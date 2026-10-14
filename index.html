@@ -836,6 +836,7 @@ footer span a:hover { color: var(--paper); }
           <button class="chip" data-cat="recovery" aria-pressed="false" data-i="cat.recovery"></button>
           <button class="chip" data-cat="training" aria-pressed="false" data-i="cat.training"></button>
           <button class="chip" data-cat="nutrition" aria-pressed="false" data-i="cat.nutrition"></button>
+          <button class="chip" data-cat="books" aria-pressed="false" data-i="cat.books"></button>
         </div>
       </div>
       <div class="products" id="products"></div>
@@ -1042,7 +1043,7 @@ const T = {
     "per.month": "/mes",
     "tm.eyebrow": "Qui som", "tm.title": "El nostre equip", "tm.lead": "Professionals de l'esport i la salut, sota el mateix sostre.", "tm.founder": "Cofundador",
     "sh.eyebrow": "Recomanat per l'equip", "sh.title": "Botiga", "sh.lead": "El material que fem servir al centre, perquè continuïs a casa.",
-    "cat.all": "Tot", "cat.recovery": "Recuperació", "cat.training": "Entrenament", "cat.nutrition": "Nutrició",
+    "cat.all": "Tot", "cat.recovery": "Recuperació", "cat.training": "Entrenament", "cat.nutrition": "Nutrició", "cat.books": "Llibres",
     "sh.btn": "Veure a Amazon", "sh.example": "Exemple",
     "sh.disc": "Com a afiliat d'Amazon, Sportax obté ingressos per les compres adscrites que compleixen els requisits aplicables. El preu per a tu és el mateix.",
     "bl.eyebrow": "Aprèn amb nosaltres", "bl.lead": "Articles del nostre equip sobre entrenament, salut i nutrició.",
@@ -1095,7 +1096,7 @@ const T = {
     "per.month": "/mes",
     "tm.eyebrow": "Quiénes somos", "tm.title": "Nuestro equipo", "tm.lead": "Profesionales del deporte y la salud, bajo el mismo techo.", "tm.founder": "Cofundador",
     "sh.eyebrow": "Recomendado por el equipo", "sh.title": "Tienda", "sh.lead": "El material que usamos en el centro, para que sigas en casa.",
-    "cat.all": "Todo", "cat.recovery": "Recuperación", "cat.training": "Entrenamiento", "cat.nutrition": "Nutrición",
+    "cat.all": "Todo", "cat.recovery": "Recuperación", "cat.training": "Entrenamiento", "cat.nutrition": "Nutrición", "cat.books": "Libros",
     "sh.btn": "Ver en Amazon", "sh.example": "Ejemplo",
     "sh.disc": "Como afiliado de Amazon, Sportax obtiene ingresos por las compras adscritas que cumplen los requisitos aplicables. El precio para ti es el mismo.",
     "bl.eyebrow": "Aprende con nosotros", "bl.lead": "Artículos de nuestro equipo sobre entrenamiento, salud y nutrición.",
@@ -1148,7 +1149,7 @@ const T = {
     "per.month": "/month",
     "tm.eyebrow": "Who we are", "tm.title": "Our team", "tm.lead": "Sport and health professionals under one roof.", "tm.founder": "Co-founder",
     "sh.eyebrow": "Team picks", "sh.title": "Shop", "sh.lead": "The gear we use at the centre, so you can keep going at home.",
-    "cat.all": "All", "cat.recovery": "Recovery", "cat.training": "Training", "cat.nutrition": "Nutrition",
+    "cat.all": "All", "cat.recovery": "Recovery", "cat.training": "Training", "cat.nutrition": "Nutrition", "cat.books": "Books",
     "sh.btn": "View on Amazon", "sh.example": "Example",
     "sh.disc": "As an Amazon Associate, Sportax earns from qualifying purchases. The price you pay stays the same.",
     "bl.eyebrow": "Learn with us", "bl.lead": "Articles by our team on training, health and nutrition.",
@@ -1278,12 +1279,15 @@ const PRODUCTS = [
   { cat: "nutrition", icon: "bottle", link: "https://www.amazon.es/dp/B0B15HGXD9?th=1&psc=1&linkCode=ll2&tag=sportaxplus08-21&linkId=19858cd83cc1a1f44d2b09f59db57820&ref_=as_li_ss_tl",
     name: { ca: "Ampolla tèrmica Super Sparrow", es: "Botella térmica Super Sparrow", en: "Super Sparrow insulated bottle" },
     desc: { ca: "Ampolla d'acer inoxidable que manté l'aigua freda durant hores. Per estar ben hidratat a l'entrenament, a la feina o a la motxilla.", es: "Botella de acero inoxidable que mantiene el agua fría durante horas. Para estar bien hidratado en el entreno, en el trabajo o en la mochila.", en: "Stainless steel bottle that keeps water cold for hours. Stay hydrated at training, at work or on the go." } },
-  { cat: "nutrition", icon: "book", link: "https://www.amazon.es/dp/B0HBKKNHMS?psc=1&linkCode=ll2&tag=sportaxplus08-21&linkId=bd7c6cdbaa5d34b43c4cd01ede77a95d&ref_=as_li_ss_tl",
+  { cat: "books", icon: "book", link: "https://www.amazon.es/dp/B0HBKKNHMS?psc=1&linkCode=ll2&tag=sportaxplus08-21&linkId=bd7c6cdbaa5d34b43c4cd01ede77a95d&ref_=as_li_ss_tl",
     name: { ca: "Llibre: Dieta antiinflamatòria", es: "Libro: Dieta antiinflamatoria", en: "Book: Anti-inflammatory diet" },
     desc: { ca: "Consells pràctics per cuidar l'alimentació i reduir la inflamació en el dia a dia. Un bon complement a la teva recuperació i al pla de nutrició.", es: "Consejos prácticos para cuidar la alimentación y reducir la inflamación en el día a día. Un buen complemento a tu recuperación y a tu plan de nutrición.", en: "Practical tips to eat well and reduce inflammation day to day. A good complement to your recovery and nutrition plan (in Spanish)." } },
-  { cat: "nutrition", icon: "book", link: "https://www.amazon.es/dp/8466378847?linkCode=ll2&tag=sportaxplus08-21&linkId=a4422a48fdcc5390bebba7c4628820dd&ref_=as_li_ss_tl",
+  { cat: "books", icon: "book", link: "https://www.amazon.es/dp/8466378847?linkCode=ll2&tag=sportaxplus08-21&linkId=a4422a48fdcc5390bebba7c4628820dd&ref_=as_li_ss_tl",
     name: { ca: "Llibre: Saludable Mente", es: "Libro: Saludable Mente", en: "Book: Saludable Mente" },
-    desc: { ca: "Hàbits per optimitzar el cervell i millorar la salut a qualsevol edat: alimentació, exercici i descans, explicats de manera clara.", es: "Hábitos para optimizar tu cerebro y mejorar tu salud a cualquier edad: alimentación, ejercicio y descanso, explicados de forma clara.", en: "Habits to optimise your brain and improve your health at any age: diet, exercise and sleep, clearly explained (in Spanish)." } }
+    desc: { ca: "Hàbits per optimitzar el cervell i millorar la salut a qualsevol edat: alimentació, exercici i descans, explicats de manera clara.", es: "Hábitos para optimizar tu cerebro y mejorar tu salud a cualquier edad: alimentación, ejercicio y descanso, explicados de forma clara.", en: "Habits to optimise your brain and improve your health at any age: diet, exercise and sleep, clearly explained (in Spanish)." } },
+  { cat: "books", icon: "book", link: "https://www.amazon.es/dp/8413444969?linkCode=ll2&tag=sportaxplus08-21&linkId=01f0d0c50a0ef95cc94f33f1caba2c3c&ref_=as_li_ss_tl",
+    name: { ca: "Llibre: Hijos de la adversidad", es: "Libro: Hijos de la adversidad", en: "Book: Hijos de la adversidad" },
+    desc: { ca: "Com fer-te més fort i resistent recuperant hàbits ancestrals que el confort modern ens ha fet perdre.", es: "Cómo hacerte más fuerte y resistente recuperando hábitos ancestrales que el confort moderno nos ha hecho perder.", en: "How to become stronger and more resilient by recovering ancestral habits that modern comfort has made us lose (in Spanish)." } }
 ];
 
 const ART = {
