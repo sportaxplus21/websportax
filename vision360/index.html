@@ -508,8 +508,8 @@ const LV = {
   espacios:[
     {defs:1,win:9,follow:0,cover:0,react:.6,reach:7,dist:[10,16],angC:.9,mates:0,ayuda:true,segunda:false,win2:6,que:'Un rival marcándote, quieto. Ves la línea de pase en verde o rojo.'},
     {defs:2,win:8.5,follow:0,cover:0,react:.6,reach:7,dist:[10,18],angC:1.1,mates:0,ayuda:true,segunda:false,win2:6,que:'Dos rivales: uno te marca y otro tapa la línea.'},
-    {defs:2,win:7.5,follow:.35,cover:0,react:.6,reach:7,dist:[10,18],angC:1.2,mates:0,ayuda:false,segunda:false,win2:6,que:'Sin ayuda visual y el marcador te sigue despacio.'},
-    {defs:2,win:7,follow:.5,cover:.3,react:.55,reach:7,dist:[10,20],angC:1.3,mates:0,ayuda:false,segunda:false,win2:6,que:'Los rivales reaccionan a tu movimiento.'},
+    {defs:2,win:7.5,follow:.35,cover:0,react:.6,reach:7,dist:[10,18],angC:1.2,mates:0,ayuda:true,segunda:false,win2:6,que:'El marcador te sigue despacio. Sigues viendo la línea de pase.'},
+    {defs:2,win:7,follow:.5,cover:.3,react:.55,reach:7,dist:[10,20],angC:1.3,mates:0,ayuda:true,segunda:false,win2:6,que:'Los rivales reaccionan a tu movimiento.'},
     {defs:3,win:6.5,follow:.55,cover:.4,react:.5,reach:7,dist:[10,20],angC:1.4,mates:2,ayuda:false,segunda:true,win2:5.5,que:'Tres rivales y, al recibir, busca el siguiente pase.'},
     {defs:3,win:6,follow:.65,cover:.5,react:.45,reach:7,dist:[11,22],angC:1.6,mates:2,ayuda:false,segunda:true,win2:5,que:'Menos tiempo para desmarcarte.'},
     {defs:4,win:5.5,follow:.7,cover:.6,react:.4,reach:7,dist:[11,22],angC:1.8,mates:3,ayuda:false,segunda:true,win2:4.5,que:'Cuatro rivales y el balón puede venir de cualquier lado.'},
@@ -548,9 +548,9 @@ const DRILLS = {
     chips:['Contexto real de juego','Ataque y defensa','Toma de decisiones'], meta:'8 situaciones · ≈2 min',
     pasos:['Ves el partido desde tu posición, con tu equipo de celeste en 4-3-3 y el rival de rojo en 4-4-2.','Sigue el balón girando la cabeza: la jugada puede llegar desde cualquier lado.','Con balón, señala el mejor pase. Sin balón, señala al rival libre más peligroso de tu zona.'],
     icon:'<svg class="ico" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="10" width="56" height="44" rx="2"/><line x1="32" y1="10" x2="32" y2="54"/><circle cx="32" cy="32" r="6"/><g fill="currentColor" stroke="none"><circle cx="12" cy="20" r="2.6"/><circle cx="12" cy="44" r="2.6"/><circle cx="20" cy="32" r="2.6"/><circle cx="26" cy="22" r="2.6"/><circle cx="26" cy="42" r="2.6"/></g><g stroke="currentColor"><circle cx="40" cy="26" r="2.6"/><circle cx="40" cy="38" r="2.6"/><circle cx="50" cy="18" r="2.6"/><circle cx="50" cy="46" r="2.6"/><circle cx="52" cy="32" r="2.6"/></g></svg>'},
-  juego:{nombre:'Jugar un partido', corto:'Jugar', desc:'Partido completo de 2 partes de 5 minutos que no se para. Tu jugador se coloca y se desmarca solo; tú escaneas y, cuando te llega el balón, decides: pase, pase al espacio, centro o tiro.',
+  juego:{nombre:'Jugar un partido', corto:'Jugar', desc:'Partido completo de 2 partes de 5 minutos que no se para. Te quedas en tu posición y el partido se juega a tu alrededor sin cortes; tú escaneas y, cuando te llega el balón, decides: pase, pase al espacio, centro o tiro.',
     chips:['Juego real continuo','Escaneo','Decisión con balón'], meta:'2 × 5 min',
-    pasos:['No hace falta el joystick: tu jugador se recoloca solo con un fundido rápido.','Gira la cabeza para escanear dónde están compañeros y rivales antes de recibir.','Con balón: apunta a un compañero (pase), al césped (pase al espacio) o a la portería (tiro) y pulsa el gatillo.'],
+    pasos:['No te mueves: te quedas en tu posición y el partido sigue a tu alrededor sin cortes.','Gira la cabeza para escanear dónde están compañeros y rivales antes de recibir.','Con balón: apunta a un compañero (pase), al césped (pase al espacio) o a la portería (tiro) y pulsa el gatillo.'],
     icon:'<svg class="ico" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="4" y="10" width="56" height="44" rx="2"/><line x1="32" y1="10" x2="32" y2="54"/><circle cx="32" cy="32" r="6"/><circle cx="20" cy="40" r="4" fill="currentColor"/><path d="M24 37l12-8" stroke-dasharray="3 3"/><circle cx="40" cy="27" r="3"/><path d="M14 22l6 6M20 22l-6 6"/></svg>'},
   espacios:{nombre:'Interpretación de espacios', corto:'Espacios', desc:'Muévete con el joystick para encontrar el espacio libre y abrir la línea de pase. Si estás libre, recibes; si un rival corta la línea, te lo interceptan.',
     chips:['Desmarque','Líneas de pase','Orientación en el campo'], meta:'8 jugadas · ≈2 min',
@@ -2695,9 +2695,10 @@ class Espacios extends Drill {
     return null;
   }
   spotScore(p,C,defs){ const d=Math.hypot(p.x-C.x,p.z-C.z); const clear=laneClear(C,p,defs.filter(x=>x.role!=='presion')); const space=nearestD(p,defs);
-    const open=clear>=1.6 && space>=2.4 && d>=6 && d<=32 && Math.abs(p.x)<=33.5 && Math.abs(p.z)<=51.5;
+    const open=clear>=1.4 && space>=2.1 && d>=5 && d<=34 && Math.abs(p.x)<=33.8 && Math.abs(p.z)<=52;
     const t=this.tipo; const fwd=(C.z-p.z)*(t==='ruptura'?.25:.05); const bias=t==='apoyo'?-Math.max(0,d-10)*.3:t==='amplitud'?Math.abs(p.x)*.09:0;
     return {open, clear, space, s:(open?2:0)+Math.min(clear,4)*.8+Math.min(space,6)*.7+fwd+bias-Math.max(0,d-26)*.3}; }
+  nearSpot(A,C,defs){ for(let r=1;r<=12;r+=1) for(let a=0;a<Math.PI*2;a+=Math.PI/12){ const p={x:A.x+Math.cos(a)*r, z:A.z+Math.sin(a)*r}; if(this.spotScore(p,C,defs).open) return p; } return null; }
   bestSpot(A,C,defs,reach){ let best=null; for(let r=0;r<=reach;r+=1.2) for(let a=0;a<Math.PI*2;a+=r?Math.PI/Math.max(4,Math.round(r*2.2)):7){ const p={x:A.x+Math.cos(a)*r, z:A.z+Math.sin(a)*r}; const sc=this.spotScore(p,C,defs); if(!sc.open) continue; const s=sc.s-r*.08; if(!best||s>best.s) best={x:p.x,z:p.z,s,sc}; } return best; }
   next(){
     if(this.k>=this.P.n) return this.finish();
@@ -2710,7 +2711,7 @@ class Espacios extends Drill {
     this.defObjs=g.defs.map(d=>{ const o=this.spawn('opp',num(),0,0); o.position.set(d.x,0,d.z); o.userData.u.stance=.9; o.userData.role=d.role; o.userData.home={x:d.x,z:d.z}; this.rounds.push(o); return o; });
     this.mateObjs=g.mates.map(m=>{ const o=this.spawn('mate',num(),0,0); o.position.set(m.x,0,m.z); o.userData.u.stance=.4; this.rounds.push(o); return o; });
     this.rounds.forEach(o=>{ if(o!==this.carrier) faceDir(o,g.C.x,g.C.z); }); faceDir(this.carrier,g.A.x,g.A.z);
-    this.phase='desmarque'; this.mt=0; this.calledAt=null; this.openT=0; this.firstOpen=null; this.trail=[];
+    this.phase='desmarque'; this.mt=0; this.calledAt=null; this.openT=0; this.lastOpenAt=null; this.firstOpen=null; this.trail=[];
     const TX={libre:'Desmárcate: busca el espacio libre y la línea de pase', apoyo:'Ofrécete de apoyo cerca del pasador', ruptura:'Rompe hacia delante, a la espalda de los rivales', amplitud:'Abre el campo: busca amplitud'}; this.consigna=TX[this.tipo];
     setHud('Jugada '+this.k+' de '+this.P.n, this.consigna);
     sfx.whistle();
@@ -2722,14 +2723,15 @@ class Espacios extends Drill {
       this.trail.push({t:this.mt, x:U.x, z:U.z}); while(this.trail.length && this.trail[0].t<this.mt-this.P.react) this.trail.shift();
       const lagU=this.trail.length?this.trail[0]:U;
       this.defObjs.forEach(o=>{ const r=o.userData.role; let t=null, v=0;
-        if(r==='marca' && this.P.follow){ const gx=-lagU.x, gz=-52.5-lagU.z, L=Math.hypot(gx,gz)||1; const lx=C.x-lagU.x, lz=C.z-lagU.z, LL=Math.hypot(lx,lz)||1; t={x:lagU.x+gx/L*1.5+lx/LL*.9, z:lagU.z+gz/L*1.5+lz/LL*.9}; v=5.4*this.P.follow; }
-        else if(r==='linea' && this.P.cover){ const tt=.5; t={x:lerp(C.x,lagU.x,tt), z:lerp(C.z,lagU.z,tt)}; v=4.6*this.P.cover; }
+        if(r==='marca' && this.P.follow){ const gx=-lagU.x, gz=-52.5-lagU.z, L=Math.hypot(gx,gz)||1; const lx=C.x-lagU.x, lz=C.z-lagU.z, LL=Math.hypot(lx,lz)||1; t={x:lagU.x+gx/L*1.8+lx/LL*.6, z:lagU.z+gz/L*1.8+lz/LL*.6}; v=1.4+2.6*this.P.follow; }
+        else if(r==='linea' && this.P.cover){ const tt=.5; t={x:lerp(C.x,lagU.x,tt), z:lerp(C.z,lagU.z,tt)}; v=1+2*this.P.cover; }
         else if(r==='presion'){ t={x:C.x+.2, z:C.z-1.3}; v=3; }
-        else if(r==='zona' && this.P.cover){ const h=o.userData.home; t={x:lerp(h.x,lagU.x,.25), z:lerp(h.z,lagU.z,.25)}; v=3*this.P.cover; }
+        else if(r==='zona' && this.P.cover){ const h=o.userData.home; t={x:lerp(h.x,lagU.x,.2), z:lerp(h.z,lagU.z,.2)}; v=1+1.5*this.P.cover; }
+        if(t && r!=='presion' && r!=='marca'){ const h=o.userData.home, lx=t.x-h.x, lz=t.z-h.z, L2=Math.hypot(lx,lz), lim=6; if(L2>lim){ t={x:h.x+lx/L2*lim, z:h.z+lz/L2*lim}; } }
         if(t){ const dx=t.x-o.position.x, dz=t.z-o.position.z, d=Math.hypot(dx,dz); if(d>.15){ const m=Math.min(d,v*dt); o.position.x+=dx/d*m; o.position.z+=dz/d*m; } }
         faceDir(o, lagU.x, lagU.z); });
       const sc=this.spotScore(U,C,this.defsNow());
-      if(sc.open){ this.openT+=dt; if(this.openT>.35 && this.firstOpen==null) this.firstOpen=this.mt; } else this.openT=0;
+      if(sc.open){ this.openT+=dt; this.lastOpenAt=this.mt; if(this.openT>.35 && this.firstOpen==null) this.firstOpen=this.mt; } else this.openT=0;
       const left=Math.max(0,this.P.win-this.mt);
       if(this.P.ayuda){ this.lineA.visible=true; setLine(this.lineA,C,U); this.lineA.material.color.setHex(sc.open?0x2bd46a:0xff4d3d); }
       setHud(({libre:'Desmárcate',apoyo:'Apoyo',ruptura:'Ruptura',amplitud:'Amplitud'})[this.tipo]+' · '+left.toFixed(1).replace('.',',')+' s', sc.open ? 'Línea abierta: pide el balón (gatillo)' : this.consigna);
@@ -2748,7 +2750,7 @@ class Espacios extends Drill {
   resolveMove(){
     if(this.phase!=='desmarque') return;
     const U=userField(), C={x:this.carrier.position.x, z:this.carrier.position.z}, defs=this.defsNow();
-    const sc=this.spotScore(U,C,defs); this.sc=sc; this.U={x:U.x,z:U.z};
+    const sc=this.spotScore(U,C,defs); if(!sc.open && this.lastOpenAt!=null && this.mt-this.lastOpenAt<.7){ sc.open=true; sc.clear=Math.max(sc.clear,1.4); sc.space=Math.max(sc.space,2.1); } this.sc=sc; this.U={x:U.x,z:U.z};
     this.carrier.userData.u.kick=.42; setTimeout(()=>sfx.kick(),180);
     this.phase='pass'; this.pt=-.18; this.p0={x:C.x,z:C.z};
     if(sc.open){ this.p1={x:U.x,z:U.z}; this.intercept=null; }
@@ -2765,16 +2767,16 @@ class Espacios extends Drill {
     // mejor espacio posible desde donde estabas
     const nb=this.bestSpot(this.U,C,this.defsNow(),4) || best;
     let ok=0;
-    if(sc.open){ ok = (sc.clear>=2.4 && sc.space>=3.6) ? 1 : .5; this.hasBall=true; sfx.ok(); const w=toWorld(this.U.x,this.U.z); const hw=new THREE.Vector3(Math.sin(headYaw())*2.5,2.2,-Math.cos(headYaw())*2.5); flash(ok===1?'✓':'½',ok===1?'#2bd46a':'#f2b233',hw,1.0); }
+    if(sc.open){ ok = 1; this.hasBall=true; sfx.ok(); const w=toWorld(this.U.x,this.U.z); const hw=new THREE.Vector3(Math.sin(headYaw())*2.5,2.2,-Math.cos(headYaw())*2.5); flash(ok===1?'✓':'½',ok===1?'#2bd46a':'#f2b233',hw,1.0); }
     else { this.hasBall=false; sfx.bad(); if(this.intercept) this.intercept.userData.u.raise=.6; }
     mk(this.U, sc.open?0x2bd46a:0xff4d3d);
-    if(!sc.open || ok<1) mk(nb, 0xf2b233);
+    if(!sc.open){ const near=this.nearSpot(this.U,C,this.defsNow()); if(near) mk(near, 0xf2b233); }
     this.lineA.visible=false;
     const rt=this.firstOpen!=null?Math.round(this.firstOpen*1000):null;
     this.cur1={ok, rt};
     if(sc.open && this.P.segunda){ this.secondAction(); return; }
     this.trials.push(this.cur1); this.phase='fb';
-    setHud(sc.open?(ok===1?'¡Espacio perfecto!':'Recibes, pero muy justo'):(sc.clear<1.6?'Línea de pase cortada':'Demasiado cerca de un rival'), sc.open?'Ámbar: un espacio todavía mejor':'Ámbar: el espacio libre que había');
+    setHud(sc.open?'¡Estabas libre! Recibes':(sc.clear<1.4?'Línea de pase cortada':'Demasiado cerca de un rival'), sc.open?(sc.clear>=2.4&&sc.space>=3.6?'Espacio muy bueno':'Libre, aunque un poco justo'):'Ámbar: el espacio libre más cercano que tenías');
     this.after(2.6, ()=>this.next());
   }
   secondAction(){
@@ -2827,7 +2829,7 @@ class Juego extends Drill {
   dispose(){ moveStop(); this.clearTimers(); field.remove(this.root); this.picks=[]; this.figs=[]; setScreens('',''); }
   start(){
     const P=this.P; this.sp=P.speed; this.form=pick(Object.keys(RIV_FORMS)); this.rf=RIV_FORMS[this.form];
-    this.E=[]; usedNums=[]; this.cnt={shots:0, cross:0};
+    this.E=[]; usedNums=[]; this.cnt={shots:0, cross:0}; this.fixed=true;
     const mk=(team,slot,f)=>{ const e={team, slot, x:0, z:0, vx:0, vz:0, user:false, gk:slot==='POR', run:null, runT:rand(1,5), wan:{x:0,z:0}, wanT:0, home:{x:0,z:0}};
       if(team==='ours' && slot===this.pos){ e.user=true; } else { e.obj=this.spawn(team==='ours'?(slot==='POR'?'gk':'mate'):(slot==='POR'?'gk2':'opp'), team==='ours'?DORSAL.ours[slot]:(DORSAL.rivs[slot]||randi(12,23)), 0, 0, true); }
       this.E.push(e); return e; };
@@ -2857,7 +2859,7 @@ class Juego extends Drill {
     this.E.forEach(e=>{ const sgn=e.team==='ours'?1:-1; let p;
       if(e.gk) p={x:0, z:sgn*49.5}; else { const f=this.F(e); p={x:f[0]*.85, z:sgn*clamp(3+(f[1]+20)*.85, 2.5, 44)}; }
       e.kx=p.x; e.kz=p.z;
-      if(e.user){ if(first){ moveStart(p.x, p.z, 0); MOVE.lock=true; } else this.blink({x:p.x, z:p.z}); }
+      if(e.user){ if(first){ const fp=this.fixedSpot(); moveStart(fp.x, fp.z, 0); MOVE.lock=true; } }
       else if(first){ e.x=p.x; e.z=p.z; e.vx=e.vz=0; } });
     this.kickT=first?0:3;
     const taker=this.mates(team).filter(e=>!e.user && !e.gk).sort((a,b)=>Math.abs(this.F(a)[1])-Math.abs(this.F(b)[1]))[0];
@@ -2937,7 +2939,7 @@ class Juego extends Drill {
       if(e===this.uPresser && B.owner===this.U) return;
       if(e.press && !e.gk){ const tg=car||B; const gx=-tg.x, gzz=gz-tg.z, L=Math.hypot(gx,gzz)||1; t={x:tg.x+gx/L*.9, z:tg.z+gzz/L*.9}; urg=this.P.press; }
       else if(e.cover && car){ const gx=-car.x, gzz=gz-car.z, L=Math.hypot(gx,gzz)||1; t={x:car.x+gx/L*6, z:car.z+gzz/L*6}; urg=.4; }
-      else if(e.mark){ const m=e.mark, gx=-m.x, gzz=gz-m.z, L=Math.hypot(gx,gzz)||1; t={x:lerp(e.home.x, m.x+gx/L*1.6, .6), z:lerp(e.home.z, m.z+gzz/L*1.6, .6)}; urg=.3; }
+      else if(e.mark){ const m=e.mark, gx=-m.x, gzz=gz-m.z, L=Math.hypot(gx,gzz)||1, md=m.user?4.2:1.6, w=m.user?.4:.6; t={x:lerp(e.home.x, m.x+gx/L*md, w), z:lerp(e.home.z, m.z+gzz/L*md, w)}; urg=.3; }
     } else if(poss===e.team && !e.gk){
       // desmarques: rupturas y apoyos
       e.runT-=dt;
@@ -2982,6 +2984,10 @@ class Juego extends Drill {
     // ruido de decisión
     let o=opts[0]; if(opts.length>1){ const top=opts.slice(0,3), ws=top.map(x=>Math.exp((x.s-top[0].s)/1.1)); o=wpick(top,ws); }
     if(c.team==='ours' && uo && (this.T-(this.lastTouch||0))>this.P.cada && uo.clear>=.7 && uo.d<38 && o.type!=='shot') o=uo;
+    else if(c.team==='ours' && uo && (this.T-(this.lastTouch||0))>this.P.cada && uo.d<40 && o.type!=='shot' && !c.reangled){ // se perfila para abrir la línea hacia ti
+      const opps2=this.opps('ours'); let bp=null; for(let a=0;a<Math.PI*2;a+=Math.PI/6) for(const r of [3,5,7]){ const q={x:clamp(c.x+Math.cos(a)*r,-32,32), z:clamp(c.z+Math.sin(a)*r,-49,49)}; const cl=laneClear(q,this.U,opps2), sp=nearestD(q,opps2); if(cl>=1.4 && sp>=1.8){ const sc=cl+sp*.3-r*.15; if(!bp||sc>bp.s) bp={x:q.x,z:q.z,s:sc}; } }
+      if(bp){ c.drive=bp; c.reangled=true; c.holdT=Math.max(.5, Math.hypot(bp.x-c.x,bp.z-c.z)/4.5); return; } }
+    c.reangled=false;
     if(!o){ c.holdT=.5; return; }
     if(o.type==='drive'){ c.drive=o.p; c.holdT=rand(.8,1.6)/this.sp; return; }
     if(c.restartType==='corner'){ const box=this.mates(c.team).filter(m=>!m.gk && Math.abs(m.x)<20 && Math.abs(m.z-fwd*52.5)<17); const tgt=box.length?pick(box):null; c.restartType=null; this.cnt.cross++; return this.kick(c,'cross', tgt?{x:tgt.x,z:tgt.z}:{x:rand(-6,6), z:fwd*45}, tgt); }
@@ -3141,6 +3147,7 @@ class Juego extends Drill {
   /* ---------- colocación automática del jugador (sin joystick) ---------- */
   autoPos(dt, poss){
     const B=this.B, U=this.U;
+    if(this.fixed) return;
     if(this.blinkTo){ this.blinkT+=dt; const t=this.blinkT; if(t>=.13 && !this.blinkDone){ moveTo(this.blinkTo.x, this.blinkTo.z); this.blinkDone=true; } setFade(t<.13 ? t/.13 : Math.max(0,1-(t-.13)/.25)); if(t>.4){ this.blinkTo=null; setFade(0); } return; }
     if(B.state==='held' && B.owner===U) return;
     if(B.state==='flight' && B.fl && B.fl.recv===U) return;
@@ -3159,6 +3166,7 @@ class Juego extends Drill {
     }
     if(Math.hypot(T.x-U.x,T.z-U.z)>5) this.blink(T);
   }
+  fixedSpot(){ if(this.pos==='POR') return {x:0,z:48}; const f=OUR_FORM[this.pos]||[0,7]; return {x:clamp(f[0]*.85,-28,28), z:clamp(f[1]*.75+2,-24,30)}; }
   blink(T){ this.blinkTo={x:T.x, z:T.z}; this.blinkT=0; this.blinkDone=false; this.lastBlink=this.T||0; }
   /* ---------- métricas y HUD ---------- */
   metrics(dt, poss){
@@ -3172,7 +3180,7 @@ class Juego extends Drill {
     let sub;
     if(this.msgT>0){ this.msgT-=dt; sub=this.userMsg+(this.userSub?' · '+this.userSub:''); }
     else if(this.B.state==='held' && this.B.owner===this.U){ sub='¡Tu balón! '+Math.max(0,this.uLeft).toFixed(1).replace('.',',')+' s antes de la presión'; }
-    else if(poss==='ours'){ const c=this.carrier(); const open=c && !c.user && laneClear(c,this.U,this.opps('ours'))>=1.6 && nearestD(this.U,this.opps('ours'))>=2.6; sub=open?'Estás libre: puedes pedir el balón (gatillo) · escanea':'Tu equipo ataca: escanea antes de recibir'; this.passLine.visible=!!(c&&this.P.ayuda); if(c&&this.P.ayuda){ setLine(this.passLine,c,this.U); this.passLine.material.color.setHex(open?0x2bd46a:0xff4d3d); } }
+    else if(poss==='ours'){ const c=this.carrier(); const open=c && !c.user && laneClear(c,this.U,this.opps('ours'))>=1.6 && nearestD(this.U,this.opps('ours'))>=2.6; sub=open?'Estás libre: puedes pedir el balón (gatillo) · escanea':'Tu equipo ataca: escanea, el balón puede llegarte'; this.passLine.visible=!!(c&&this.P.ayuda); if(c&&this.P.ayuda){ setLine(this.passLine,c,this.U); this.passLine.material.color.setHex(open?0x2bd46a:0xff4d3d); } }
     else { sub='El rival tiene el balón: mira dónde están tus compañeros'; this.passLine.visible=false; }
     if(poss!=='ours') this.passLine.visible=false;
     if(t!==this._ht || sub!==this._hs){ this._ht=t; this._hs=sub; setHud(t, sub); }
