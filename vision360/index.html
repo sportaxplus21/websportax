@@ -1260,7 +1260,7 @@ function realLoad(){
   REAL.state='loading';
   REAL.promise = (async()=>{
     if(!THREE.GLTFLoader) await loadScriptOnce(REAL_BASE+'GLTFLoader.js').catch(()=>loadScriptOnce('https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js'));
-    const gl = await new THREE.GLTFLoader().loadAsync(REAL_BASE+'jugador.glb');
+    const GL=new THREE.GLTFLoader(); const gl = await GL.loadAsync(REAL_BASE+'jugador.glb').catch(()=>GL.loadAsync(REAL_BASE+'jugador.json'));
     const TL = new THREE.TextureLoader();
     const tex = async n=>{ const t=await TL.loadAsync(REAL_BASE+'kit_'+n+'.jpg'); t.flipY=true; t.anisotropy=4; return t; };
     const names=['mate','opp','gk','gk2'];
