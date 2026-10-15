@@ -1204,7 +1204,7 @@ function buildStadium(){
   // gradas y cubierta
   GEO.roofLight=new THREE.BoxGeometry(2.6,.5,.9); MAT.roofLight=new THREE.MeshBasicMaterial({color:0xfffbea});
   GEO.banner=new THREE.PlaneGeometry(14,2.6);
-  MAT.banners=[bannerTexture('SPORTAX','#2BA9C7','#000000'),bannerTexture('VISION 360','#000000','#2BA9C7'),bannerTexture('TERRASSA','#144C5A','#ffffff'),bannerTexture('ENTRENA TU MENTE','#ffffff','#144C5A')].map(t=>new THREE.MeshBasicMaterial({map:t, side:THREE.DoubleSide}));
+  MAT.banners=[bannerTexture('SPORTAX','#2BA9C7','#000000'),bannerTexture('VISION 360','#000000','#2BA9C7'),bannerTexture('MENTE · CUERPO · JUEGO','#144C5A','#ffffff'),bannerTexture('ENTRENA TU MENTE','#ffffff','#144C5A')].map(t=>new THREE.MeshBasicMaterial({map:t, side:THREE.DoubleSide}));
   field.add(buildStands());
   buildCrowd();
   // videomarcadores en dos esquinas
@@ -1623,6 +1623,7 @@ function loop(t){
   if(!renderer.xr.isPresenting){ camera.rotation.set(pitch, yaw, 0); camera.position.set(0,1.6,0); }
   if(REAL.state==='ready'){ REAL.frame++; (renderer.xr.isPresenting ? renderer.xr.getCamera(camera) : camera).getWorldPosition(REAL.camPos); }
   stadiumTick(dt);
+  if(COMFORT.auto>0){ COMFORT.auto=Math.max(0,COMFORT.auto-Math.max(dt,.016)*2.2); setFade(COMFORT.auto); }
   if(!$('#stage').hidden){ hudFollow(dt); miniTick(dt); }
   if(!LINK.paused) moveTick(dt);
   if(drill && !LINK.paused) drill.tick(dt);
@@ -2588,7 +2589,7 @@ function moveTick(dt){
     setField(MOVE.th, MOVE.a.x, MOVE.a.z); }
 }
 /* Confort en VR: fundido a negro para recolocaciones y viñeta al moverse con joystick */
-const COMFORT={sphere:null, vig:null, a:0};
+const COMFORT={sphere:null, vig:null, a:0, auto:0};
 function comfortInit(){ if(COMFORT.sphere || !camera) return;
   const sm=new THREE.MeshBasicMaterial({color:0x000000, side:THREE.BackSide, transparent:true, opacity:0, depthTest:false, depthWrite:false, fog:false});
   COMFORT.sphere=new THREE.Mesh(new THREE.SphereGeometry(.35,16,10), sm); COMFORT.sphere.renderOrder=999; COMFORT.sphere.visible=false; camera.add(COMFORT.sphere);
@@ -3222,59 +3223,114 @@ function shirtTexture(name, num){
   x.font='118px '+FD; x.lineWidth=10; x.strokeStyle='#144C5A'; x.strokeText(String(num),128,192); x.fillStyle='#fff'; x.fillText(String(num),128,192);
   return new THREE.CanvasTexture(c);
 }
+function lockerTextTex(lines, w, h, bg, fg, font){ const [c,x]=cvs(w,h); if(bg){ x.fillStyle=bg; x.fillRect(0,0,w,h); } else x.clearRect(0,0,w,h); x.textAlign='center'; x.textBaseline='middle'; x.fillStyle=fg; lines.forEach((t,i)=>{ x.font=(Array.isArray(font)?font[i]:font); x.fillText(t,w/2,h*(i+1)/(lines.length+1),w-30); }); return new THREE.CanvasTexture(c); }
+function walnutTexture(){ const [c,x]=cvs(512,512); x.fillStyle='#2b1b12'; x.fillRect(0,0,512,512); for(let i=0;i<900;i++){ x.strokeStyle='rgba('+(Math.random()<.5?'20,10,5':'80,50,30')+','+rand(.05,.18).toFixed(2)+')'; x.lineWidth=rand(.5,2); x.beginPath(); const yy=rand(0,512); x.moveTo(0,yy); x.bezierCurveTo(170,yy+rand(-8,8),340,yy+rand(-8,8),512,yy+rand(-4,4)); x.stroke(); } return tex(c,true); }
 function buildLocker(){
   if(LOCKER.group) return;
   const g=new THREE.Group(); LOCKER.group=g; g.visible=false; scene.add(g);
-  const W=12, Z0=-3.3, Z1=4.7, H=3.3;
-  const wood=new THREE.MeshLambertMaterial({map:woodTexture()}), wall=new THREE.MeshLambertMaterial({map:wallTexture()}), dark=new THREE.MeshLambertMaterial({color:0x111518}), ceilM=new THREE.MeshLambertMaterial({color:0x14181b});
-  const ft=floorTexture(); ft.repeat.set(3,2); const floor=new THREE.Mesh(new THREE.PlaneGeometry(W,Z1-Z0), new THREE.MeshLambertMaterial({map:ft})); floor.rotation.x=-Math.PI/2; floor.position.set(0,0,(Z0+Z1)/2); g.add(floor);
-  const ceil=new THREE.Mesh(new THREE.PlaneGeometry(W,Z1-Z0), ceilM); ceil.rotation.x=Math.PI/2; ceil.position.set(0,H,(Z0+Z1)/2); g.add(ceil);
-  const wt=wall.map; wt.repeat.set(2,1);
-  const mkWall=(w,x,z,ry)=>{ const m=new THREE.Mesh(new THREE.PlaneGeometry(w,H), wall); m.position.set(x,H/2,z); m.rotation.y=ry; g.add(m); };
-  mkWall(W,0,Z0,0); mkWall(W,0,Z1,Math.PI); mkWall(Z1-Z0,-W/2,(Z0+Z1)/2,Math.PI/2); mkWall(Z1-Z0,W/2,(Z0+Z1)/2,-Math.PI/2);
-  const lightM=new THREE.MeshBasicMaterial({color:0xf4fbff});
-  for(let i=-1;i<=1;i++) for(let j=0;j<2;j++){ const l=new THREE.Mesh(new THREE.BoxGeometry(2.6,.04,.28), lightM); l.position.set(i*3.6,H-.03,-.6+j*3); g.add(l); }
-  const strip=new THREE.Mesh(new THREE.BoxGeometry(W-.4,.03,.05), new THREE.MeshBasicMaterial({color:0x2BA9C7})); strip.position.set(0,.06,Z0+.05); g.add(strip);
-  // Logo grande en el centro del suelo
-  const ring=new THREE.Mesh(new THREE.RingGeometry(1.75,1.85,64), new THREE.MeshBasicMaterial({color:0x2BA9C7})); ring.rotation.x=-Math.PI/2; ring.position.set(0,.012,.9); g.add(ring);
-  const disc=new THREE.Mesh(new THREE.CircleGeometry(1.75,64), new THREE.MeshLambertMaterial({color:0x0c2e36})); disc.rotation.x=-Math.PI/2; disc.position.set(0,.01,.9); g.add(disc);
+  const X0=-9, X1=9, Z0=-3.6, Z1=9.4, H=4.2, W=X1-X0, Dd=Z1-Z0, cz=(Z0+Z1)/2;
+  const walnut=new THREE.MeshStandardMaterial({map:walnutTexture(), roughness:.45, metalness:.05});
+  const black=new THREE.MeshStandardMaterial({color:0x0b0d0f, roughness:.3, metalness:.2});
+  const leather=new THREE.MeshStandardMaterial({color:0x1d2327, roughness:.65});
+  const steel=new THREE.MeshStandardMaterial({color:0xb9c3c9, roughness:.25, metalness:.85});
+  const gold=new THREE.MeshStandardMaterial({color:0xd9b44a, roughness:.25, metalness:.9, emissive:0x2a1d00});
+  const led=new THREE.MeshBasicMaterial({color:0x2BA9C7}), white=new THREE.MeshBasicMaterial({color:0xf4fbff});
+  const fabric=new THREE.MeshLambertMaterial({map:wallTexture()}); fabric.map.repeat.set(3,1);
+  // Suelo pulido y techo con iluminación
+  const ft=floorTexture(); ft.repeat.set(5,4); const floor=new THREE.Mesh(new THREE.PlaneGeometry(W,Dd), new THREE.MeshStandardMaterial({map:ft, roughness:.22, metalness:.25})); floor.rotation.x=-Math.PI/2; floor.position.set(0,0,cz); g.add(floor);
+  const ceil=new THREE.Mesh(new THREE.PlaneGeometry(W,Dd), new THREE.MeshLambertMaterial({color:0x101417})); ceil.rotation.x=Math.PI/2; ceil.position.set(0,H,cz); g.add(ceil);
+  for(let i=-3;i<=3;i++) for(let j=0;j<4;j++){ const l=new THREE.Mesh(new THREE.CircleGeometry(.16,16), white); l.rotation.x=Math.PI/2; l.position.set(i*2.4,H-.01,-1.5+j*3.2); g.add(l); }
+  const cring=new THREE.Mesh(new THREE.TorusGeometry(2.4,.05,8,64), led); cring.rotation.x=Math.PI/2; cring.position.set(0,H-.15,3); g.add(cring);
+  const cring2=new THREE.Mesh(new THREE.TorusGeometry(2.0,.03,8,64), white); cring2.rotation.x=Math.PI/2; cring2.position.set(0,H-.15,3); g.add(cring2);
+  // Paredes: zócalo de nogal, tela con franja celeste y LED
+  const wall=(w,x,z,ry)=>{ const grp=new THREE.Group(); grp.position.set(x,0,z); grp.rotation.y=ry;
+    const up=new THREE.Mesh(new THREE.PlaneGeometry(w,H-1.2), fabric); up.position.y=1.2+(H-1.2)/2; grp.add(up);
+    const lo=new THREE.Mesh(new THREE.PlaneGeometry(w,1.2), walnut); lo.position.y=.6; grp.add(lo);
+    const ls=new THREE.Mesh(new THREE.BoxGeometry(w,.03,.03), led); ls.position.set(0,1.2,.02); grp.add(ls);
+    const lt=new THREE.Mesh(new THREE.BoxGeometry(w,.03,.03), led); lt.position.set(0,H-.05,.02); grp.add(lt);
+    g.add(grp); return grp; };
+  wall(W,0,Z0,0); wall(W,0,Z1,Math.PI); wall(Dd,X0,cz,Math.PI/2); wall(Dd,X1,cz,-Math.PI/2);
+  // Logo central en el suelo
   const logoW=lockerTex('logo_blanco.png'), logoC=lockerTex('logo_color.png');
-  const flogo=new THREE.Mesh(new THREE.PlaneGeometry(3.0,.97), new THREE.MeshBasicMaterial({map:logoW, transparent:true, depthWrite:false})); flogo.rotation.x=-Math.PI/2; flogo.position.set(0,.015,.9); g.add(flogo);
-  // Logo sobre la pantalla y franja blanca con logo en la pared del fondo
-  const wlogo=new THREE.Mesh(new THREE.PlaneGeometry(2.5,.8), new THREE.MeshBasicMaterial({map:logoW, transparent:true})); wlogo.position.set(0,2.86,Z0+.02); g.add(wlogo);
-  const band=new THREE.Mesh(new THREE.PlaneGeometry(4.6,.95), new THREE.MeshLambertMaterial({color:0xf2f5f6})); band.position.set(0,2.75,Z1-.02); band.rotation.y=Math.PI; g.add(band);
-  const blogo=new THREE.Mesh(new THREE.PlaneGeometry(2.6,.84), new THREE.MeshBasicMaterial({map:logoC, transparent:true})); blogo.position.set(0,2.75,Z1-.03); blogo.rotation.y=Math.PI; g.add(blogo);
-  [-1,1].forEach(sd=>{ const sl=new THREE.Mesh(new THREE.PlaneGeometry(1.9,.62), new THREE.MeshBasicMaterial({map:logoW, transparent:true})); sl.position.set(sd*(W/2-.02),2.8,-.6); sl.rotation.y=-sd*Math.PI/2; g.add(sl); });
-  // Pantalla (menú)
-  const frame=new THREE.Mesh(new THREE.BoxGeometry(3.04,1.78,.08), dark); frame.position.set(0,1.62,Z0+.05); g.add(frame);
-  LOCKER.menu=new VRMenu(2.9,1.63,1600,900); LOCKER.menu.mesh.position.set(0,1.62,Z0+.1); g.add(LOCKER.menu.mesh);
-  // Pizarra táctica
+  const disc=new THREE.Mesh(new THREE.CircleGeometry(2.6,64), new THREE.MeshStandardMaterial({color:0x0a2229, roughness:.3, metalness:.2})); disc.rotation.x=-Math.PI/2; disc.position.set(0,.008,3); g.add(disc);
+  const ring=new THREE.Mesh(new THREE.RingGeometry(2.6,2.72,64), led); ring.rotation.x=-Math.PI/2; ring.position.set(0,.01,3); g.add(ring);
+  const flogo=new THREE.Mesh(new THREE.PlaneGeometry(4.2,1.35), new THREE.MeshBasicMaterial({map:logoW, transparent:true, depthWrite:false})); flogo.rotation.x=-Math.PI/2; flogo.position.set(0,.014,3); g.add(flogo);
+  // Pantalla principal con marco y logos
+  const frame=new THREE.Mesh(new THREE.BoxGeometry(3.5,2.02,.1), black); frame.position.set(0,1.75,Z0+.06); g.add(frame);
+  const glow=new THREE.Mesh(new THREE.PlaneGeometry(3.7,2.22), led); glow.position.set(0,1.75,Z0+.005); g.add(glow);
+  LOCKER.menu=new VRMenu(3.3,1.856,1600,900); LOCKER.menu.mesh.position.set(0,1.75,Z0+.12); g.add(LOCKER.menu.mesh);
+  const wlogo=new THREE.Mesh(new THREE.PlaneGeometry(3.4,1.09), new THREE.MeshBasicMaterial({map:logoW, transparent:true})); wlogo.position.set(0,3.45,Z0+.03); g.add(wlogo);
+  // Frases en las paredes
+  const quote=(t1,t2,x,z,ry)=>{ const m=new THREE.Mesh(new THREE.PlaneGeometry(4,1), new THREE.MeshBasicMaterial({map:lockerTextTex([t1,t2],1024,256,null,'#ffffff',['84px '+FD,'800 44px '+FB]), transparent:true})); m.position.set(x,3.45,z); m.rotation.y=ry; g.add(m); };
+  quote('EL TALENTO SE ENTRENA','MENTE · CUERPO · JUEGO', X0+.03, 1.2, Math.PI/2);
+  quote('DECIDE ANTES QUE NADIE','VISION 360', X1-.03, 1.2, -Math.PI/2);
+  // Franja trasera con logo a color
+  const band=new THREE.Mesh(new THREE.PlaneGeometry(6,1.25), new THREE.MeshLambertMaterial({color:0xf2f5f6})); band.position.set(0,3.4,Z1-.03); band.rotation.y=Math.PI; g.add(band);
+  const blogo=new THREE.Mesh(new THREE.PlaneGeometry(3.4,1.1), new THREE.MeshBasicMaterial({map:logoC, transparent:true})); blogo.position.set(0,3.4,Z1-.04); blogo.rotation.y=Math.PI; g.add(blogo);
+  // Pizarra táctica (izquierda de la pantalla)
   const [bc,bx]=cvs(512,320); bx.fillStyle='#f4f6f6'; bx.fillRect(0,0,512,320); bx.strokeStyle='#144C5A'; bx.lineWidth=4; bx.strokeRect(20,20,472,280); bx.beginPath(); bx.moveTo(256,20); bx.lineTo(256,300); bx.stroke(); bx.beginPath(); bx.arc(256,160,40,0,Math.PI*2); bx.stroke(); bx.strokeRect(20,95,60,130); bx.strokeRect(432,95,60,130);
   [[90,70],[90,250],[150,120],[150,200],[210,160],[300,90],[300,230],[360,160]].forEach(([px,py],i)=>{ bx.fillStyle=i<5?'#2BA9C7':'#e0323a'; bx.beginPath(); bx.arc(px,py,12,0,Math.PI*2); bx.fill(); });
-  bx.strokeStyle='#144C5A'; bx.setLineDash([10,8]); bx.beginPath(); bx.moveTo(150,120); bx.lineTo(290,90); bx.stroke(); bx.setLineDash([]); bx.fillStyle='#144C5A'; bx.font='28px '+FD; bx.fillText('VISION 360',30,310-6);
-  const board=new THREE.Mesh(new THREE.PlaneGeometry(1.6,1), new THREE.MeshLambertMaterial({map:new THREE.CanvasTexture(bc)})); board.position.set(-4.3,1.6,Z0+.03); g.add(board);
-  const board2=board.clone(); board2.position.x=4.3; g.add(board2);
-  // Taquillas con camisetas
+  bx.strokeStyle='#144C5A'; bx.setLineDash([10,8]); bx.beginPath(); bx.moveTo(150,120); bx.lineTo(290,90); bx.stroke(); bx.setLineDash([]);
+  const board=new THREE.Mesh(new THREE.PlaneGeometry(2,1.25), new THREE.MeshLambertMaterial({map:new THREE.CanvasTexture(bc)})); board.position.set(-4.4,1.8,Z0+.04); g.add(board);
+  const bfr=new THREE.Mesh(new THREE.BoxGeometry(2.1,1.35,.05), steel); bfr.position.set(-4.4,1.8,Z0+.015); g.add(bfr);
+  // Vitrina de trofeos (derecha de la pantalla)
+  const cab=new THREE.Group(); cab.position.set(5,0,Z0+.45); g.add(cab);
+  const cb=new THREE.Mesh(new THREE.BoxGeometry(3,.5,.8), black); cb.position.y=.25; cab.add(cb);
+  const ctop=new THREE.Mesh(new THREE.BoxGeometry(3,.06,.8), black); ctop.position.y=2.6; cab.add(ctop);
+  const glass=new THREE.Mesh(new THREE.BoxGeometry(2.96,2.1,.76), new THREE.MeshStandardMaterial({color:0xa8d8e6, roughness:.05, metalness:.1, transparent:true, opacity:.14, depthWrite:false})); glass.position.y=1.55; cab.add(glass);
+  [1.15,1.95].forEach(y=>{ const sh=new THREE.Mesh(new THREE.BoxGeometry(2.9,.03,.7), new THREE.MeshStandardMaterial({color:0xdfe9ec, roughness:.1, transparent:true, opacity:.5})); sh.position.y=y; cab.add(sh); });
+  const cupG=new THREE.LatheGeometry([[0,0],[.12,0],[.12,.03],[.04,.06],[.035,.16],[.09,.2],[.13,.32],[.12,.42],[.0,.42]].map(p=>new THREE.Vector2(p[0],p[1])),24);
+  [[-1,.5,1.3],[0,.5,1.6],[1,.5,1.2],[-.6,1.15,1],[.6,1.15,1.1],[0,1.95,1.4]].forEach(([x,y,s])=>{ const c=new THREE.Mesh(cupG,gold); c.position.set(x,y,0); c.scale.setScalar(s); cab.add(c); });
+  const cl=new THREE.Mesh(new THREE.BoxGeometry(2.9,.02,.02), white); cl.position.set(0,2.55,.3); cab.add(cl);
+  // Taquillas premium
   LOCKER.shirts=[];
+  const bootG=GEO.ath?GEO.ath.boot:null, bootM=new THREE.MeshStandardMaterial({color:0x111111, roughness:.35}), bootM2=new THREE.MeshStandardMaterial({color:0x2BA9C7, roughness:.35});
+  const towelM=new THREE.MeshLambertMaterial({color:0xf3f6f7}), bottleM=new THREE.MeshStandardMaterial({color:0x2BA9C7, roughness:.3}), capM=new THREE.MeshStandardMaterial({color:0x111111});
   const lk=(x,z,ry)=>{ const L=new THREE.Group(); L.position.set(x,0,z); L.rotation.y=ry;
-    const back=new THREE.Mesh(new THREE.PlaneGeometry(1.08,2.3), new THREE.MeshLambertMaterial({color:0x0c2e36})); back.position.set(0,1.25,-.28); L.add(back);
-    [-.55,.55].forEach(sx=>{ const s=new THREE.Mesh(new THREE.BoxGeometry(.04,2.4,.6), wood); s.position.set(sx,1.2,0); L.add(s); });
-    const top=new THREE.Mesh(new THREE.BoxGeometry(1.14,.06,.6), wood); top.position.set(0,2.4,0); L.add(top);
-    const shelf=new THREE.Mesh(new THREE.BoxGeometry(1.08,.04,.5), wood); shelf.position.set(0,2.02,-.03); L.add(shelf);
-    const plate=new THREE.Mesh(new THREE.PlaneGeometry(.9,.18), new THREE.MeshBasicMaterial({color:0xffffff})); plate.position.set(0,2.2,.02); L.add(plate);
-    const sh=new THREE.Mesh(new THREE.PlaneGeometry(.78,.98), new THREE.MeshLambertMaterial({transparent:true, alphaTest:.1, side:THREE.DoubleSide})); sh.position.set(0,1.42,-.24); L.add(sh);
-    const seat=new THREE.Mesh(new THREE.BoxGeometry(1.1,.06,.42), wood); seat.position.set(0,.47,.42); L.add(seat);
-    const leg=new THREE.Mesh(new THREE.BoxGeometry(1,.44,.06), dark); leg.position.set(0,.22,.5); L.add(leg);
-    const ball=makeBall(); ball.scale.setScalar(1); ball.position.set(rand(-.3,.3),.11,.1); if(Math.random()<.35) L.add(ball);
+    const back=new THREE.Mesh(new THREE.PlaneGeometry(1.1,2.7), new THREE.MeshLambertMaterial({color:0x0b2a32})); back.position.set(0,1.45,-.34); L.add(back);
+    [-.57,.57].forEach(sx=>{ const s=new THREE.Mesh(new THREE.BoxGeometry(.05,2.8,.72), walnut); s.position.set(sx,1.4,0); L.add(s); const l=new THREE.Mesh(new THREE.BoxGeometry(.02,2.6,.02), led); l.position.set(sx*.96,1.45,.34); L.add(l); });
+    const top=new THREE.Mesh(new THREE.BoxGeometry(1.2,.08,.74), walnut); top.position.set(0,2.84,0); L.add(top);
+    const shelf=new THREE.Mesh(new THREE.BoxGeometry(1.1,.04,.6), walnut); shelf.position.set(0,2.3,-.04); L.add(shelf);
+    const toplight=new THREE.Mesh(new THREE.BoxGeometry(1,.02,.03), white); toplight.position.set(0,2.27,.2); L.add(toplight);
+    const plate=new THREE.Mesh(new THREE.PlaneGeometry(.95,.2), new THREE.MeshBasicMaterial({color:0xffffff})); plate.position.set(0,2.55,.37); L.add(plate);
+    const sh=new THREE.Mesh(new THREE.PlaneGeometry(.82,1.03), new THREE.MeshLambertMaterial({transparent:true, alphaTest:.1, side:THREE.DoubleSide})); sh.position.set(0,1.62,-.3); L.add(sh);
+    const hanger=new THREE.Mesh(new THREE.BoxGeometry(.5,.02,.02), steel); hanger.position.set(0,2.16,-.3); L.add(hanger);
+    const seat=new THREE.Mesh(new THREE.BoxGeometry(1.14,.1,.5), leather); seat.position.set(0,.5,.5); L.add(seat);
+    const sbase=new THREE.Mesh(new THREE.BoxGeometry(1.14,.45,.46), walnut); sbase.position.set(0,.225,.5); L.add(sbase);
+    const towel=new THREE.Mesh(new THREE.BoxGeometry(.4,.06,.28), towelM); towel.position.set(rand(-.3,.3),.58,.5); L.add(towel);
+    if(bootG){ [-.1,.1].forEach((bx2,k)=>{ const b=new THREE.Mesh(bootG, Math.random()<.5?bootM:bootM2); b.position.set(bx2+.15,.02,.15); b.rotation.y=rand(-.3,.3)+Math.PI; L.add(b); }); }
+    if(Math.random()<.5){ const ball=makeBall(); ball.position.set(-.3,.11,.15); L.add(ball); }
+    const bot=new THREE.Mesh(new THREE.CylinderGeometry(.035,.035,.22,12), bottleM); bot.position.set(.38,.66,.55); L.add(bot); const cap=new THREE.Mesh(new THREE.CylinderGeometry(.02,.02,.04,8), capM); cap.position.set(.38,.79,.55); L.add(cap);
     g.add(L); LOCKER.shirts.push({sh, plate}); };
-  for(let i=0;i<6;i++) lk(-W/2+.32, -1.8+i*1.12, Math.PI/2);
-  for(let i=0;i<6;i++) lk(W/2-.32, -1.8+i*1.12, -Math.PI/2);
-  for(let i=0;i<7;i++) lk(-3.6+i*1.2, Z1-.32, Math.PI);
-  const amb=new THREE.PointLight(0xffffff,.55,14); amb.position.set(0,2.9,.8); g.add(amb);
+  for(let i=0;i<9;i++) lk(X0+.4, -.3+i*1.2, Math.PI/2);
+  for(let i=0;i<9;i++) lk(X1-.4, -.3+i*1.2, -Math.PI/2);
+  for(let i=0;i<12;i++) lk(-6.6+i*1.2, Z1-.4, Math.PI);
+  // Zona de recuperación: bañeras de hielo y camillas
+  const tubM=new THREE.MeshStandardMaterial({color:0xe8eef0, roughness:.25, metalness:.1}), waterM=new THREE.MeshStandardMaterial({color:0x7fd3e6, roughness:.05, metalness:.1, transparent:true, opacity:.8});
+  [-1,1].forEach(sd=>{ const t=new THREE.Mesh(new THREE.CylinderGeometry(.6,.55,.85,28,1,true), tubM); t.position.set(sd*6.6,.425,-2.3); g.add(t); const b=new THREE.Mesh(new THREE.CircleGeometry(.58,28), waterM); b.rotation.x=-Math.PI/2; b.position.set(sd*6.6,.78,-2.3); g.add(b); const r=new THREE.Mesh(new THREE.TorusGeometry(.6,.04,8,28), steel); r.rotation.x=Math.PI/2; r.position.set(sd*6.6,.85,-2.3); g.add(r); });
+  const tableG=new THREE.Group(); const tt=new THREE.Mesh(new THREE.BoxGeometry(.8,.1,2), leather); tt.position.y=.8; tableG.add(tt); [[-.32,-.9],[.32,-.9],[-.32,.9],[.32,.9]].forEach(([a,b])=>{ const lg=new THREE.Mesh(new THREE.BoxGeometry(.05,.75,.05), steel); lg.position.set(a,.38,b); tableG.add(lg); }); const tw=new THREE.Mesh(new THREE.BoxGeometry(.7,.03,.5), towelM); tw.position.set(0,.87,.6); tableG.add(tw);
+  [-1,1].forEach(sd=>{ const tg=tableG.clone(); tg.position.set(sd*4.6,0,6.2); g.add(tg); });
+  // Material de entrenamiento: carro de balones, conos y petos
+  const rack=new THREE.Group(); rack.position.set(-6.3,0,Z0+.6); g.add(rack);
+  const rb=new THREE.Mesh(new THREE.BoxGeometry(1.4,.04,.7), steel); rb.position.y=.3; rack.add(rb);
+  [[-.68,-.33],[.68,-.33],[-.68,.33],[.68,.33]].forEach(([a,b])=>{ const p=new THREE.Mesh(new THREE.CylinderGeometry(.015,.015,1,6), steel); p.position.set(a,.5,b); rack.add(p); });
+  for(let i=0;i<10;i++){ const bl=makeBall(); bl.position.set(-.5+(i%5)*.25, .43+Math.floor(i/5)*.21, (Math.floor(i/5)?.06:-.1)+rand(-.05,.05)); rack.add(bl); }
+  const coneM=new THREE.MeshStandardMaterial({color:0xff7a1a, roughness:.5}), coneG=new THREE.ConeGeometry(.12,.3,16);
+  for(let i=0;i<6;i++){ const c=new THREE.Mesh(coneG,coneM); c.position.set(-5.2+i*.03, .15+i*.04, Z0+.6); g.add(c); }
+  const petoM=new THREE.MeshLambertMaterial({color:0xd7ff2b}); for(let i=0;i<4;i++){ const pt=new THREE.Mesh(new THREE.BoxGeometry(.5,.02,.4), petoM); pt.position.set(-7.4, .9+i*.025, Z0+.5); g.add(pt); }
+  const ptab=new THREE.Mesh(new THREE.BoxGeometry(.8,.85,.6), walnut); ptab.position.set(-7.4,.42,Z0+.5); g.add(ptab);
+  // Puerta al campo
+  const door=new THREE.Group(); door.position.set(6.6,0,Z1-.02); door.rotation.y=Math.PI; g.add(door);
+  const dfr=new THREE.Mesh(new THREE.BoxGeometry(2.2,3,.12), black); dfr.position.y=1.5; door.add(dfr);
+  const dop=new THREE.Mesh(new THREE.PlaneGeometry(1.9,2.8), new THREE.MeshBasicMaterial({color:0x020405})); dop.position.set(0,1.42,.07); door.add(dop);
+  const dsign=new THREE.Mesh(new THREE.PlaneGeometry(1.9,.4), new THREE.MeshBasicMaterial({map:lockerTextTex(['AL CAMPO'],512,108,'#2BA9C7','#000000','78px '+FD)})); dsign.position.set(0,3.25,.07); door.add(dsign);
+  // Luces cálidas
+  const l1=new THREE.PointLight(0xfff4e6,.6,18); l1.position.set(0,3.6,1); g.add(l1);
+  const l2=new THREE.PointLight(0xe6f6ff,.45,18); l2.position.set(0,3.6,7); g.add(l2);
 }
 function lockerShirts(){
   const names=S.players.slice().sort((a,b)=>String(a.nombre).localeCompare(String(b.nombre),'es')).map(p=>String(p.nombre).split(' ')[0]);
-  LOCKER.shirts.forEach((o,i)=>{ const nm=names[i]||(i===0?'SPORTAX':['VISION','360','TERRASSA','SPORTAX'][i%4]); const num=i<names.length?(i+2):[7,9,10,11,8,4,5,6,3,2,14,16,17,18,19,20,21,22,23][i%19];
+  LOCKER.shirts.forEach((o,i)=>{ const nm=names[i]||['SPORTAX','VISION','360','SPORTAX','VISION 360'][i%5]; const num=i<names.length?(i+2):[7,9,10,11,8,4,5,6,3,2,14,16,17,18,19,20,21,22,23][i%19];
     if(o.sh.material.map) o.sh.material.map.dispose(); o.sh.material.map=shirtTexture(nm,num); o.sh.material.needsUpdate=true;
     const [c,x]=cvs(512,100); x.fillStyle='#ffffff'; x.fillRect(0,0,512,100); x.fillStyle='#144C5A'; x.font='64px '+FD; x.textAlign='center'; x.textBaseline='middle'; x.fillText(String(nm).toUpperCase(),256,54,480);
     o.plate.material.map=new THREE.CanvasTexture(c); o.plate.material.needsUpdate=true; });
@@ -3361,12 +3417,12 @@ function enterLocker(){
   $('#intro').hidden=true; $('#results').hidden=true; $('#hint').hidden=renderer.xr.isPresenting; $('#hint').textContent='Arrastra para mirar · clic en la pantalla del vestuario'; $('#loading').hidden=true;
   setHud('Vestuario', 'Elige tu entrenamiento');
   if(STADIUM.audio) STADIUM.audio.base=.012;
-  setFade(1); let a=1; const f=()=>{ a-=.08; setFade(Math.max(0,a)); if(a>0) requestAnimationFrame(f); }; requestAnimationFrame(f);
+  COMFORT.auto=1; setFade(1);
 }
 function leaveLocker(){
   if(!LOCKER.on) return; LOCKER.on=false; if(LOCKER.group) LOCKER.group.visible=false; field.visible=true; if(STADIUM.sky) STADIUM.sky.visible=true; if(hudPanel) hudPanel.mesh.visible=true;
   uiPicks=uiPicks.filter(m=>!LOCKER.menu || m!==LOCKER.menu.mesh); if(STADIUM.audio) STADIUM.audio.base=.05;
-  setFade(1); let a=1; const f=()=>{ a-=.06; setFade(Math.max(0,a)); if(a>0) requestAnimationFrame(f); }; requestAnimationFrame(f);
+  COMFORT.auto=1; setFade(1);
 }
 async function enterVR(){
   ensureAudio();
