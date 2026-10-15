@@ -180,6 +180,64 @@ td.num,th.num{text-align:right}
 .stat span{font-size:.82rem;color:var(--hud-muted)}
 .prog{border-left:3px solid var(--celeste);padding:6px 10px;margin:0 0 14px;color:var(--hud-fg);font-size:.95rem}
 .loading{position:absolute;inset:0;display:grid;place-items:center;color:var(--celeste);font-family:var(--font-round);font-weight:800;letter-spacing:.1em;text-transform:uppercase}
+.linkbox{border:1px solid var(--line);border-radius:10px;background:var(--surface);padding:12px;display:flex;flex-direction:column;gap:10px;box-shadow:6px 6px 0 var(--shadow)}
+.lk-st{display:flex;align-items:center;gap:8px;font-family:var(--font-round);font-weight:800;font-size:.9rem}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--muted);flex:none}
+.dot.linked{background:var(--good)}.dot.waiting{background:var(--celeste)}.dot.error{background:var(--bad)}.dot.connecting{background:#c9a227}
+@keyframes pulse{50%{opacity:.35}}
+@media (prefers-reduced-motion:no-preference){.dot.waiting,.dot.connecting{animation:pulse 1.4s ease-in-out infinite}}
+.lk-code{font-family:var(--font-display);font-size:2.6rem;letter-spacing:.18em;line-height:1;color:var(--blanco);text-align:center;padding:10px 0 8px;border:1px dashed var(--azul);border-radius:8px;user-select:all}
+body.coach-mode main.wrap{display:none}
+.co-wrap{padding-block:22px 56px;display:flex;flex-direction:column;gap:22px}
+.co-bar{display:flex;flex-wrap:wrap;gap:12px 24px;align-items:flex-end;justify-content:space-between}
+.co-conn label{display:block;font-family:var(--font-round);font-weight:800;font-size:.8rem;color:var(--celeste);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px}
+.co-connrow{display:flex;gap:8px}
+.co-connrow input{flex:1 1 auto;min-width:0}
+#coCode{width:8.5em;flex:none;font-family:var(--font-display);font-size:1.5rem;letter-spacing:.16em;text-transform:uppercase;padding:6px 12px}
+.co-grid{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:22px;align-items:start}
+@media (max-width:980px){.co-grid{grid-template-columns:1fr}}
+.co-live{border:1px solid var(--line);border-radius:10px;background:var(--surface);padding:14px;display:flex;flex-direction:column;gap:10px;box-shadow:6px 6px 0 var(--shadow);min-width:0}
+.co-head{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px}
+.co-head b{font-family:var(--font-display);font-weight:400;font-size:1.6rem;text-transform:uppercase;letter-spacing:.02em}
+.co-head span{color:var(--muted);font-weight:700}
+.co-head .chip{color:var(--ink);font-family:var(--font-round);font-weight:800}
+.co-head .chip.on{background:var(--celeste);color:#000;border-color:var(--celeste)}
+.co-hud{min-height:1.5em;font-size:.95rem;overflow-wrap:anywhere}
+.co-hud .lbl{display:inline-block;margin-right:8px;font-family:var(--font-round);font-weight:800;font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;color:var(--celeste)}
+.co-canvas{position:relative;border-radius:8px;overflow:hidden;background:#06140f}
+#coCanvas{display:block;width:100%;height:clamp(260px,52vw,560px)}
+.co-empty{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:24px;color:var(--hud-muted);font-weight:700;background:rgba(0,0,0,.4)}
+.co-legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:.8rem;color:var(--muted)}
+.co-legend span{display:inline-flex;align-items:center;gap:6px}
+.lg{display:inline-block;width:12px;height:12px;border-radius:50%;box-sizing:border-box}
+.lg.me{background:#fff;box-shadow:0 0 0 2px var(--celeste)}.lg.mate{background:#2BA9C7}.lg.opp{background:#c4262e}.lg.ans{border:2px dashed #43bd76}.lg.hid{border:2px dashed #fff;opacity:.6}
+.co-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
+.co-stats div{background:var(--surface-2);border-radius:8px;padding:8px 10px;min-width:0}
+.co-stats span{display:block;font-size:.72rem;color:var(--muted);font-family:var(--font-round);font-weight:800;text-transform:uppercase;letter-spacing:.05em}
+.co-stats b{font-size:.95rem;overflow-wrap:anywhere}
+.co-ctl{display:flex;gap:8px;flex-wrap:wrap}
+.co-side{display:flex;flex-direction:column;gap:14px;min-width:0}
+.co-card{border:1px solid var(--line);border-radius:10px;background:var(--surface);padding:14px;display:flex;flex-direction:column;gap:10px}
+.co-card h2{margin:0}
+.co-card .field label{font-size:.78rem;color:var(--muted);font-weight:700}
+.co-card .note{margin:0}
+.co-val{display:flex;align-items:center;gap:6px}
+.co-val input{width:6em;flex:none;padding:10px 8px;border:1px solid var(--azul);border-radius:8px;background:var(--surface);color:var(--ink)}
+.co-val span{font-size:.8rem;color:var(--muted)}
+.co-quick{display:flex;flex-wrap:wrap;gap:6px}
+.qbtn{border:1px solid var(--azul);background:transparent;color:var(--ink);border-radius:7px;padding:6px 9px;font-family:var(--font-round);font-weight:800;font-size:.8rem;cursor:pointer;text-align:left}
+.qbtn:hover{border-color:var(--celeste)}
+.co-add summary{cursor:pointer;color:var(--celeste);font-weight:700;font-size:.9rem}
+.co-add form{margin-top:8px}
+.co-sess{display:flex;gap:10px;align-items:center;justify-content:space-between;padding:8px 0;border-top:1px solid var(--line)}
+.co-sess:first-child{border-top:0}
+.co-sess div{min-width:0}
+.co-sess small{display:block;color:var(--muted);font-size:.75rem}
+.co-res .ok{color:var(--good);font-weight:800}.co-res .ko{color:var(--bad);font-weight:800}
+.co-cast{border-left:4px solid var(--celeste);background:var(--surface);border-radius:0 8px 8px 0;padding:14px 18px}
+.co-cast p,.co-cast ol{margin:0 0 8px;max-width:75ch}
+.co-cast ol{padding-left:20px}
+body.coach-mode:not(.co-linked) .co-side .btn,body.coach-mode:not(.co-linked) .co-ctl .btn,body.coach-mode:not(.co-linked) .qbtn{opacity:.45;pointer-events:none}
 .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(env(safe-area-inset-bottom,0px) + 20px);background:var(--celeste);color:#000;padding:10px 16px;border-radius:10px;z-index:40;font-weight:600;max-width:calc(100% - 32px)}
 @media (prefers-reduced-motion:no-preference){.drill{transition:border-color .15s}.drill:hover{border-color:var(--pitch)}}
 </style>
@@ -223,6 +281,10 @@ td.num,th.num{text-align:right}
         <p class="note">Se aplica a Escaneo, Lectura táctica y Partido: cambia dónde estás en el campo, quién te rodea y las opciones de pase.</p>
       </section>
       <section>
+        <h2>Entrenador</h2>
+        <div class="linkbox" id="linkBox"></div>
+      </section>
+      <section>
         <h2>En las Quest</h2>
         <p class="note" style="margin:0">Abre la página en el navegador de las gafas y pulsa <b>Entrar en VR</b>. Gatillo para elegir, botón lateral (grip) para salir. Deja 2 m libres alrededor del jugador.</p>
       </section>
@@ -254,6 +316,72 @@ td.num,th.num{text-align:right}
     </section>
   </div>
 </main>
+
+<div id="coach" hidden>
+ <div class="wrap co-wrap">
+  <div class="co-bar">
+    <div class="co-conn">
+      <label for="coCode">Código de las gafas</label>
+      <div class="co-connrow"><input id="coCode" type="text" maxlength="6" autocomplete="off" spellcheck="false" placeholder="ABCDE"><button class="btn" id="coConnect" type="button">Conectar</button></div>
+    </div>
+    <div class="lk-st" id="coStatus"></div>
+  </div>
+  <div class="co-grid">
+    <section class="co-live" aria-label="En directo">
+      <div class="co-head" id="coHead"></div>
+      <div class="co-hud" id="coHud"></div>
+      <div class="co-canvas"><canvas id="coCanvas" aria-label="Vista táctica en directo"></canvas><div class="co-empty" id="coEmpty">Conecta las gafas para ver la jugada en directo.</div></div>
+      <div class="co-legend"><span><i class="lg me"></i>Jugador y hacia dónde mira</span><span><i class="lg mate"></i>Compañero</span><span><i class="lg opp"></i>Rival</span><span><i class="lg ans"></i>Respuesta correcta (solo la ves tú)</span><span><i class="lg hid"></i>Oculto al jugador</span></div>
+      <div class="co-stats" id="coStats"></div>
+      <div class="co-ctl"><button class="btn ghost" id="coPause" type="button">Pausar</button><button class="btn ghost" id="coStop" type="button">Parar ejercicio</button></div>
+    </section>
+    <aside class="co-side">
+      <section class="co-card">
+        <h2>Jugador</h2>
+        <select id="coPlayer" aria-label="Jugador"><option value="">Conecta las gafas</option></select>
+        <details class="co-add"><summary>Nuevo jugador</summary>
+          <form id="coAddForm" class="field"><input id="coNewName" type="text" maxlength="40" placeholder="Nombre" required aria-label="Nombre">
+          <div class="row"><select id="coNewPos" aria-label="Posición"></select><select id="coNewCat" aria-label="Categoría"><option>Base</option><option selected>Amateur</option><option>Semi-pro / Pro</option></select></div>
+          <button class="btn" type="submit">Crear en las gafas</button></form>
+        </details>
+      </section>
+      <section class="co-card">
+        <h2>Lanzar ejercicio</h2>
+        <div class="field"><label for="coEj">Ejercicio</label><select id="coEj"></select></div>
+        <div class="field" id="coVarWrap"><label for="coVar">Variante</label><select id="coVar"></select></div>
+        <div class="row"><div class="field"><label for="coLvl">Nivel</label><select id="coLvl"></select></div><div class="field"><label for="coPos">Posición</label><select id="coPos"></select></div></div>
+        <div class="field"><label for="coMin">Duración</label><select id="coMin"><option value="">Normal</option><option value="1">1 min</option><option value="2">2 min</option><option value="3">3 min</option><option value="5">5 min</option><option value="8">8 min</option></select></div>
+        <button class="btn block" id="coLaunch" type="button">Lanzar a las gafas</button>
+      </section>
+      <section class="co-card">
+        <h2>Reto</h2>
+        <p class="note">Lanza el ejercicio de arriba con un objetivo. Al terminar, el jugador y tú veis si lo ha superado.</p>
+        <div class="row"><select id="coRetoTipo" aria-label="Tipo de reto"><option value="puntos">Puntuación</option><option value="acierto">Acierto</option><option value="tr">Tiempo de reacción</option></select><div class="co-val"><input id="coRetoVal" type="number" min="0" max="3000" aria-label="Objetivo"><span id="coRetoUnit"></span></div></div>
+        <input id="coRetoTxt" type="text" maxlength="80" placeholder="Mensaje opcional para el jugador" aria-label="Mensaje del reto">
+        <button class="btn peto block" id="coReto" type="button">Lanzar reto</button>
+      </section>
+      <section class="co-card">
+        <h2>Corregir</h2>
+        <div class="co-quick" id="coQuick"></div>
+        <form id="coMsgForm" class="co-connrow"><input id="coMsg" type="text" maxlength="160" placeholder="Escribe una corrección" aria-label="Corrección"><button class="btn" type="submit">Enviar</button></form>
+      </section>
+      <section class="co-card">
+        <h2>Sesiones</h2>
+        <div id="coSess"><p class="note">Conecta las gafas para ver sus sesiones.</p></div>
+      </section>
+    </aside>
+  </div>
+  <section class="co-res">
+    <div class="histhead"><h2 id="coResT">Resultados</h2><button class="btn ghost" id="coExport" type="button">Exportar CSV</button></div>
+    <div id="coRes"></div>
+  </section>
+  <section class="co-cast">
+    <h2>Ver la imagen exacta de las gafas</h2>
+    <p>La vista táctica muestra la jugada, la respuesta correcta y hacia dónde mira el jugador. Si además quieres ver su imagen en primera persona, ábrela en otra pestaña con la transmisión de Meta:</p>
+    <ol><li>En el ordenador, abre <b>oculus.com/casting</b> en Chrome o Edge e inicia sesión con la cuenta de Meta de las gafas.</li><li>En las gafas, pulsa el botón de Meta del mando y ve a <b>Cámara → Transmitir → Ordenador</b>.</li><li>Las gafas y el ordenador tienen que estar en la misma red wifi.</li></ol>
+  </section>
+ </div>
+</div>
 
 <div id="stage" hidden>
   <div class="loading" id="loading">Montando el estadio…</div>
@@ -639,19 +767,7 @@ $('#sessions').addEventListener('change', e=>{
   renderSessions();
 });
 $('#sessions').addEventListener('input', e=>{ if(e.target.id==='edName' && S.edit) S.edit.nombre=e.target.value; });
-function startTemplate(t){
-  if(!t) return;
-  const items=t.bloques.map(b=>{
-    if(b.tipo==='descanso') return {key:'descanso', secs:b.seg};
-    const lvl=blockLvl(b), pos=POS_DRILLS.indexOf(b.ej)>=0 && b.pos && POS[b.pos] ? b.pos : S.pos;
-    return {key:b.ej, lvl, pos, n:trialsFor(b.ej,lvl,b.min,b.var), v:b.var||'luces'};
-  });
-  while(items.length && items[0].key==='descanso') items.shift();
-  while(items.length && items[items.length-1].key==='descanso') items.pop();
-  if(!items.length) return;
-  plan={nombre:t.nombre, items, i:0};
-  openDrill(items[0].key, items[0].lvl, items[0].pos, items[0].n, items[0].v);
-}
+function startTemplate(t){ if(!t) return; launchItems(buildItems(t), t.nombre, null); }
 
 function fmtDate(iso){ try{ return new Date(iso).toLocaleString('es-ES',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}); }catch(e){ return iso; } }
 function spark(vals){
@@ -977,7 +1093,9 @@ function makePanel(w,h,pw,ph){
 }
 function roundRect(x,X,Y,W,H,r){ x.beginPath(); x.moveTo(X+r,Y); x.arcTo(X+W,Y,X+W,Y+H,r); x.arcTo(X+W,Y+H,X,Y+H,r); x.arcTo(X,Y+H,X,Y,r); x.arcTo(X,Y,X+W,Y,r); x.closePath(); }
 const FD = "Impact,'Anton','Arial Narrow',Arial,sans-serif", FB = "'Arial Rounded MT Bold','Nunito',Arial,sans-serif";
+const HUD={t:'',s:''};
 function setHud(t,s){
+  HUD.t=t; HUD.s=s||'';
   $('#hudT').textContent=t; $('#hudS').textContent=s||'';
   if(!hudPanel) return;
   hudPanel.draw((x,w,h)=>{
@@ -1093,7 +1211,7 @@ function makeAthlete(team, number, lite){
   const ring=new THREE.Mesh(GEO.ring, new THREE.MeshBasicMaterial({color:COLORS.ok, side:THREE.DoubleSide, transparent:true, opacity:.95}));
   ring.rotation.x=-Math.PI/2; ring.position.y=.04; ring.visible=false; root.add(ring); u.ring=ring;
   u.prev=new THREE.Vector3(); u.init=false;
-  root.userData.u=u; return root;
+  root.userData.u=u; root.userData.num=number; return root;
 }
 function setGrey(f,on){ f.userData.u.kitMeshes.forEach(m=>{ m.material = on ? MAT.grey : m.userData.mat0; }); }
 function animateAthlete(f, dt){
@@ -1147,7 +1265,7 @@ let last=0;
 function loop(t){
   const dt = Math.min(.05, last ? (t-last)/1000 : 0); last=t;
   if(!renderer.xr.isPresenting){ camera.rotation.set(pitch, yaw, 0); camera.position.set(0,1.6,0); }
-  if(drill) drill.tick(dt);
+  if(drill && !LINK.paused) drill.tick(dt);
   for(let i=fx.length-1;i>=0;i--){ const f=fx[i]; f.life+=dt; const k=f.life/f.dur; f.obj.position.y=f.y0+k*.5; f.obj.material.opacity=1-k; if(k>=1){ world.remove(f.obj); fx.splice(i,1); } }
   if(renderer.xr.isPresenting){
     const picks=activePicks();
@@ -1905,7 +2023,7 @@ class Readapt extends Drill {
       const grp=new THREE.Group(); grp.position.set(Math.sin(a)*r,y,-Math.cos(a)*r); grp.lookAt(0,y,0);
       const ball=new THREE.Mesh(this.geo, this.mats[b.c]); ball.rotation.set(rand(0,6),rand(0,6),0);
       const lab=textSprite(String(b.n),b.c==='blanco'?'#144C5A':'#ffffff',.3); lab.position.set(0,0,.2);
-      grp.add(ball,lab); this.root.add(grp); this.objs.push(grp);
+      grp.add(ball,lab); this.root.add(grp); this.objs.push(grp); grp.userData.lbl=String(b.n); grp.userData.b=b; grp.userData.mat=this.mats[b.c];
       this.addPick(grp, ()=>this.choose(b,grp));
     });
     this.phase='pick'; this.t0=performance.now();
@@ -1946,6 +2064,7 @@ function showIntro(){
   $('#introQ').textContent = 'Nivel '+cur.lvl+': '+(cur.key==='reaccion'?queVar(cur.var,cur.lvl):LV[cur.key][cur.lvl-1].que) + (cur.key==='readapt' ? ' Postura: '+FASES_RA[cur.lvl-1].toLowerCase()+'.' : '') + (usesPos ? ' Posición: '+PO.nombre.toLowerCase()+'.' : '');
   const pasos = (cur.key==='reaccion' ? VARS[cur.var].pasos : d.pasos).slice(); if(cur.key==='tactica') pasos[0]='Juegas de '+PO.nombre.toLowerCase()+': '+PO.desc.charAt(0).toLowerCase()+PO.desc.slice(1);
   $('#introL').innerHTML = pasos.map(x=>'<li>'+esc(x)+'</li>').join('');
+  if(LINK.reto) $('#introQ').textContent += ' Reto del entrenador: '+retoText(LINK.reto)+'.';
   $('#vrMsg').hidden = xrSupported;
   if(!xrSupported) $('#vrMsg').textContent='Para jugar en VR, abre esta página en el navegador de las Meta Quest.';
   $('#vrBtn').hidden = !xrSupported;
@@ -1981,9 +2100,11 @@ function progressMsg(res, p){
 }
 async function onDrillEnd(res){
   const p=currentPlayer(); res.fecha=new Date().toISOString(); if(plan) res.sesion=plan.nombre; if(POS_DRILLS.indexOf(res.ejercicio)>=0) res.posicion=cur.pos; lastRes=res;
-  const msg=progressMsg(res,p);
+  if(LINK.reto){ res.reto={tipo:LINK.reto.tipo, valor:LINK.reto.valor, texto:LINK.reto.texto||'', ok:retoOk(LINK.reto,res)}; LINK.reto=null; }
+  const msg=(res.reto?(res.reto.ok?'¡Reto superado! ':'Reto no superado. '):'')+progressMsg(res,p);
   let saved=false;
   if(p){ res.jugadorId=p.id; res.jugador=p.nombre; saved = await Store.addSession(res); if(Store.mode==='local'){ syncLevels(); renderAll(); } }
+  linkSend({t:'res', res});
   const d=DRILLS[res.ejercicio];
   setHud('Fin · '+res.puntuacion+' puntos', 'Acierto '+res.aciertoPct+' %'+(res.trMedio!=null?' · '+res.trMedio+' ms':''));
   $('#resWho').textContent = planLabel()+'N'+res.nivel+' · '+faseDe(res.ejercicio,res.nivel)+(res.posicion?' · '+POS[normPos(res.posicion)].corto:'')+' · '+(p?p.nombre:'Sin jugador');
@@ -2027,6 +2148,7 @@ function showXrResults(res, msg){
 function onXREnd(){
   clearXrPanel();
   if($('#stage').hidden) return;
+  if(!drill && !cur){ exitStage(); return; }
   if(drill && drill.isRest){ disposeDrill(); const idx=plan?plan.items.findIndex((it,j)=>j>plan.i && it.key!=='descanso'):-1; if(idx>=0){ plan.i=idx; const it=plan.items[idx]; cur={key:it.key, lvl:it.lvl, pos:it.pos, n:it.n, var:it.v}; } showIntro(); }
   else if(drill && drill.done && lastRes) $('#results').hidden=false;
   else { disposeDrill(); showIntro(); }
@@ -2034,7 +2156,7 @@ function onXREnd(){
 }
 function exitStage(){
   const s=renderer && renderer.xr.getSession(); if(s) s.end();
-  disposeDrill(); if(renderer) stopLoop(); plan=null;
+  disposeDrill(); if(renderer) stopLoop(); plan=null; cur=null; if(LINK.paused) setPause(false);
   $('#stage').hidden=true; document.body.style.overflow='';
   syncLevels(); renderAll();
 }
@@ -2053,8 +2175,399 @@ $('#vrBtn').addEventListener('click', async ()=>{
     $('#vrMsg').textContent='Las gafas no han podido abrir el modo VR desde esta página. Usa la versión para Quest (archivo HTML alojado en tu web) o juega en pantalla.';
   }
 });
-if(navigator.xr && navigator.xr.isSessionSupported){ navigator.xr.isSessionSupported('immersive-vr').then(ok=>{ xrSupported=!!ok; }).catch(()=>{}); }
-Store.init();
+if(navigator.xr && navigator.xr.isSessionSupported){ navigator.xr.isSessionSupported('immersive-vr').then(ok=>{ xrSupported=!!ok; renderLink(); }).catch(()=>{}); }
+/* ================= Enlace jugador ⇄ entrenador ================= */
+const PEER_PREFIX='sportax-v360-', CODE_ALPHA='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+const LINK={peer:null, conn:null, code:null, status:'off', paused:false, pauseAt:0, hudBefore:null, reto:null, msgMesh:null, msgT:null, idRetries:0};
+const TEAMCODE={mate:1, opp:2, gk:3, gk2:4};
+const r2=v=>Math.round(v*100)/100;
+function newCode(){ let c=''; for(let i=0;i<5;i++) c+=CODE_ALPHA[Math.floor(Math.random()*CODE_ALPHA.length)]; return c; }
+function linkAvailable(){ return !window.claude && !!(window.RTCPeerConnection) && /^https?:$/.test(location.protocol); }
+function loadPeer(){
+  return new Promise((res,rej)=>{
+    const get=()=>window.Peer || (window.peerjs && (window.peerjs.Peer || window.peerjs.default));
+    if(get()) return res(get());
+    const s=document.createElement('script'); s.src='https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js';
+    s.onload=()=>{ const P=get(); P?res(P):rej(new Error('peerjs')); }; s.onerror=rej; document.head.appendChild(s);
+  });
+}
+function linkSend(o){ if(LINK.conn && LINK.conn.open){ try{ LINK.conn.send(o); }catch(e){} } }
+function setLinkStatus(s){ LINK.status=s; renderLink(); if(isLobby()) lobbyHud(); }
+function isLobby(){ return renderer && !$('#stage').hidden && !drill && !cur; }
+async function startLink(){
+  if(!linkAvailable()){ setLinkStatus('na'); return; }
+  if(LINK.peer) return;
+  if(!LINK.code){ try{ LINK.code=localStorage.getItem('v360.code'); }catch(e){} if(!LINK.code){ LINK.code=newCode(); try{ localStorage.setItem('v360.code',LINK.code); }catch(e){} } }
+  setLinkStatus('connecting');
+  let PeerC; try{ PeerC=await loadPeer(); }catch(e){ setLinkStatus('error'); setTimeout(startLink,8000); return; }
+  const p=new PeerC(PEER_PREFIX+LINK.code, {debug:0}); LINK.peer=p;
+  p.on('open', ()=>{ LINK.idRetries=0; setLinkStatus(LINK.conn&&LINK.conn.open?'linked':'waiting'); });
+  p.on('connection', c=>{
+    c.on('open', ()=>{ if(LINK.conn && LINK.conn!==c){ try{ LINK.conn.close(); }catch(e){} } LINK.conn=c; setLinkStatus('linked'); sendHello(); toast('Entrenador conectado'); });
+    c.on('data', d=>{ try{ onCoachData(d); }catch(e){} });
+    c.on('close', ()=>{ if(LINK.conn===c){ LINK.conn=null; if(LINK.paused) setPause(false); setLinkStatus(LINK.peer&&LINK.peer.open?'waiting':'connecting'); } });
+    c.on('error', ()=>{});
+  });
+  p.on('disconnected', ()=>{ if(p.destroyed) return; setLinkStatus('connecting'); setTimeout(()=>{ try{ if(!p.destroyed && p.disconnected) p.reconnect(); }catch(e){} }, 3000); });
+  p.on('error', err=>{
+    const t=err&&err.type;
+    if(t==='unavailable-id'){
+      try{ p.destroy(); }catch(e){} LINK.peer=null; LINK.idRetries++;
+      if(LINK.idRetries>4){ LINK.code=newCode(); LINK.idRetries=0; try{ localStorage.setItem('v360.code',LINK.code); }catch(e){} }
+      setTimeout(startLink, 3000); return;
+    }
+    if(t==='network' || t==='server-error' || t==='socket-error' || t==='socket-closed' || t==='browser-incompatible'){
+      try{ p.destroy(); }catch(e){} LINK.peer=null; setLinkStatus('error'); setTimeout(startLink, 6000);
+    }
+  });
+}
+function renderLink(){
+  const el=$('#linkBox'); if(!el) return;
+  const st=LINK.status;
+  if(st==='na'){ el.innerHTML='<p class="note" style="margin:0">El modo entrenador funciona al abrir la app desde <b>sportax.es/vision360</b>.</p>'; return; }
+  const txt={off:'Desconectado', connecting:'Conectando…', waiting:'Esperando al entrenador', linked:'Entrenador conectado', error:'Sin conexión, reintentando…'}[st]||'';
+  el.innerHTML='<div class="lk-st"><span class="dot '+st+'"></span>'+esc(txt)+'</div>'+
+    '<div class="lk-code" aria-label="Código para el entrenador">'+esc(LINK.code||'·····')+'</div>'+
+    '<p class="note" style="margin:0">En el ordenador, abre <b>sportax.es/vision360/entrenador</b> y escribe este código.</p>'+
+    '<button class="btn block" id="lobbyBtn" type="button">'+(xrSupported?'Entrar en VR y esperar al entrenador':'Abrir el estadio y esperar al entrenador')+'</button>';
+  $('#lobbyBtn').addEventListener('click', enterLobby);
+}
+function lobbyHud(){ setHud('Esperando al entrenador', LINK.status==='linked' ? 'Tu entrenador lanzará el ejercicio' : 'Código del entrenador: '+(LINK.code||'')); }
+async function enterLobby(){
+  ensureAudio();
+  $('#stage').hidden=false; document.body.style.overflow='hidden'; $('#loading').hidden=true;
+  initScene(); resize(); startLoop();
+  disposeDrill(); cur=null; plan=null; lastRes=null; setField(0,0,0); yaw=0; pitch=0;
+  $('#intro').hidden=true; $('#results').hidden=true; $('#hint').hidden=true;
+  lobbyHud();
+  if(xrSupported){
+    try{ const session=await navigator.xr.requestSession('immersive-vr', {optionalFeatures:['local-floor','bounded-floor']}); await renderer.xr.setSession(session); }
+    catch(e){ toast('No se ha podido entrar en VR. Pulsa de nuevo el botón.'); }
+  }
+}
+function setPause(on){
+  if(on===LINK.paused) return;
+  LINK.paused=on;
+  if(on){ LINK.pauseAt=performance.now(); LINK.hudBefore=[HUD.t,HUD.s]; setHud('Pausa','Escucha a tu entrenador'); sfx.whistle(); }
+  else { const d=performance.now()-LINK.pauseAt; if(drill && drill.t0) drill.t0+=d; if(LINK.hudBefore) setHud(LINK.hudBefore[0],LINK.hudBefore[1]); sfx.tick(); }
+}
+function retoText(r){
+  if(!r) return '';
+  const base = r.tipo==='acierto' ? 'Acierto del '+r.valor+' % o más' : r.tipo==='tr' ? 'Tiempo de reacción medio de '+r.valor+' ms o menos' : 'Consigue '+r.valor+' puntos o más';
+  return base+(r.texto?' · '+r.texto:'');
+}
+function retoOk(r,res){ return r.tipo==='acierto' ? res.aciertoPct>=r.valor : r.tipo==='tr' ? (res.trMedio!=null && res.trMedio<=r.valor) : res.puntuacion>=r.valor; }
+function coachMsg(text, secs){
+  text=String(text||'').slice(0,160); if(!text) return;
+  tone(660,.09,'sine',.14); setTimeout(()=>tone(990,.12,'sine',.14),110);
+  if(renderer && !$('#stage').hidden){
+    if(LINK.msgMesh){ world.remove(LINK.msgMesh); LINK.msgMesh=null; }
+    const p=makePanel(2.3,.62,1150,310);
+    p.draw((x,w,h)=>{
+      x.fillStyle='rgba(0,0,0,.84)'; roundRect(x,0,0,w,h,26); x.fill(); x.fillStyle='#2BA9C7'; x.fillRect(0,0,16,h);
+      x.textAlign='left'; x.textBaseline='middle'; x.fillStyle='#2BA9C7'; x.font='800 40px '+FB; x.fillText('ENTRENADOR',48,52);
+      x.fillStyle='#ffffff'; x.font='800 54px '+FB; wrapText(x,text,w-96).slice(0,3).forEach((ln,i)=>x.fillText(ln,48,124+i*64));
+    });
+    const a=headYaw(); p.mesh.position.set(Math.sin(a)*3.4, 1.74, -Math.cos(a)*3.4); p.mesh.rotation.y=-a;
+    world.add(p.mesh); LINK.msgMesh=p.mesh;
+    clearTimeout(LINK.msgT); LINK.msgT=setTimeout(()=>{ if(LINK.msgMesh===p.mesh){ world.remove(p.mesh); LINK.msgMesh=null; } }, (secs||4.5)*1000);
+  } else toast('Entrenador: '+text);
+}
+function buildItems(t){
+  const items=(t.bloques||[]).map(b=>{
+    if(b.tipo==='descanso') return {key:'descanso', secs:b.seg};
+    if(!DRILLS[b.ej]) return null;
+    const lvl=blockLvl(b), pos=POS_DRILLS.indexOf(b.ej)>=0 && b.pos && POS[b.pos] ? b.pos : S.pos;
+    return {key:b.ej, lvl, pos, n:trialsFor(b.ej,lvl,b.min,b.var), v:b.var||'luces'};
+  }).filter(Boolean);
+  while(items.length && items[0].key==='descanso') items.shift();
+  while(items.length && items[items.length-1].key==='descanso') items.pop();
+  return items;
+}
+function launchItems(items, nombre, reto){
+  if(!items.length) return;
+  if(LINK.paused) setPause(false);
+  plan = nombre ? {nombre, items, i:0} : null;
+  LINK.reto = reto || null;
+  const it=items[0];
+  if(renderer && renderer.xr.isPresenting){ cur={key:it.key, lvl:it.lvl, pos:it.pos, n:it.n, var:it.v}; beginDrill(); if(reto) coachMsg('Reto: '+retoText(reto), 6); }
+  else openDrill(it.key, it.lvl, it.pos, it.n, it.v);
+}
+function coachStop(){
+  plan=null; LINK.reto=null; if(LINK.paused) setPause(false);
+  if(renderer && renderer.xr.isPresenting){ disposeDrill(); cur=null; lastRes=null; $('#results').hidden=true; lobbyHud(); }
+  else if(!$('#stage').hidden) exitStage();
+}
+function onCoachData(d){
+  if(!d || typeof d!=='object') return;
+  if(d.t==='hi') sendHello();
+  else if(d.t==='start' && DRILLS[d.key]){
+    const lvl = d.lvl==='rec' || !d.lvl ? (S.lv[d.key]||1) : clamp(+d.lvl,1,10);
+    const pos = POS_DRILLS.indexOf(d.key)>=0 && d.pos && POS[d.pos] ? d.pos : S.pos;
+    const v = VARS[d.var] ? d.var : S.var;
+    const n = d.min ? trialsFor(d.key, lvl, +d.min, v) : null;
+    const reto = d.reto && ['puntos','acierto','tr'].indexOf(d.reto.tipo)>=0 ? {tipo:d.reto.tipo, valor:+d.reto.valor||0, texto:String(d.reto.texto||'').slice(0,80)} : null;
+    launchItems([{key:d.key, lvl, pos, n, v}], null, reto);
+  }
+  else if(d.t==='session' && d.tpl){ const items=buildItems(d.tpl); launchItems(items, String(d.tpl.nombre||'Sesión').slice(0,50), null); }
+  else if(d.t==='stop') coachStop();
+  else if(d.t==='pause') setPause(!!d.on);
+  else if(d.t==='msg') coachMsg(d.text);
+  else if(d.t==='player'){
+    S.playerId = d.id && S.players.some(p=>p.id===d.id) ? d.id : null;
+    try{ localStorage.setItem('campovr.player', S.playerId||''); }catch(e){}
+    const pp=posFromPlayer(currentPlayer()); if(pp) S.pos=pp;
+    syncLevels(); renderAll(); sendHello();
+  }
+  else if(d.t==='addPlayer' && d.nombre){
+    Store.addPlayer({nombre:String(d.nombre).slice(0,40), categoria:String(d.categoria||'Amateur').slice(0,20), posicion:normPos(d.posicion)||'MC', creado:new Date().toISOString()}).then(id=>{
+      if(id){ S.playerId=id; S.pos=normPos(d.posicion)||S.pos; try{ localStorage.setItem('campovr.player', id); }catch(e){} syncLevels(); renderAll(); sendHello(); }
+    });
+  }
+}
+function sendHello(){
+  linkSend({t:'hello', ver:1, code:LINK.code, playerId:S.playerId, pos:S.pos, lv:S.lv,
+    players:S.players.map(p=>({id:p.id, nombre:p.nombre, categoria:p.categoria||'', posicion:p.posicion||''})),
+    templates:allTemplates().map(t=>({id:t.id, nombre:t.nombre, bloques:t.bloques, fija:!!t.fija})),
+    hist:S.sessions.slice(0,300)});
+}
+function ansSet(){
+  const s=new Set(), d=drill; if(!d || d.done || d.isRest) return s;
+  try{
+    if(d instanceof Escaneo){ if(d.mates && d.mates[d.free]) s.add(d.mates[d.free]); }
+    else if(d instanceof Tactica){ if(d.g && d.mateObjs) s.add(d.mateObjs[d.g.sc[0].i]); }
+    else if(d instanceof Partido){ if(d.g){ const tm=d.g.atk?d.ours:d.rivs, o=tm[d.g.sc[0].slot]; if(o) s.add(o); } }
+    else if(d instanceof Llamada){ (d.lit||[]).forEach(e=>{ if(e.go) s.add(e.f); }); }
+    else if(d instanceof Reaccion){ (d.lit||[]).forEach(e=>{ if(e.go && d.pods[e.i]) s.add(d.pods[e.i]); }); }
+    else if(d instanceof ControlOr){ if(d.phase==='pick' && d.side && d.arrows) s.add(d.arrows[-d.side<0?0:1]); }
+    else if(d instanceof Readapt){ (d.objs||[]).forEach(o=>{ if(o.userData.b && d.rule && d.rule.t(o.userData.b)) s.add(o); }); }
+    else if(d instanceof Mot){ (d.targets||[]).forEach(o=>s.add(o)); }
+  }catch(e){}
+  return s;
+}
+function entSnapshot(){
+  const d=drill; if(!d || d.isRest) return [];
+  const ans=ansSet(), out=[], seen=new Set();
+  (d.figs||[]).forEach(f=>{ if(seen.has(f)) return; seen.add(f); const u=f.userData.u; let r=0;
+    if(u.ring && u.ring.visible){ const c=u.ring.material.color.getHex(); r = c===COLORS.ok?1 : c===COLORS.bad?2 : 3; }
+    out.push([r2(f.position.x), r2(f.position.z), TEAMCODE[u.team]||1, f.userData.num||'', r, f.visible?1:0, (u.kitMeshes[0] && u.kitMeshes[0].material===MAT.grey)?1:0, u.raise>0?1:0, 0, ans.has(f)?1:0, 0]); });
+  (d.picks||[]).forEach(o=>{ if(seen.has(o)) return; seen.add(o); const m=o.userData.mat;
+    out.push([r2(o.position.x), r2(o.position.z), 9, o.userData.lbl||'', 0, o.visible?1:0, 0, 0, m&&m.color?m.color.getHex():0xffffff, ans.has(o)?1:0, (d.targets && d.targets.indexOf(o)>=0)?1:0]); });
+  return out;
+}
+function linkState(){
+  const stage=!$('#stage').hidden, d=drill;
+  const tr=d&&d.trials?d.trials:[];
+  return {t:'st', vr:!!(renderer && renderer.xr.isPresenting), stage, paused:LINK.paused,
+    key: d&&!d.isRest ? d.key : (cur?cur.key:null), v: cur?cur.var:null, lvl: cur?cur.lvl:null, pos: cur?cur.pos:null,
+    rest: d&&d.isRest ? Math.max(0,Math.ceil(d.left)) : null,
+    phase: d ? (d.isRest?'descanso':d.done?'fin':(d.phase||'juego')) : (stage ? (cur?'intro':'lobby') : 'panel'),
+    hud:[HUD.t,HUD.s], k:d&&!d.isRest?(d.k||0):0, n:d&&d.P?(d.P.total||d.P.n||0):0,
+    ok:r2(tr.reduce((a,t)=>a+(t.ok===true?1:(typeof t.ok==='number'?t.ok:0)),0)), tr:tr.length,
+    scans: d && d.key==='escaneo' && !d.isRest ? (d.scans||0) : null,
+    plan: plan ? {nombre:plan.nombre, i:plan.items.slice(0,plan.i+1).filter(x=>x.key!=='descanso').length, n:plan.items.filter(x=>x.key!=='descanso').length} : null,
+    yaw: renderer&&camera ? r2(headYaw()) : 0,
+    F:[+FIELD.c.toFixed(4), +FIELD.s.toFixed(4), r2(FIELD.px), r2(FIELD.pz)],
+    e:entSnapshot(), b: d&&d.ball&&d.ball.visible!==false ? [r2(d.ball.position.x), r2(d.ball.position.z)] : null,
+    player:S.playerId, reto: LINK.reto ? retoText(LINK.reto) : null};
+}
+setInterval(()=>{ if(LINK.conn && LINK.conn.open){ try{ linkSend(linkState()); }catch(e){} } }, 125);
+
+/* ================= Panel del entrenador ================= */
+const CO={peer:null, conn:null, code:'', status:'off', st:null, stAt:0, hello:null, rows:[], retry:null, view:null, paused:false};
+const PHASES={prep:'Preparando la jugada', pass:'Balón en juego', pick:'Decidiendo', fb:'Viendo la corrección', anim:'Jugada en movimiento', intro:'Pantalla de inicio: falta pulsar Entrar en VR', lobby:'En el estadio, esperando órdenes', panel:'En el panel de la app', fin:'Ejercicio terminado', show:'Memorizando', move:'Siguiendo los balones', wait:'Preparado', settle:'Jugada en movimiento', play:'Jugada en movimiento', descanso:'Descanso', juego:'En juego'};
+const QUICK=['Escanea antes de recibir','Mira también a tu espalda','Decide más rápido','Busca el pase más profundo','Perfil abierto al recibir','¡Muy bien, sigue así!'];
+const coSend=o=>{ if(CO.conn && CO.conn.open){ try{ CO.conn.send(o); return true; }catch(e){} } toast('Las gafas no están conectadas.'); return false; };
+function coRowKey(r){ return (r.fecha||'')+'|'+(r.ejercicio||'')+'|'+(r.jugadorId||''); }
+function coLoad(){ try{ CO.rows=JSON.parse(localStorage.getItem('v360.coach.rows')||'[]'); }catch(e){ CO.rows=[]; } try{ CO.code=localStorage.getItem('v360.coach.code')||''; }catch(e){} }
+function coSave(){ try{ localStorage.setItem('v360.coach.rows', JSON.stringify(CO.rows.slice(0,3000))); }catch(e){} }
+function coMerge(list){ const keys=new Set(CO.rows.map(coRowKey)); let added=0; (list||[]).forEach(r=>{ if(!r || !r.fecha) return; const k=coRowKey(r); if(!keys.has(k)){ keys.add(k); CO.rows.push(r); added++; } }); if(added){ CO.rows.sort((a,b)=>String(b.fecha).localeCompare(String(a.fecha))); coSave(); } return added; }
+function coStatus(s, extra){
+  CO.status=s;
+  const txt={off:'Sin conectar', connecting:'Conectando con las gafas…', linked:'Conectado a las gafas', lost:'Conexión perdida, reintentando…', notfound:'No encuentro las gafas con ese código', silent:'Conectado, sin señal de las gafas', error:'Sin conexión con el servidor, reintentando…', na:'El panel del entrenador funciona en sportax.es/vision360/entrenador'}[s]||'';
+  $('#coStatus').innerHTML='<span class="dot '+({linked:'linked', connecting:'connecting', silent:'connecting', off:'off'}[s]||'error')+'"></span>'+esc(txt)+(extra?' · '+esc(extra):'');
+  document.body.classList.toggle('co-linked', s==='linked' || s==='silent');
+}
+async function coConnect(){
+  const code=String($('#coCode').value||'').toUpperCase().replace(/[^A-Z0-9]/g,'');
+  $('#coCode').value=code;
+  if(code.length<5){ coStatus('off','escribe el código de 5 caracteres que aparece en las gafas'); return; }
+  if(!linkAvailable()){ coStatus('na'); return; }
+  CO.code=code; try{ localStorage.setItem('v360.coach.code', code); }catch(e){}
+  coStatus('connecting');
+  let PeerC; try{ PeerC=await loadPeer(); }catch(e){ coStatus('error'); coRetry(); return; }
+  if(!CO.peer || CO.peer.destroyed){
+    const p=new PeerC(undefined, {debug:0}); CO.peer=p;
+    p.on('open', ()=>coDial());
+    p.on('error', e=>{ const t=e&&e.type; if(t==='peer-unavailable'){ coStatus('notfound','comprueba que la app está abierta en las gafas'); coRetry(); } else if(t==='network'||t==='server-error'||t==='socket-error'||t==='socket-closed'){ try{ p.destroy(); }catch(_){} CO.peer=null; coStatus('error'); coRetry(); } });
+    p.on('disconnected', ()=>{ if(p.destroyed) return; setTimeout(()=>{ try{ if(!p.destroyed && p.disconnected) p.reconnect(); }catch(_){} }, 2000); });
+  } else if(CO.peer.open) coDial();
+}
+function coDial(){
+  if(CO.conn){ try{ CO.conn.close(); }catch(e){} CO.conn=null; }
+  const c=CO.peer.connect(PEER_PREFIX+CO.code, {serialization:'json', reliable:true}); CO.conn=c;
+  c.on('open', ()=>{ clearTimeout(CO.retry); coStatus('linked'); CO.stAt=performance.now(); c.send({t:'hi'}); });
+  c.on('data', d=>{ try{ coData(d); }catch(e){} });
+  c.on('close', ()=>{ if(CO.conn===c){ CO.conn=null; CO.st=null; coStatus('lost'); coRender(); coRetry(); } });
+  c.on('error', ()=>{});
+}
+function coRetry(){ clearTimeout(CO.retry); CO.retry=setTimeout(()=>{ if(!CO.conn || !CO.conn.open) coConnect(); }, 4000); }
+setInterval(()=>{ if(!document.body.classList.contains('coach-mode')) return;
+  if(CO.conn && CO.conn.open){ const age=performance.now()-CO.stAt; if(age>6000 && CO.status==='linked') coStatus('silent'); if(age>20000){ try{ CO.conn.close(); }catch(e){} } }
+}, 1000);
+function coData(d){
+  if(!d || typeof d!=='object') return;
+  if(d.t==='hello'){ CO.hello=d; if(d.lv) Object.assign(S.lv, d.lv); coMerge(d.hist); coRenderControls(); coRenderRes(); }
+  else if(d.t==='st'){ const first=!CO.st; CO.st=d; CO.stAt=performance.now(); if(CO.status!=='linked') coStatus('linked'); CO.paused=!!d.paused; coRenderLive(first); }
+  else if(d.t==='res' && d.res){ coMerge([d.res]); coRenderRes(); const r=d.res; toast((r.jugador?r.jugador+': ':'')+coDrillName(r.ejercicio,r.variante)+' · '+r.puntuacion+' puntos'+(r.reto?(r.reto.ok?' · reto superado':' · reto no superado'):'')); }
+}
+function coDrillName(k,v){ return k==='reaccion' && VARS[v] ? VARS[v].nombre : (DRILLS[k]?DRILLS[k].nombre:k||''); }
+function coPlayerName(id){ const p=CO.hello && CO.hello.players.find(x=>x.id===id); return p?p.nombre:''; }
+let coLiveKey='';
+function coRenderLive(force){
+  const s=CO.st; if(!s) return;
+  const name=coPlayerName(s.player)||'Sin jugador';
+  const where = s.paused ? '<span class="chip on">Pausa</span>' : s.vr ? '<span class="chip on">En VR</span>' : s.stage ? '<span class="chip">En pantalla</span>' : '<span class="chip">En el panel</span>';
+  const ej = s.key ? coDrillName(s.key,s.v)+' · N'+(s.lvl||'')+(POS_DRILLS.indexOf(s.key)>=0 && POS[s.pos] ? ' · '+POS[s.pos].nombre : '') : 'Sin ejercicio';
+  const head='<b>'+esc(name)+'</b><span>'+esc(ej)+'</span>'+where;
+  const hud = s.hud && s.hud[0] ? '<span class="lbl">Lo que lee el jugador</span><b>'+esc(s.hud[0])+'</b>'+(s.hud[1]?' · '+esc(s.hud[1]):'') : '';
+  const stats=[];
+  stats.push(['Estado', s.rest!=null ? 'Descanso · '+fmtClock(s.rest) : (PHASES[s.phase]||s.phase||'—')]);
+  if(s.n) stats.push([s.key==='reaccion' && s.v==='mot'?'Ronda':'Jugada', (s.k||0)+' de '+s.n]);
+  if(s.tr) stats.push(['Aciertos', String(s.ok).replace('.',',')+' de '+s.tr]);
+  if(s.scans!=null) stats.push(['Escaneos en esta jugada', s.scans]);
+  if(s.plan) stats.push(['Sesión', s.plan.nombre+' · '+s.plan.i+' de '+s.plan.n]);
+  if(s.reto) stats.push(['Reto', s.reto]);
+  const statsH=stats.map(x=>'<div><span>'+esc(x[0])+'</span><b>'+esc(String(x[1]))+'</b></div>').join('');
+  const key=head+'|'+hud+'|'+statsH;
+  if(key!==coLiveKey || force){ coLiveKey=key; $('#coHead').innerHTML=head; $('#coHud').innerHTML=hud; $('#coStats').innerHTML=statsH; }
+  $('#coPause').textContent = CO.paused ? 'Reanudar' : 'Pausar';
+  if(CO.hello && $('#coPlayer').value!==(s.player||'')) $('#coPlayer').value=s.player||'';
+}
+function coRender(){ if(!CO.st){ $('#coHead').innerHTML='<b>Sin conexión</b><span>Conecta las gafas para ver al jugador en directo</span>'; $('#coHud').innerHTML=''; $('#coStats').innerHTML=''; coLiveKey=''; } }
+function coRenderControls(){
+  const h=CO.hello; if(!h) return;
+  $('#coPlayer').innerHTML='<option value="">Sin jugador (no se guarda)</option>'+h.players.slice().sort((a,b)=>String(a.nombre).localeCompare(String(b.nombre),'es')).map(p=>'<option value="'+esc(p.id)+'">'+esc(p.nombre)+(p.categoria?' · '+esc(p.categoria):'')+'</option>').join('');
+  $('#coPlayer').value=h.playerId||'';
+  $('#coSess').innerHTML = h.templates.length ? h.templates.map(t=>'<div class="co-sess"><div><b>'+esc(t.nombre)+'</b><small>'+t.bloques.map(b=>esc(blockLabel(b))).join(' · ')+'</small></div><button class="btn ghost" type="button" data-tpl="'+esc(t.id)+'">Lanzar</button></div>').join('') : '<p class="note">No hay sesiones guardadas en las gafas.</p>';
+}
+function coRenderRes(){
+  const pid=$('#coPlayer').value;
+  $('#coResT').textContent='Resultados · '+(pid?(coPlayerName(pid)||'jugador'):'todos los jugadores');
+  const rows=CO.rows.filter(r=>!pid || r.jugadorId===pid);
+  if(!rows.length){ $('#coRes').innerHTML='<div class="empty">Todavía no hay resultados'+(pid?' de este jugador':'')+'. Cada ejercicio que termine en las gafas aparecerá aquí y quedará guardado en este ordenador.</div>'; return; }
+  $('#coRes').innerHTML='<div class="tablewrap"><table><thead><tr><th>Fecha</th><th>Jugador</th><th>Ejercicio</th><th>Nivel</th><th class="num">Acierto</th><th class="num">TR medio</th><th class="num">Puntos</th><th>Reto</th></tr></thead><tbody>'+
+    rows.slice(0,40).map(s=>'<tr><td>'+esc(fmtDate(s.fecha))+'</td><td>'+esc(s.jugador||'—')+'</td><td>'+esc(coDrillName(s.ejercicio,s.variante))+(s.posicion&&normPos(s.posicion)?' · '+POS[normPos(s.posicion)].corto:'')+'</td><td>N'+levelOf(s)+'</td><td class="num">'+s.aciertoPct+' %</td><td class="num">'+(s.trMedio!=null?s.trMedio+' ms':'—')+'</td><td class="num"><b>'+s.puntuacion+'</b></td><td>'+(s.reto?(s.reto.ok?'<span class="ok">Superado</span>':'<span class="ko">No superado</span>'):'')+'</td></tr>').join('')+'</tbody></table></div>';
+}
+function coExport(){
+  const pid=$('#coPlayer').value, rows=CO.rows.filter(r=>!pid || r.jugadorId===pid);
+  if(!rows.length){ toast('No hay resultados para exportar.'); return; }
+  const head=['fecha','sesion','jugador','ejercicio','variante','posicion','nivel','ensayos','acierto_pct','tr_medio_ms','escaneos_por_s','acierto_con_balon','acierto_sin_balon','puntuacion','reto','reto_superado'];
+  const q=v=>{ const s=v==null?'':String(v); return /[",;\n]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s; };
+  const lines=[head.join(';')].concat(rows.map(s=>[s.fecha, s.sesion||'', s.jugador||'', DRILLS[s.ejercicio]?DRILLS[s.ejercicio].nombre:s.ejercicio, s.variante&&VARS[s.variante]?VARS[s.variante].nombre:'', s.posicion&&normPos(s.posicion)?POS[normPos(s.posicion)].nombre:'', levelOf(s), s.ensayos, s.aciertoPct, s.trMedio, s.escaneosSeg, s.aciertoAtaque, s.aciertoDefensa, s.puntuacion, s.reto?retoText(s.reto):'', s.reto?(s.reto.ok?'si':'no'):''].map(q).join(';')));
+  const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob(['﻿'+lines.join('\n')],{type:'text/csv'})); a.download='sportax-vision360-'+(pid?String(coPlayerName(pid)).toLowerCase().replace(/[^a-z0-9áéíóúñü]+/gi,'-'):'resultados')+'.csv'; document.body.appendChild(a); a.click(); a.remove();
+}
+function coLaunchCfg(){
+  const key=$('#coEj').value;
+  return {key, lvl:$('#coLvl').value==='rec'?'rec':+$('#coLvl').value, pos:$('#coPos').value, var:$('#coVar').value, min:$('#coMin').value?+$('#coMin').value:null};
+}
+function coSyncForm(){
+  const k=$('#coEj').value;
+  $('#coVarWrap').hidden = k!=='reaccion';
+  $('#coPos').disabled = POS_DRILLS.indexOf(k)<0;
+  const t=$('#coRetoTipo').value, v=$('#coRetoVal');
+  if(!v.dataset.touched) v.value = t==='tr' ? 500 : 80;
+  $('#coRetoUnit').textContent = t==='tr' ? 'ms o menos' : t==='acierto' ? '% o más' : 'puntos o más';
+}
+/* ---------- Vista táctica en directo ---------- */
+function coDraw(){
+  requestAnimationFrame(coDraw);
+  const cv=$('#coCanvas'); if(!cv || cv.offsetParent===null) return;
+  const dpr=Math.min(window.devicePixelRatio||1,2), W=cv.clientWidth, H=cv.clientHeight;
+  if(cv.width!==Math.round(W*dpr) || cv.height!==Math.round(H*dpr)){ cv.width=Math.round(W*dpr); cv.height=Math.round(H*dpr); }
+  const x=cv.getContext('2d'); x.setTransform(dpr,0,0,dpr,0,0);
+  x.fillStyle='#06140f'; x.fillRect(0,0,W,H);
+  const s=CO.st, live=s && (CO.status==='linked'||CO.status==='silent');
+  $('#coEmpty').hidden = !!(live && (s.e.length || s.stage));
+  if(!live){ $('#coEmpty').textContent = 'Conecta las gafas para ver la jugada en directo.'; return; }
+  if(!s.stage){ $('#coEmpty').textContent='El jugador está en el panel de la app. Lanza un ejercicio o pídele que pulse «Entrar en VR y esperar al entrenador».'; $('#coEmpty').hidden=false; }
+  const F=s.F, toF=(wx,wz)=>({x:(wx-F[2])*F[0]-(wz-F[3])*F[1], z:(wx-F[2])*F[1]+(wz-F[3])*F[0]});
+  const me=toF(0,0), ents=s.e.map(e=>Object.assign({p:toF(e[0],e[1])}, {k:e[2], lb:e[3], r:e[4], v:e[5], g:e[6], up:e[7], c:e[8], a:e[9], tg:e[10]})), ball=s.b?toF(s.b[0],s.b[1]):null;
+  let x0=me.x, x1=me.x, z0=me.z, z1=me.z;
+  ents.concat(ball?[{p:ball}]:[]).forEach(o=>{ x0=Math.min(x0,o.p.x); x1=Math.max(x1,o.p.x); z0=Math.min(z0,o.p.z); z1=Math.max(z1,o.p.z); });
+  const pad=4, span=Math.max(24, x1-x0+pad*2, (z1-z0+pad*2)*W/H);
+  const tgt={cx:(x0+x1)/2, cz:(z0+z1)/2, sc:Math.min(W/span, H/Math.max(24*H/W, z1-z0+pad*2))};
+  if(!CO.view || Math.abs(CO.view.sc-tgt.sc)/tgt.sc>3) CO.view=Object.assign({},tgt);
+  const V=CO.view, k=.12; V.cx+=(tgt.cx-V.cx)*k; V.cz+=(tgt.cz-V.cz)*k; V.sc+=(tgt.sc-V.sc)*k;
+  const SX=fx=>W/2+(fx-V.cx)*V.sc, SY=fz=>H/2+(fz-V.cz)*V.sc, M=V.sc;
+  // césped y líneas
+  for(let i=-9;i<9;i++){ x.fillStyle=i%2?'#0d3b26':'#0f4229'; const za=i*105/18, zb=za+105/18; x.fillRect(SX(-34),SY(za),68*M,(zb-za)*M); }
+  x.strokeStyle='rgba(255,255,255,.55)'; x.lineWidth=Math.max(1,.12*M);
+  x.strokeRect(SX(-34),SY(-52.5),68*M,105*M);
+  x.beginPath(); x.moveTo(SX(-34),SY(0)); x.lineTo(SX(34),SY(0)); x.stroke();
+  x.beginPath(); x.arc(SX(0),SY(0),9.15*M,0,Math.PI*2); x.stroke();
+  [-1,1].forEach(d=>{ const g=d*52.5; x.strokeRect(SX(-20.16),SY(d<0?g:g-16.5),40.32*M,16.5*M); x.strokeRect(SX(-9.16),SY(d<0?g:g-5.5),18.32*M,5.5*M); x.strokeRect(SX(-3.66),SY(d<0?g-1.5:g),7.32*M,1.5*M); });
+  // mirada
+  const yw=s.yaw||0, dx=Math.sin(yw), dz=-Math.cos(yw), gx=dx*F[0]-dz*F[1], gz=dx*F[1]+dz*F[0], ga=Math.atan2(gz,gx), R=Math.max(6, span*.4)*M;
+  const grd=x.createRadialGradient(SX(me.x),SY(me.z),0,SX(me.x),SY(me.z),R); grd.addColorStop(0,'rgba(43,169,199,.45)'); grd.addColorStop(1,'rgba(43,169,199,0)');
+  x.fillStyle=grd; x.beginPath(); x.moveTo(SX(me.x),SY(me.z)); x.arc(SX(me.x),SY(me.z),R,ga-.9,ga+.9); x.closePath(); x.fill();
+  // línea a la respuesta correcta
+  ents.filter(o=>o.a && o.k!==9 && s.phase!=='fb').forEach(o=>{ x.save(); x.setLineDash([6,6]); x.strokeStyle='rgba(67,189,118,.85)'; x.lineWidth=2; x.beginPath(); x.moveTo(SX(me.x),SY(me.z)); x.lineTo(SX(o.p.x),SY(o.p.z)); x.stroke(); x.restore(); });
+  const rad=Math.max(6, .55*M), fsz=Math.max(9, Math.min(15, rad*1.05));
+  const FILL={1:'#2BA9C7',2:'#c4262e',3:'#111111',4:'#f2c12e'};
+  ents.forEach(o=>{
+    const px=SX(o.p.x), py=SY(o.p.z);
+    x.globalAlpha=o.v?1:.35;
+    if(o.r){ x.fillStyle=o.r===1?'rgba(43,212,106,.45)':o.r===2?'rgba(255,77,61,.45)':'rgba(242,178,51,.45)'; x.beginPath(); x.arc(px,py,rad*1.9,0,Math.PI*2); x.fill(); }
+    if(o.k===9){ x.fillStyle='#'+('000000'+(o.c>>>0).toString(16)).slice(-6); x.beginPath(); x.arc(px,py,rad*.75,0,Math.PI*2); x.fill(); x.strokeStyle='rgba(0,0,0,.6)'; x.lineWidth=1; x.stroke(); }
+    else { x.fillStyle=o.g?'#8a918d':FILL[o.k]||'#2BA9C7'; x.beginPath(); x.arc(px,py,rad,0,Math.PI*2); x.fill(); x.strokeStyle=o.k===3?'#2BA9C7':'rgba(0,0,0,.7)'; x.lineWidth=1.5; x.stroke(); }
+    if(!o.v){ x.save(); x.setLineDash([3,3]); x.strokeStyle='#ffffff'; x.lineWidth=1.5; x.beginPath(); x.arc(px,py,rad+2,0,Math.PI*2); x.stroke(); x.restore(); }
+    if(o.a || o.tg){ x.save(); x.setLineDash([4,3]); x.strokeStyle=o.a?'#43bd76':'#2BA9C7'; x.lineWidth=2.5; x.beginPath(); x.arc(px,py,rad*1.55,0,Math.PI*2); x.stroke(); x.restore(); }
+    if(o.lb!=='' && o.lb!=null){ x.fillStyle=o.k===4||o.k===9&&o.c===0xffffff?'#000':'#fff'; x.font='800 '+fsz+'px Arial, sans-serif'; x.textAlign='center'; x.textBaseline='middle'; x.fillText(String(o.lb),px,py+.5); }
+    if(o.up){ x.fillStyle='#f2c12e'; x.font='900 '+(fsz+6)+'px Arial, sans-serif'; x.textAlign='center'; x.fillText('!',px,py-rad-8); }
+    x.globalAlpha=1;
+  });
+  if(ball){ x.fillStyle='#fff'; x.strokeStyle='#000'; x.lineWidth=1.5; x.beginPath(); x.arc(SX(ball.x),SY(ball.z),Math.max(3.5,.3*M),0,Math.PI*2); x.fill(); x.stroke(); }
+  // jugador
+  const mx=SX(me.x), my=SY(me.z);
+  x.fillStyle='#ffffff'; x.beginPath(); x.arc(mx,my,rad*1.1,0,Math.PI*2); x.fill(); x.strokeStyle='#2BA9C7'; x.lineWidth=3; x.stroke();
+  x.strokeStyle='#000'; x.lineWidth=2.5; x.beginPath(); x.moveTo(mx,my); x.lineTo(mx+Math.cos(ga)*rad*1.6, my+Math.sin(ga)*rad*1.6); x.stroke();
+}
+function coachInit(){
+  document.body.classList.add('coach-mode');
+  document.title='Entrenador · Sportax Vision 360';
+  $('#coach').hidden=false;
+  $('.band h1').textContent='Panel del entrenador';
+  $('.band p').textContent='Sigue al jugador en directo, corrige al momento y lanza ejercicios, sesiones y retos a las gafas.';
+  coLoad();
+  $('#coEj').innerHTML=Object.keys(DRILLS).map(k=>'<option value="'+k+'">'+esc(DRILLS[k].nombre)+'</option>').join('');
+  $('#coVar').innerHTML=VAR_KEYS.map(v=>'<option value="'+v+'">'+esc(VARS[v].nombre)+'</option>').join('');
+  $('#coLvl').innerHTML='<option value="rec">Recomendado para el jugador</option>'+[1,2,3,4,5,6,7,8,9,10].map(l=>'<option value="'+l+'">Nivel '+l+' · '+FASES[l-1]+'</option>').join('');
+  $('#coPos').innerHTML='<option value="jugador">Posición del jugador</option>'+POS_KEYS.map(k=>'<option value="'+k+'">'+esc(POS[k].nombre)+'</option>').join('');
+  $('#coNewPos').innerHTML=POS_KEYS.map(k=>'<option value="'+k+'"'+(k==='MC'?' selected':'')+'>'+esc(POS[k].nombre)+'</option>').join('');
+  $('#coQuick').innerHTML=QUICK.map(q=>'<button type="button" class="qbtn" data-q="'+esc(q)+'">'+esc(q)+'</button>').join('');
+  coSyncForm(); coRender(); coRenderRes();
+  $('#coCode').value=CO.code;
+  $('#coConnect').addEventListener('click', coConnect);
+  $('#coCode').addEventListener('keydown', e=>{ if(e.key==='Enter') coConnect(); });
+  $('#coEj').addEventListener('change', coSyncForm);
+  $('#coRetoTipo').addEventListener('change', ()=>{ $('#coRetoVal').dataset.touched=''; coSyncForm(); });
+  $('#coRetoVal').addEventListener('input', e=>{ e.target.dataset.touched='1'; });
+  $('#coLaunch').addEventListener('click', ()=>{ const c=coLaunchCfg(); if(coSend(Object.assign({t:'start'},c))) toast('Ejercicio enviado a las gafas.'); });
+  $('#coReto').addEventListener('click', ()=>{ const c=coLaunchCfg(); const reto={tipo:$('#coRetoTipo').value, valor:+$('#coRetoVal').value||0, texto:$('#coRetoTxt').value.trim()}; if(coSend(Object.assign({t:'start', reto},c))) toast('Reto enviado: '+retoText(reto)); });
+  $('#coQuick').addEventListener('click', e=>{ const b=e.target.closest('[data-q]'); if(b && coSend({t:'msg', text:b.dataset.q})) toast('Enviado: '+b.dataset.q); });
+  $('#coMsgForm').addEventListener('submit', e=>{ e.preventDefault(); const t=$('#coMsg').value.trim(); if(t && coSend({t:'msg', text:t})){ toast('Enviado: '+t); $('#coMsg').value=''; } });
+  $('#coPause').addEventListener('click', ()=>{ if(coSend({t:'pause', on:!CO.paused})){ CO.paused=!CO.paused; $('#coPause').textContent=CO.paused?'Reanudar':'Pausar'; } });
+  $('#coStop').addEventListener('click', ()=>{ if(coSend({t:'stop'})) toast('Ejercicio parado.'); });
+  $('#coPlayer').addEventListener('change', e=>{ coSend({t:'player', id:e.target.value||null}); coRenderRes(); });
+  $('#coAddForm').addEventListener('submit', e=>{ e.preventDefault(); const n=$('#coNewName').value.trim(); if(!n) return; if(coSend({t:'addPlayer', nombre:n, posicion:$('#coNewPos').value, categoria:$('#coNewCat').value})){ $('#coNewName').value=''; toast('Jugador creado en las gafas.'); } });
+  $('#coSess').addEventListener('click', e=>{ const b=e.target.closest('[data-tpl]'); if(!b || !CO.hello) return; const t=CO.hello.templates.find(x=>x.id===b.dataset.tpl); if(t && coSend({t:'session', tpl:{nombre:t.nombre, bloques:t.bloques}})) toast('Sesión enviada: '+t.nombre); });
+  $('#coExport').addEventListener('click', coExport);
+  if(!linkAvailable()) coStatus('na'); else if(CO.code.length>=5) coConnect(); else coStatus('off');
+  requestAnimationFrame(coDraw);
+}
+
+if(location.hash==='#entrenador') coachInit(); else { Store.init(); renderLink(); startLink(); }
 })();
 </script>
 
