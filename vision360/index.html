@@ -384,7 +384,7 @@ body.coach-mode:not(.co-linked) .co-side .btn,body.coach-mode:not(.co-linked) .c
 </div>
 
 <div id="stage" hidden>
-  <div class="loading" id="loading">Montando el estadio…</div>
+  <div class="loading" id="loading">Preparando jugadores y estadio…</div>
   <div class="hud">
     <div class="hudbox"><div class="t" id="hudT">Vision 360</div><div class="s" id="hudS"></div></div>
     <button class="btn" id="exitBtn">Salir</button>
@@ -1175,6 +1175,7 @@ function buildAthleteGeos(){
   return A;
 }
 function makeAthlete(team, number, lite){
+  if(REAL.state==='ready') return makeRealAthlete(team, number, lite);
   const A=GEO.ath, T=MAT.team[team]; const u={team, phase:rand(0,6), seed:rand(0,6), speed:0, stance:.4, kick:0, kitMeshes:[]};
   const root=new THREE.Group();
   const sh=new THREE.Mesh(GEO.shadow, MAT.shadow); sh.rotation.x=-Math.PI/2; sh.position.y=.015; root.add(sh);
@@ -1213,8 +1214,9 @@ function makeAthlete(team, number, lite){
   u.prev=new THREE.Vector3(); u.init=false;
   root.userData.u=u; root.userData.num=number; return root;
 }
-function setGrey(f,on){ f.userData.u.kitMeshes.forEach(m=>{ m.material = on ? MAT.grey : m.userData.mat0; }); }
+function setGrey(f,on){ const u=f.userData.u, g=f.userData.real?REAL.grey:MAT.grey; u.kitMeshes.forEach(m=>{ m.material = on ? g : m.userData.mat0; }); if(u.numMesh) u.numMesh.visible=!on; }
 function animateAthlete(f, dt){
+  if(f.userData.real) return animateReal(f, dt);
   const u=f.userData.u; if(!dt) return;
   if(!u.init){ u.prev.copy(f.position); u.init=true; }
   const inst=f.position.distanceTo(u.prev)/dt; u.prev.copy(f.position);
@@ -1248,6 +1250,113 @@ function animateAthlete(f, dt){
   u.spine.rotation.set(lean,sy,sz); u.head.rotation.set(-lean*.6,hdy,0);
   u.torso.scale.y=1+Math.sin(ph*1.1)*.008;
 }
+/* ---------- Jugadores realistas: modelo 3D + captura de movimiento (Mixamo) ---------- */
+const REAL = {state:'off', promise:null, src:null, clips:{}, mats:{}, grey:null, camPos:new THREE.Vector3(), frame:0};
+const REAL_BASE = 'assets/';
+const GAIT = { jog:{dur:.833, len:2.3*.833, off:.233}, run:{dur:.633, len:5.25*.633, off:.2}, strafeL:{dur:.667, len:3.21*.667, off:.3}, strafeR:{dur:.667, len:3.21*.667, off:.8} };
+function loadScriptOnce(src){ return new Promise((res,rej)=>{ const s=document.createElement('script'); s.src=src; s.onload=res; s.onerror=()=>rej(new Error('script '+src)); document.head.appendChild(s); }); }
+function realLoad(){
+  if(REAL.promise) return REAL.promise;
+  REAL.state='loading';
+  REAL.promise = (async()=>{
+    if(!THREE.GLTFLoader) await loadScriptOnce(REAL_BASE+'GLTFLoader.js').catch(()=>loadScriptOnce('https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js'));
+    const gl = await new THREE.GLTFLoader().loadAsync(REAL_BASE+'jugador.glb');
+    const TL = new THREE.TextureLoader();
+    const tex = async n=>{ const t=await TL.loadAsync(REAL_BASE+'kit_'+n+'.jpg'); t.flipY=true; t.anisotropy=4; return t; };
+    const names=['mate','opp','gk','gk2'];
+    const texs = await Promise.all(names.concat(['grey']).map(tex));
+    names.forEach((n,i)=>{ REAL.mats[n]=new THREE.MeshStandardMaterial({map:texs[i], roughness:.78, metalness:0, skinning:true}); });
+    REAL.grey = new THREE.MeshStandardMaterial({map:texs[4], roughness:.9, metalness:0, skinning:true});
+    gl.animations.forEach(c=>{ REAL.clips[c.name]=c; });
+    REAL.src = gl.scene; REAL.src.updateMatrixWorld(true);
+    const sb=REAL.src.getObjectByName('spine_03x');
+    if(sb){ REAL.numLocal=new THREE.Matrix4().copy(sb.matrixWorld).invert().multiply(new THREE.Matrix4().compose(new THREE.Vector3(0,1.285,-.151), new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0,1,0),Math.PI), new THREE.Vector3(1,1,1))); REAL.numGeo=new THREE.PlaneGeometry(.2,.2); }
+    REAL.src.traverse(o=>{ if(o.isSkinnedMesh){ o.geometry.computeBoundingSphere(); o.geometry.boundingSphere.radius*=1.35; } });
+    REAL.state='ready';
+  })().catch(e=>{ console.warn('Jugadores realistas no disponibles:', e); REAL.state='error'; });
+  return REAL.promise;
+}
+const NUM_CACHE={};
+function numMat(team, number){
+  const key=team+'_'+number; if(NUM_CACHE[key]) return NUM_CACHE[key];
+  const k=KITS[team]||KITS.mate; const [c,x]=cvs(128,128);
+  x.textAlign='center'; x.textBaseline='middle'; x.font='112px '+FD; x.lineJoin='round';
+  x.lineWidth=16; x.strokeStyle=team==='gk2'?'rgba(255,255,255,.9)':'rgba(0,0,0,.8)'; x.strokeText(String(number),64,70);
+  x.fillStyle=k.num; x.fillText(String(number),64,70);
+  const t=new THREE.CanvasTexture(c); t.anisotropy=4;
+  return NUM_CACHE[key]=new THREE.MeshLambertMaterial({map:t, transparent:true, alphaTest:.05, depthWrite:false, polygonOffset:true, polygonOffsetFactor:-2, polygonOffsetUnits:-2});
+}
+function realClone(){
+  const root = REAL.src.clone(true);
+  const bones={}; root.traverse(o=>{ if(o.isBone) bones[o.name]=o; });
+  let skel=null; const meshes=[];
+  root.traverse(o=>{ if(o.isSkinnedMesh){
+    if(!skel) skel=new THREE.Skeleton(o.skeleton.bones.map(b=>bones[b.name]), o.skeleton.boneInverses);
+    o.bind(skel, o.bindMatrix); o.raycast=()=>{}; meshes.push(o); } });
+  return {root, meshes};
+}
+function makeRealAthlete(team, number, lite){
+  const u={team, real:true, seed:rand(0,6), speed:0, vf:0, vl:0, stance:(team==='gk'||team==='gk2')?.9:.4, kick:0, raise:0, kitMeshes:[], phase:Math.random(), lod:-1, acc:0, kt:-1, wv:0, wvT:0};
+  const root=new THREE.Group();
+  const sh=new THREE.Mesh(GEO.shadow, MAT.shadow); sh.rotation.x=-Math.PI/2; sh.position.y=.015; root.add(sh);
+  const {root:body, meshes}=realClone(); body.scale.setScalar(rand(.95,1.05)); root.add(body);
+  const mat=REAL.mats[team]||REAL.mats.mate;
+  meshes.forEach(m=>{ m.material=mat; m.userData.mat0=mat; u.kitMeshes.push(m); if(/lo/.test(m.name)) u.lo=m; else u.hi=m; });
+  if(u.lo && u.hi){ u.lo.visible=false; }
+  const sb=body.getObjectByName('spine_03x');
+  if(sb && REAL.numLocal && number!=null && number!==''){ const d=new THREE.Mesh(REAL.numGeo, numMat(team,number)); d.matrixAutoUpdate=false; d.matrix.copy(REAL.numLocal); d.raycast=()=>{}; sb.add(d); u.numMesh=d; }
+  const mixer=new THREE.AnimationMixer(body); u.mixer=mixer; u.act={};
+  Object.keys(REAL.clips).forEach(n=>{ const a=mixer.clipAction(REAL.clips[n]); a.enabled=false; a.setEffectiveWeight(0); a.play(); u.act[n]=a; });
+  ['jog','run','strafeL','strafeR'].forEach(n=>{ if(u.act[n]) u.act[n].timeScale=0; });
+  ['idle','ready'].forEach(n=>{ if(u.act[n]) u.act[n].time=Math.random()*REAL.clips[n].duration; });
+  if(u.act.pass){ u.act.pass.setLoop(THREE.LoopOnce); u.act.pass.clampWhenFinished=true; }
+  const hit=new THREE.Mesh(GEO.hit, MAT.hit); hit.position.y=1.1; root.add(hit);
+  const ring=new THREE.Mesh(GEO.ring, new THREE.MeshBasicMaterial({color:COLORS.ok, side:THREE.DoubleSide, transparent:true, opacity:.95}));
+  ring.rotation.x=-Math.PI/2; ring.position.y=.04; ring.visible=false; root.add(ring); u.ring=ring;
+  u.prev=new THREE.Vector3(); u.init=false; u.lite=!!lite;
+  root.userData.u=u; root.userData.num=number; root.userData.real=true; return root;
+}
+const _rv=new THREE.Vector3(), _rf=new THREE.Vector3(), _rw=new THREE.Vector3();
+const sstep=(a,b,x)=>{ const t=clamp((x-a)/(b-a),0,1); return t*t*(3-2*t); };
+function animateReal(f, dt){
+  const u=f.userData.u; if(!dt) return;
+  if(!u.init){ u.prev.copy(f.position); u.init=true; }
+  _rv.subVectors(f.position,u.prev).divideScalar(dt); u.prev.copy(f.position); _rv.y=0;
+  _rf.set(0,0,1).applyQuaternion(f.quaternion); _rf.y=0; _rf.normalize();
+  const k=1-Math.exp(-dt*7);
+  const inst=Math.min(_rv.length(),9);
+  u.speed=lerp(u.speed, inst, k);
+  u.vf=lerp(u.vf, _rv.x*_rf.x+_rv.z*_rf.z, k);
+  u.vl=lerp(u.vl, _rv.x*_rf.z-_rv.z*_rf.x, k);
+  const sp=u.speed, A=u.act;
+  // pesos de locomoción
+  const mov=sstep(.25,.9,sp);
+  const af=Math.abs(u.vf), al=Math.abs(u.vl);
+  const side=sstep(.5,.7, al/(af+al+1e-4))*mov, fwd=mov-side;
+  const r=clamp((sp-2.6)/(4.8-2.6),0,1);
+  const ready=clamp((u.stance-.35)/.45,0,1);
+  let w={ idle:(1-mov)*(1-ready), ready:(1-mov)*ready, jog:fwd*(1-r), run:fwd*r, strafeL:u.vl>0?side:0, strafeR:u.vl>0?0:side, pass:0, wave:0 };
+  // cadencia sincronizada (sin patinar)
+  const L=side>fwd ? GAIT.strafeL.len : lerp(GAIT.jog.len, GAIT.run.len, r);
+  const back = u.vf < -.3 && side<fwd;
+  u.phase = (u.phase + dt*clamp(sp/L, .55, 2.0)*(back?-1:1) + 10) % 1;
+  // golpeo (pase): el contacto llega a los 0,18 s, como el sonido
+  if(u.kick>0 && A.pass){ u.kick=0; u.kt=0; A.pass.reset(); A.pass.time=.253; A.pass.enabled=true; }
+  if(u.kt>=0){ u.kt+=dt; const wk=Math.min(1,u.kt/.1)*(1-sstep(.75,1.05,u.kt)); w.pass=wk; if(u.kt>1.05) u.kt=-1; }
+  // brazo arriba (activación): saludo con los brazos en alto
+  if(u.raise>0){ u.raise-=dt; if(u.wv<=0 && A.wave){ A.wave.time=.55; } u.wv=Math.min(1,u.wv+dt/.15); }
+  else u.wv=Math.max(0,u.wv-dt/.25);
+  if(A.wave){ if(A.wave.time>2.6) A.wave.time=1.0; w.wave=u.wv; }
+  const over=Math.max(w.pass,w.wave);
+  Object.keys(A).forEach(n=>{ let x=w[n]||0; if(n!=='pass' && n!=='wave') x*=(1-over); const a=A[n]; a.enabled = x>.002; a.setEffectiveWeight(x);
+    const g=GAIT[n]; if(g && a.enabled) a.time=((u.phase+g.off)%1)*g.dur; });
+  // LOD por distancia y actualización a menor ritmo de los lejanos
+  f.getWorldPosition(_rw); const d=_rw.distanceTo(REAL.camPos);
+  const lod = d > (u.lod===1?12:14) ? 1 : 0;
+  if(lod!==u.lod && u.hi && u.lo){ u.lod=lod; u.hi.visible=lod===0; u.lo.visible=lod===1; }
+  u.acc+=dt;
+  if(lod===0 || (REAL.frame + (u.seed*10|0))%2===0){ u.mixer.update(u.acc); u.acc=0; }
+}
 function faceTo(obj, x, z){ obj.lookAt(x, obj.position.y, z); }
 function makeBall(mat){ const b=new THREE.Mesh(GEO.ball, mat||MAT.ball); const s=new THREE.Mesh(GEO.shadow,MAT.shadow); s.scale.setScalar(.3); s.rotation.x=-Math.PI/2; b.userData.shadow=s; return b; }
 
@@ -1265,6 +1374,7 @@ let last=0;
 function loop(t){
   const dt = Math.min(.05, last ? (t-last)/1000 : 0); last=t;
   if(!renderer.xr.isPresenting){ camera.rotation.set(pitch, yaw, 0); camera.position.set(0,1.6,0); }
+  if(REAL.state==='ready'){ REAL.frame++; (renderer.xr.isPresenting ? renderer.xr.getCamera(camera) : camera).getWorldPosition(REAL.camPos); }
   if(drill && !LINK.paused) drill.tick(dt);
   for(let i=fx.length-1;i>=0;i--){ const f=fx[i]; f.life+=dt; const k=f.life/f.dur; f.obj.position.y=f.y0+k*.5; f.obj.material.opacity=1-k; if(k>=1){ world.remove(f.obj); fx.splice(i,1); } }
   if(renderer.xr.isPresenting){
@@ -2048,7 +2158,8 @@ function openDrill(key, lvl, pos, n, v){
   $('#stage').hidden=false; document.body.style.overflow='hidden';
   $('#loading').hidden=!!renderer;
   const fontsReady = (document.fonts && document.fonts.load) ? Promise.all([document.fonts.load('40px Anton'), document.fonts.load('800 40px Nunito')]).catch(()=>{}) : Promise.resolve();
-  Promise.race([fontsReady, new Promise(r=>setTimeout(r,1500))]).then(()=>{
+  if(REAL.state!=='ready' && REAL.state!=='error') $('#loading').hidden=false;
+  Promise.race([Promise.all([Promise.race([fontsReady, new Promise(r=>setTimeout(r,1500))]), realLoad()]), new Promise(r=>setTimeout(r,15000))]).then(()=>{
     initScene(); $('#loading').hidden=true; resize();
     cur={key, lvl, pos:pos||S.pos, n:n||null, var:v||S.var}; yaw=0; pitch=0; disposeDrill();
     showIntro(); startLoop();
@@ -2350,7 +2461,7 @@ function entSnapshot(){
   const ans=ansSet(), out=[], seen=new Set();
   (d.figs||[]).forEach(f=>{ if(seen.has(f)) return; seen.add(f); const u=f.userData.u; let r=0;
     if(u.ring && u.ring.visible){ const c=u.ring.material.color.getHex(); r = c===COLORS.ok?1 : c===COLORS.bad?2 : 3; }
-    out.push([r2(f.position.x), r2(f.position.z), TEAMCODE[u.team]||1, f.userData.num||'', r, f.visible?1:0, (u.kitMeshes[0] && u.kitMeshes[0].material===MAT.grey)?1:0, u.raise>0?1:0, 0, ans.has(f)?1:0, 0]); });
+    out.push([r2(f.position.x), r2(f.position.z), TEAMCODE[u.team]||1, f.userData.num||'', r, f.visible?1:0, (u.kitMeshes[0] && (u.kitMeshes[0].material===MAT.grey || u.kitMeshes[0].material===REAL.grey))?1:0, u.raise>0?1:0, 0, ans.has(f)?1:0, 0]); });
   (d.picks||[]).forEach(o=>{ if(seen.has(o)) return; seen.add(o); const m=o.userData.mat;
     out.push([r2(o.position.x), r2(o.position.z), 9, o.userData.lbl||'', 0, o.visible?1:0, 0, 0, m&&m.color?m.color.getHex():0xffffff, ans.has(o)?1:0, (d.targets && d.targets.indexOf(o)>=0)?1:0]); });
   return out;
@@ -2567,7 +2678,8 @@ function coachInit(){
   requestAnimationFrame(coDraw);
 }
 
-if(location.hash==='#entrenador') coachInit(); else { Store.init(); renderLink(); startLink(); }
+window.__v360={REAL, HUD, openDrill:(...a)=>openDrill(...a), mk:(t,n)=>makeAthlete(t,n), setGrey:(f,o)=>setGrey(f,o), get drill(){ return drill; }, exit:()=>{ if(typeof exitStage==='function') exitStage(); }};
+if(location.hash==='#entrenador') coachInit(); else { Store.init(); renderLink(); startLink(); realLoad(); }
 })();
 </script>
 
