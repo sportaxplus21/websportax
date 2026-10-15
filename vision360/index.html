@@ -249,6 +249,7 @@ body.coach-mode:not(.co-linked) .co-side .btn,body.coach-mode:not(.co-linked) .c
     <div class="eyebrow">Entrenamiento cognitivo</div>
     <h1>Vision 360</h1>
     <p>Cuatro capacidades, diez niveles cada una y una regla clara para subir o bajar. Elige jugador, pulsa un ejercicio o la sesión guiada y entra en VR con las Meta Quest.</p>
+    <button class="btn" id="vrHome" type="button" style="margin-top:16px;position:relative;font-size:1.1rem;padding:14px 22px">Entrar en VR · Vestuario</button>
   </div>
 </header>
 
@@ -1175,7 +1176,7 @@ function setScreens(a,b){ if(STADIUM.screenTxt[0]===a && STADIUM.screenTxt[1]===
 function bannerTexture(txt, bg, fg){ const [c,x]=cvs(512,96); x.fillStyle=bg; x.fillRect(0,0,512,96); x.fillStyle=fg; x.font='64px '+FD; x.textAlign='center'; x.textBaseline='middle'; x.fillText(txt,256,52,490); return tex(c); }
 function buildStadium(){
   const sky=new THREE.Mesh(new THREE.SphereGeometry(330,40,20), new THREE.MeshBasicMaterial({map:skyTexture(), side:THREE.BackSide, fog:false, depthWrite:false}));
-  scene.add(sky);
+  scene.add(sky); STADIUM.sky=sky;
   const gt=grassTexture(); gt.repeat.set(70,70);
   const ground=new THREE.Mesh(new THREE.PlaneGeometry(320,320), new THREE.MeshStandardMaterial({map:gt, roughness:1}));
   ground.rotation.x=-Math.PI/2; ground.position.y=-.02; field.add(ground);
@@ -1303,7 +1304,7 @@ function initScene(){
   }
   const cv = renderer.domElement; let drag=null;
   cv.addEventListener('pointerdown', e=>{ ensureAudio(); drag={x:e.clientX,y:e.clientY,yaw,pitch,moved:0}; try{ cv.setPointerCapture(e.pointerId); }catch(_){} });
-  cv.addEventListener('pointermove', e=>{ if(!drag && renderer && !renderer.xr.isPresenting){ const r=cv.getBoundingClientRect(); raycaster.setFromCamera({x:((e.clientX-r.left)/r.width)*2-1, y:-((e.clientY-r.top)/r.height)*2+1}, camera); const f=findPick(raycaster.intersectObjects(activePicks(),true)); hoverRing(f && f.o.userData.u ? f.o : null); } if(!drag) return; const dx=e.clientX-drag.x, dy=e.clientY-drag.y; drag.moved=Math.max(drag.moved,Math.abs(dx)+Math.abs(dy)); yaw=drag.yaw+dx*.0055; pitch=clamp(drag.pitch+dy*.0045,-1.1,1.1); });
+  cv.addEventListener('pointermove', e=>{ if(!drag && renderer && !renderer.xr.isPresenting){ const r=cv.getBoundingClientRect(); raycaster.setFromCamera({x:((e.clientX-r.left)/r.width)*2-1, y:-((e.clientY-r.top)/r.height)*2+1}, camera); const f=findPick(raycaster.intersectObjects(activePicks(),true)); hoverRing(f && f.o.userData.u ? f.o : null); if(LOCKER.menu && LOCKER.on) LOCKER.menu.hover(f && f.o.userData.menu ? f.h : null); } if(!drag) return; const dx=e.clientX-drag.x, dy=e.clientY-drag.y; drag.moved=Math.max(drag.moved,Math.abs(dx)+Math.abs(dy)); yaw=drag.yaw+dx*.0055; pitch=clamp(drag.pitch+dy*.0045,-1.1,1.1); });
   cv.addEventListener('pointerup', e=>{ if(drag && drag.moved<8){ const r=cv.getBoundingClientRect(); raycaster.setFromCamera({x:((e.clientX-r.left)/r.width)*2-1, y:-((e.clientY-r.top)/r.height)*2+1}, camera); tryPick(); } drag=null; });
   cv.addEventListener('pointercancel', ()=>{ drag=null; });
   window.addEventListener('keydown', e=>{ if($('#stage').hidden) return; if(e.key==='ArrowLeft') yaw+=.15; if(e.key==='ArrowRight') yaw-=.15; });
@@ -1628,11 +1629,11 @@ function loop(t){
   for(let i=fx.length-1;i>=0;i--){ const f=fx[i]; f.life+=dt; const k=f.life/f.dur; f.obj.position.y=f.y0+k*.5; f.obj.material.opacity=1-k; if(k>=1){ world.remove(f.obj); fx.splice(i,1); } }
   if(renderer.xr.isPresenting){
     const picks=activePicks();
-    let hov=null;
+    let hov=null, menuHov=false;
     controllers.forEach(c=>{ if(!c.userData.line.visible){ c.userData.dot.visible=false; return; } setRayFrom(c); const f=findPick(raycaster.intersectObjects(picks,true));
-      if(f){ c.userData.line.scale.z=f.h.distance; c.userData.dot.position.copy(f.h.point); c.userData.dot.visible=true; if(f.o.userData.u) hov=f.o; }
+      if(f){ c.userData.line.scale.z=f.h.distance; c.userData.dot.position.copy(f.h.point); c.userData.dot.visible=true; if(f.o.userData.u) hov=f.o; if(f.o.userData.menu){ menuHov=true; f.o.userData.menu.hover(f.h); } }
       else { const r=raycaster.ray; let t=6; if(r.direction.y<-.02){ t=Math.min(45,-r.origin.y/r.direction.y); } c.userData.line.scale.z=t; c.userData.dot.position.copy(r.origin).addScaledVector(r.direction,t); c.userData.dot.visible=true; } });
-    hoverRing(hov);
+    hoverRing(hov); if(!menuHov && LOCKER.menu && LOCKER.menu.hov!==-1) LOCKER.menu.hover(null);
   }
   renderer.render(scene, camera);
 }
@@ -2597,7 +2598,7 @@ function comfortInit(){ if(COMFORT.sphere || !camera) return;
 function setFade(a){ comfortInit(); if(!COMFORT.sphere) return; COMFORT.sphere.material.opacity=a; COMFORT.sphere.visible=a>.01; }
 function setVignette(a){ comfortInit(); if(!COMFORT.vig) return; COMFORT.a+=(a-COMFORT.a)*.2; COMFORT.vig.material.opacity=COMFORT.a*.85; COMFORT.vig.visible=COMFORT.a>.02; }
 const HUDF={a:0, on:false};
-function hudFollow(dt){ if(!hudPanel) return; const want=headYaw(); let d=Math.atan2(Math.sin(want-HUDF.a),Math.cos(want-HUDF.a)); if(Math.abs(d)>.3) HUDF.a+=d*Math.min(1,dt*2.6); else if(Math.abs(d)>.05) HUDF.a+=d*Math.min(1,dt*.6); const r=3.4; hudPanel.mesh.rotation.order='YXZ'; hudPanel.mesh.position.set(Math.sin(HUDF.a)*r,2.5,-Math.cos(HUDF.a)*r); hudPanel.mesh.rotation.set(.18,-HUDF.a,0); hudPanel.mesh.scale.setScalar(.8); HUDF.on=true; }
+function hudFollow(dt){ if(!hudPanel || LOCKER.on) return; const want=headYaw(); let d=Math.atan2(Math.sin(want-HUDF.a),Math.cos(want-HUDF.a)); if(Math.abs(d)>.3) HUDF.a+=d*Math.min(1,dt*2.6); else if(Math.abs(d)>.05) HUDF.a+=d*Math.min(1,dt*.6); const r=3.4; hudPanel.mesh.rotation.order='YXZ'; hudPanel.mesh.position.set(Math.sin(HUDF.a)*r,2.5,-Math.cos(HUDF.a)*r); hudPanel.mesh.rotation.set(.18,-HUDF.a,0); hudPanel.mesh.scale.setScalar(.8); HUDF.on=true; }
 function hudReset(){}
 /* ---------- Minimapa: campo en panorámica con la jugada ---------- */
 const MINI={panel:null, t:0};
@@ -3201,6 +3202,184 @@ class Juego extends Drill {
 
 const CLASSES = {escaneo:Escaneo, reaccion:Reaccion, tactica:Tactica, partido:Partido, juego:Juego, espacios:Espacios, readapt:Readapt};
 
+/* ================= Vestuario: centro de mando dentro de la realidad virtual ================= */
+const LOCKER={group:null, menu:null, on:false, screen:'home', key:null, page:0, shirts:[]};
+function lockerTex(path){ const t=new THREE.TextureLoader().load(REAL_BASE+path); t.anisotropy=8; return t; }
+function woodTexture(){ const [c,x]=cvs(512,512); x.fillStyle='#2a1f18'; x.fillRect(0,0,512,512); for(let i=0;i<16;i++){ x.fillStyle=i%2?'#33261c':'#2c2119'; x.fillRect(i*32,0,31,512); } for(let i=0;i<500;i++){ x.strokeStyle='rgba(0,0,0,'+rand(.05,.15).toFixed(2)+')'; x.beginPath(); const xx=rand(0,512); x.moveTo(xx,rand(0,512)); x.lineTo(xx+rand(-2,2),rand(0,512)); x.stroke(); } return tex(c,true); }
+function floorTexture(){ const [c,x]=cvs(1024,1024); x.fillStyle='#1b1f22'; x.fillRect(0,0,1024,1024); x.strokeStyle='rgba(255,255,255,.04)'; x.lineWidth=2; for(let i=0;i<=1024;i+=128){ x.beginPath(); x.moveTo(i,0); x.lineTo(i,1024); x.stroke(); x.beginPath(); x.moveTo(0,i); x.lineTo(1024,i); x.stroke(); } addNoise(x,1024,1024,10); return tex(c,true); }
+function wallTexture(){ const [c,x]=cvs(1024,512); const g=x.createLinearGradient(0,0,0,512); g.addColorStop(0,'#0b2a32'); g.addColorStop(1,'#071a1f'); x.fillStyle=g; x.fillRect(0,0,1024,512);
+  x.fillStyle='#2BA9C7'; x.fillRect(0,300,1024,10); x.fillStyle='#144C5A'; x.fillRect(0,318,1024,26);
+  for(let i=0;i<8;i++){ x.fillStyle='rgba(43,169,199,.07)'; x.beginPath(); x.moveTo(i*140,0); x.lineTo(i*140+60,0); x.lineTo(i*140-80,300); x.lineTo(i*140-140,300); x.closePath(); x.fill(); }
+  addNoise(x,1024,512,6); return tex(c,true); }
+function shirtTexture(name, num){
+  const [c,x]=cvs(256,320); x.clearRect(0,0,256,320);
+  x.beginPath(); x.moveTo(78,18); x.quadraticCurveTo(128,40,178,18); x.lineTo(238,48); x.lineTo(214,112); x.lineTo(190,100); x.lineTo(192,304); x.lineTo(64,304); x.lineTo(66,100); x.lineTo(42,112); x.lineTo(18,48); x.closePath();
+  const g=x.createLinearGradient(0,0,256,0); g.addColorStop(0,'#1f8eaa'); g.addColorStop(.5,'#2BA9C7'); g.addColorStop(1,'#1f8eaa'); x.fillStyle=g; x.fill();
+  x.save(); x.clip(); x.fillStyle='rgba(20,76,90,.55)'; x.beginPath(); x.moveTo(30,300); x.lineTo(70,300); x.lineTo(230,40); x.lineTo(190,40); x.closePath(); x.fill(); x.restore();
+  x.lineWidth=4; x.strokeStyle='#144C5A'; x.stroke();
+  x.textAlign='center'; x.textBaseline='middle'; x.lineJoin='round';
+  const nm=String(name||'SPORTAX').toUpperCase().slice(0,12); x.font=(nm.length>9?'26px ':'32px ')+FD; x.lineWidth=6; x.strokeStyle='rgba(0,0,0,.6)'; x.strokeText(nm,128,92,170); x.fillStyle='#fff'; x.fillText(nm,128,92,170);
+  x.font='118px '+FD; x.lineWidth=10; x.strokeStyle='#144C5A'; x.strokeText(String(num),128,192); x.fillStyle='#fff'; x.fillText(String(num),128,192);
+  return new THREE.CanvasTexture(c);
+}
+function buildLocker(){
+  if(LOCKER.group) return;
+  const g=new THREE.Group(); LOCKER.group=g; g.visible=false; scene.add(g);
+  const W=12, Z0=-3.3, Z1=4.7, H=3.3;
+  const wood=new THREE.MeshLambertMaterial({map:woodTexture()}), wall=new THREE.MeshLambertMaterial({map:wallTexture()}), dark=new THREE.MeshLambertMaterial({color:0x111518}), ceilM=new THREE.MeshLambertMaterial({color:0x14181b});
+  const ft=floorTexture(); ft.repeat.set(3,2); const floor=new THREE.Mesh(new THREE.PlaneGeometry(W,Z1-Z0), new THREE.MeshLambertMaterial({map:ft})); floor.rotation.x=-Math.PI/2; floor.position.set(0,0,(Z0+Z1)/2); g.add(floor);
+  const ceil=new THREE.Mesh(new THREE.PlaneGeometry(W,Z1-Z0), ceilM); ceil.rotation.x=Math.PI/2; ceil.position.set(0,H,(Z0+Z1)/2); g.add(ceil);
+  const wt=wall.map; wt.repeat.set(2,1);
+  const mkWall=(w,x,z,ry)=>{ const m=new THREE.Mesh(new THREE.PlaneGeometry(w,H), wall); m.position.set(x,H/2,z); m.rotation.y=ry; g.add(m); };
+  mkWall(W,0,Z0,0); mkWall(W,0,Z1,Math.PI); mkWall(Z1-Z0,-W/2,(Z0+Z1)/2,Math.PI/2); mkWall(Z1-Z0,W/2,(Z0+Z1)/2,-Math.PI/2);
+  const lightM=new THREE.MeshBasicMaterial({color:0xf4fbff});
+  for(let i=-1;i<=1;i++) for(let j=0;j<2;j++){ const l=new THREE.Mesh(new THREE.BoxGeometry(2.6,.04,.28), lightM); l.position.set(i*3.6,H-.03,-.6+j*3); g.add(l); }
+  const strip=new THREE.Mesh(new THREE.BoxGeometry(W-.4,.03,.05), new THREE.MeshBasicMaterial({color:0x2BA9C7})); strip.position.set(0,.06,Z0+.05); g.add(strip);
+  // Logo grande en el centro del suelo
+  const ring=new THREE.Mesh(new THREE.RingGeometry(1.75,1.85,64), new THREE.MeshBasicMaterial({color:0x2BA9C7})); ring.rotation.x=-Math.PI/2; ring.position.set(0,.012,.9); g.add(ring);
+  const disc=new THREE.Mesh(new THREE.CircleGeometry(1.75,64), new THREE.MeshLambertMaterial({color:0x0c2e36})); disc.rotation.x=-Math.PI/2; disc.position.set(0,.01,.9); g.add(disc);
+  const logoW=lockerTex('logo_blanco.png'), logoC=lockerTex('logo_color.png');
+  const flogo=new THREE.Mesh(new THREE.PlaneGeometry(3.0,.97), new THREE.MeshBasicMaterial({map:logoW, transparent:true, depthWrite:false})); flogo.rotation.x=-Math.PI/2; flogo.position.set(0,.015,.9); g.add(flogo);
+  // Logo sobre la pantalla y franja blanca con logo en la pared del fondo
+  const wlogo=new THREE.Mesh(new THREE.PlaneGeometry(2.5,.8), new THREE.MeshBasicMaterial({map:logoW, transparent:true})); wlogo.position.set(0,2.86,Z0+.02); g.add(wlogo);
+  const band=new THREE.Mesh(new THREE.PlaneGeometry(4.6,.95), new THREE.MeshLambertMaterial({color:0xf2f5f6})); band.position.set(0,2.75,Z1-.02); band.rotation.y=Math.PI; g.add(band);
+  const blogo=new THREE.Mesh(new THREE.PlaneGeometry(2.6,.84), new THREE.MeshBasicMaterial({map:logoC, transparent:true})); blogo.position.set(0,2.75,Z1-.03); blogo.rotation.y=Math.PI; g.add(blogo);
+  [-1,1].forEach(sd=>{ const sl=new THREE.Mesh(new THREE.PlaneGeometry(1.9,.62), new THREE.MeshBasicMaterial({map:logoW, transparent:true})); sl.position.set(sd*(W/2-.02),2.8,-.6); sl.rotation.y=-sd*Math.PI/2; g.add(sl); });
+  // Pantalla (menú)
+  const frame=new THREE.Mesh(new THREE.BoxGeometry(3.04,1.78,.08), dark); frame.position.set(0,1.62,Z0+.05); g.add(frame);
+  LOCKER.menu=new VRMenu(2.9,1.63,1600,900); LOCKER.menu.mesh.position.set(0,1.62,Z0+.1); g.add(LOCKER.menu.mesh);
+  // Pizarra táctica
+  const [bc,bx]=cvs(512,320); bx.fillStyle='#f4f6f6'; bx.fillRect(0,0,512,320); bx.strokeStyle='#144C5A'; bx.lineWidth=4; bx.strokeRect(20,20,472,280); bx.beginPath(); bx.moveTo(256,20); bx.lineTo(256,300); bx.stroke(); bx.beginPath(); bx.arc(256,160,40,0,Math.PI*2); bx.stroke(); bx.strokeRect(20,95,60,130); bx.strokeRect(432,95,60,130);
+  [[90,70],[90,250],[150,120],[150,200],[210,160],[300,90],[300,230],[360,160]].forEach(([px,py],i)=>{ bx.fillStyle=i<5?'#2BA9C7':'#e0323a'; bx.beginPath(); bx.arc(px,py,12,0,Math.PI*2); bx.fill(); });
+  bx.strokeStyle='#144C5A'; bx.setLineDash([10,8]); bx.beginPath(); bx.moveTo(150,120); bx.lineTo(290,90); bx.stroke(); bx.setLineDash([]); bx.fillStyle='#144C5A'; bx.font='28px '+FD; bx.fillText('VISION 360',30,310-6);
+  const board=new THREE.Mesh(new THREE.PlaneGeometry(1.6,1), new THREE.MeshLambertMaterial({map:new THREE.CanvasTexture(bc)})); board.position.set(-4.3,1.6,Z0+.03); g.add(board);
+  const board2=board.clone(); board2.position.x=4.3; g.add(board2);
+  // Taquillas con camisetas
+  LOCKER.shirts=[];
+  const lk=(x,z,ry)=>{ const L=new THREE.Group(); L.position.set(x,0,z); L.rotation.y=ry;
+    const back=new THREE.Mesh(new THREE.PlaneGeometry(1.08,2.3), new THREE.MeshLambertMaterial({color:0x0c2e36})); back.position.set(0,1.25,-.28); L.add(back);
+    [-.55,.55].forEach(sx=>{ const s=new THREE.Mesh(new THREE.BoxGeometry(.04,2.4,.6), wood); s.position.set(sx,1.2,0); L.add(s); });
+    const top=new THREE.Mesh(new THREE.BoxGeometry(1.14,.06,.6), wood); top.position.set(0,2.4,0); L.add(top);
+    const shelf=new THREE.Mesh(new THREE.BoxGeometry(1.08,.04,.5), wood); shelf.position.set(0,2.02,-.03); L.add(shelf);
+    const plate=new THREE.Mesh(new THREE.PlaneGeometry(.9,.18), new THREE.MeshBasicMaterial({color:0xffffff})); plate.position.set(0,2.2,.02); L.add(plate);
+    const sh=new THREE.Mesh(new THREE.PlaneGeometry(.78,.98), new THREE.MeshLambertMaterial({transparent:true, alphaTest:.1, side:THREE.DoubleSide})); sh.position.set(0,1.42,-.24); L.add(sh);
+    const seat=new THREE.Mesh(new THREE.BoxGeometry(1.1,.06,.42), wood); seat.position.set(0,.47,.42); L.add(seat);
+    const leg=new THREE.Mesh(new THREE.BoxGeometry(1,.44,.06), dark); leg.position.set(0,.22,.5); L.add(leg);
+    const ball=makeBall(); ball.scale.setScalar(1); ball.position.set(rand(-.3,.3),.11,.1); if(Math.random()<.35) L.add(ball);
+    g.add(L); LOCKER.shirts.push({sh, plate}); };
+  for(let i=0;i<6;i++) lk(-W/2+.32, -1.8+i*1.12, Math.PI/2);
+  for(let i=0;i<6;i++) lk(W/2-.32, -1.8+i*1.12, -Math.PI/2);
+  for(let i=0;i<7;i++) lk(-3.6+i*1.2, Z1-.32, Math.PI);
+  const amb=new THREE.PointLight(0xffffff,.55,14); amb.position.set(0,2.9,.8); g.add(amb);
+}
+function lockerShirts(){
+  const names=S.players.slice().sort((a,b)=>String(a.nombre).localeCompare(String(b.nombre),'es')).map(p=>String(p.nombre).split(' ')[0]);
+  LOCKER.shirts.forEach((o,i)=>{ const nm=names[i]||(i===0?'SPORTAX':['VISION','360','TERRASSA','SPORTAX'][i%4]); const num=i<names.length?(i+2):[7,9,10,11,8,4,5,6,3,2,14,16,17,18,19,20,21,22,23][i%19];
+    if(o.sh.material.map) o.sh.material.map.dispose(); o.sh.material.map=shirtTexture(nm,num); o.sh.material.needsUpdate=true;
+    const [c,x]=cvs(512,100); x.fillStyle='#ffffff'; x.fillRect(0,0,512,100); x.fillStyle='#144C5A'; x.font='64px '+FD; x.textAlign='center'; x.textBaseline='middle'; x.fillText(String(nm).toUpperCase(),256,54,480);
+    o.plate.material.map=new THREE.CanvasTexture(c); o.plate.material.needsUpdate=true; });
+}
+/* ---------- Menú táctil en la pantalla del vestuario ---------- */
+class VRMenu {
+  constructor(w,h,pw,ph){ this.pw=pw; this.ph=ph; const [c,x]=cvs(pw,ph); this.c=c; this.x=x; this.t=new THREE.CanvasTexture(c); this.t.anisotropy=8;
+    this.mesh=new THREE.Mesh(new THREE.PlaneGeometry(w,h), new THREE.MeshBasicMaterial({map:this.t})); this.mesh.userData.menu=this; this.mesh.userData.pick=h=>this.click(h); this.btns=[]; this.hov=-1; }
+  begin(){ this.btns=[]; const x=this.x, W=this.pw, H=this.ph; const g=x.createLinearGradient(0,0,0,H); g.addColorStop(0,'#071a1f'); g.addColorStop(1,'#020809'); x.fillStyle=g; x.fillRect(0,0,W,H);
+    x.fillStyle='#2BA9C7'; x.fillRect(0,0,W,8); x.beginPath(); x.moveTo(W-260,0); x.lineTo(W,0); x.lineTo(W,120); x.closePath(); x.fillStyle='rgba(43,169,199,.25)'; x.fill();
+    const lg=$('#brandLogo'); try{ if(lg && lg.complete && lg.naturalWidth) x.drawImage(lg,40,26,210,70); }catch(e){} return x; }
+  btn(r,label,fn,o){ o=o||{}; const x=this.x, i=this.btns.length, hov=i===this.hov && !o.off; this.btns.push({r,fn:o.off?null:fn});
+    const [X,Y,W,H]=r; x.save(); roundRect(x,X,Y,W,H,o.round||18); x.fillStyle=o.on?'#2BA9C7':(hov?'#16505e':(o.bg||'#0d2c34')); x.fill(); x.lineWidth=o.on||hov?5:2; x.strokeStyle=o.on?'#ffffff':(hov?'#2BA9C7':'#1d4a55'); x.stroke(); x.restore();
+    x.textAlign=o.align||'center'; x.textBaseline='middle'; const tx=o.align==='left'?X+28:X+W/2;
+    x.fillStyle=o.off?'#56707a':(o.on?'#000':'#fff'); x.font=(o.size||46)+'px '+FD; x.fillText(String(label).toUpperCase(), tx, Y+(o.sub?H*.38:H/2), W-30);
+    if(o.sub){ x.fillStyle=o.on?'#06171B':'#A9DCE8'; x.font='800 '+(o.subSize||26)+'px '+FB; x.fillText(o.sub, tx, Y+H*.72, W-30); }
+    if(o.star){ x.fillStyle=o.on?'#000':'#f2c12e'; x.font='800 26px '+FB; x.fillText('★', X+W-20, Y+20); } }
+  text(t,X,Y,o){ o=o||{}; const x=this.x; x.textAlign=o.align||'left'; x.textBaseline='middle'; x.fillStyle=o.color||'#fff'; x.font=o.font||('800 34px '+FB); if(o.wrap){ wrapText(x,String(t),o.wrap).slice(0,o.lines||3).forEach((ln,i)=>x.fillText(ln,X,Y+i*(o.lh||44))); } else x.fillText(String(t),X,Y,o.max||1500); }
+  end(){ this.t.needsUpdate=true; }
+  hit(h){ if(!h || !h.uv) return -1; const px=h.uv.x*this.pw, py=(1-h.uv.y)*this.ph; for(let i=this.btns.length-1;i>=0;i--){ const [X,Y,W,H]=this.btns[i].r; if(px>=X && px<=X+W && py>=Y && py<=Y+H) return i; } return -1; }
+  click(h){ const i=this.hit(h); if(i>=0 && this.btns[i].fn){ sfx.tick(); this.btns[i].fn(); } }
+  hover(h){ const i=this.hit(h); if(i!==this.hov){ this.hov=i; lockerDraw(); } }
+}
+function lockerDraw(){
+  const M=LOCKER.menu; if(!M) return; const x=M.begin(), W=M.pw, H=M.ph, p=currentPlayer();
+  const header=t=>{ x.textAlign='left'; x.textBaseline='middle'; x.fillStyle='#fff'; x.font='64px '+FD; x.fillText(String(t).toUpperCase(),290,62,700);
+    M.btn([W-560,24,520,78], p?p.nombre:'Sin jugador', ()=>{ LOCKER.screen='players'; LOCKER.page=0; lockerDraw(); }, {size:38, sub:'Jugador · tocar para cambiar', subSize:20}); };
+  const sc=LOCKER.screen;
+  if(sc==='home'){
+    header('Vestuario');
+    const tiles=['escaneo','reaccion','tactica','partido','juego','espacios','readapt'].map(k=>({k, name:DRILLS[k].nombre, sub:'Nivel '+S.lv[k]+(POS_DRILLS.indexOf(k)>=0?' · '+POS[S.pos].corto:'')}));
+    tiles.push({k:'sesiones', name:'Sesiones', sub:allTemplates().length+' sesiones guardadas'});
+    tiles.push({k:'coach', name:'Esperar al entrenador', sub:LINK.code?'Código '+LINK.code:'Sale el código'});
+    const cols=3, tw=490, th=190, gx=(W-cols*tw)/(cols+1);
+    tiles.forEach((t,i)=>{ const c=i%cols, r=Math.floor(i/cols); M.btn([gx+c*(tw+gx), 140+r*(th+22), tw, th], t.name, ()=>{ if(t.k==='sesiones'){ LOCKER.screen='sessions'; } else if(t.k==='coach'){ LOCKER.screen='coach'; } else { LOCKER.screen='drill'; LOCKER.key=t.k; } lockerDraw(); }, {size:t.name.length>20?40:48, sub:t.sub, subSize:26, on:t.k==='coach'&&LINK.status==='linked'}); });
+    M.btn([W-330,H-74,290,56],'Salir de VR',()=>{ const s=renderer.xr.getSession(); if(s) s.end(); else exitStage(); },{size:32, bg:'#3a1214'});
+    M.text('Apunta con el mando y pulsa el gatillo', 60, H-46, {color:'#A9BFC5', font:'800 26px '+FB});
+  } else if(sc==='drill'){
+    const k=LOCKER.key, d=DRILLS[k], lvl=S.lv[k], pr=p?progress(p.id,k):null; header(k==='reaccion'?VARS[S.var].nombre:d.nombre);
+    M.text(k==='reaccion'?'Activación · variante para calentar.':d.desc, 60, 150, {color:'#A9BFC5', font:'800 28px '+FB, wrap:W-120, lines:2, lh:38});
+    M.text('Nivel', 60, 248, {font:'40px '+FD, color:'#2BA9C7'});
+    for(let l=1;l<=10;l++) M.btn([200+(l-1)*128, 214, 112, 72], String(l), ()=>{ S.lv[k]=l; lockerDraw(); }, {on:l===lvl, size:46, star:pr&&pr.rec===l});
+    M.text('N'+lvl+' · '+faseDe(k,lvl)+': '+(k==='reaccion'?queVar(S.var,lvl):LV[k][lvl-1].que), 60, 322, {font:'800 28px '+FB, wrap:W-120, lines:2, lh:36});
+    let y=400;
+    if(POS_DRILLS.indexOf(k)>=0){ M.text('Posición', 60, y+36, {font:'40px '+FD, color:'#2BA9C7'}); POS_KEYS.forEach((pk,i)=>M.btn([250+i*142, y, 130, 72], POS[pk].corto, ()=>{ S.pos=pk; try{ localStorage.setItem('campovr.pos', S.pos); }catch(_){} lockerDraw(); }, {on:S.pos===pk, size:34})); y+=100; }
+    if(k==='reaccion'){ M.text('Variante', 60, y+36, {font:'40px '+FD, color:'#2BA9C7'}); VAR_KEYS.forEach((v,i)=>M.btn([250+i*300, y, 280, 72], VARS[v].corto, ()=>{ S.var=v; lockerDraw(); }, {on:S.var===v, size:36})); y+=100; }
+    M.btn([60,H-150,300,100],'Volver',()=>{ LOCKER.screen='home'; lockerDraw(); },{size:44});
+    M.btn([W-560,H-170,500,130],'Empezar',()=>lockerStart(k),{size:72, on:true});
+  } else if(sc==='sessions'){
+    header('Sesiones');
+    const T=allTemplates().slice(LOCKER.page*6, LOCKER.page*6+6);
+    T.forEach((t,i)=>{ const c=i%2, r=Math.floor(i/2); const sub=(t.bloques||[]).filter(b=>b.tipo!=='descanso').map(b=>DRILLS[b.ej]?DRILLS[b.ej].corto:'').join(' · ');
+      M.btn([60+c*750, 150+r*170, 720, 150], t.nombre, ()=>{ LOCKER.page=0; lockerLaunch(buildItems(t), t.nombre); }, {size:46, sub, subSize:24}); });
+    if(allTemplates().length>6) M.btn([W-560,H-150,220,100],'Más',()=>{ LOCKER.page=(LOCKER.page+1)%Math.ceil(allTemplates().length/6); lockerDraw(); },{size:40});
+    M.btn([60,H-150,300,100],'Volver',()=>{ LOCKER.screen='home'; LOCKER.page=0; lockerDraw(); },{size:44});
+  } else if(sc==='players'){
+    header('Elige jugador');
+    const PL=[{id:null, nombre:'Sin jugador', categoria:'No se guarda'}].concat(S.players.slice().sort((a,b)=>String(a.nombre).localeCompare(String(b.nombre),'es')));
+    const per=12, pg=PL.slice(LOCKER.page*per, LOCKER.page*per+per);
+    pg.forEach((pl,i)=>{ const c=i%4, r=Math.floor(i/4); M.btn([60+c*375, 150+r*165, 350, 145], pl.nombre, ()=>{ S.playerId=pl.id; try{ localStorage.setItem('campovr.player', S.playerId||''); }catch(_){} const pp=posFromPlayer(currentPlayer()); if(pp) S.pos=pp; syncLevels(); renderAll(); LOCKER.screen='home'; LOCKER.page=0; lockerDraw(); }, {size:40, sub:pl.id?(pl.categoria||'')+(pl.posicion&&POS[normPos(pl.posicion)]?' · '+POS[normPos(pl.posicion)].corto:''):'Para probar', subSize:22, on:(S.playerId||null)===pl.id}); });
+    if(PL.length>per) M.btn([W-560,H-150,220,100],'Más',()=>{ LOCKER.page=(LOCKER.page+1)%Math.ceil(PL.length/per); lockerDraw(); },{size:40});
+    M.btn([60,H-150,300,100],'Volver',()=>{ LOCKER.screen='home'; LOCKER.page=0; lockerDraw(); },{size:44});
+    if(!S.players.length) M.text('Los jugadores se crean en el panel de la web o desde el ordenador del entrenador.', 60, 520, {color:'#A9BFC5', font:'800 30px '+FB});
+  } else if(sc==='coach'){
+    header('Entrenador');
+    const st=LINK.status, txt={off:'Desconectado', connecting:'Conectando…', waiting:'Esperando al entrenador', linked:'Entrenador conectado', error:'Sin conexión, reintentando…', na:'No disponible aquí'}[st]||'';
+    if(st==='na'){ M.text('El modo entrenador funciona al abrir la app desde sportax.es/vision360.', W/2, 380, {align:'center', font:'800 40px '+FB}); }
+    else { M.text('Código para el entrenador', W/2, 190, {align:'center', color:'#A9BFC5', font:'800 36px '+FB});
+      x.textAlign='center'; x.textBaseline='middle'; x.fillStyle='#fff'; x.font='230px '+FD; x.fillText(LINK.code||'·····', W/2, 360);
+      x.fillStyle=st==='linked'?'#43bd76':'#2BA9C7'; x.font='800 44px '+FB; x.fillText(txt, W/2, 520);
+      M.text('En el ordenador abre sportax.es/vision360/entrenador y escribe este código. Él lanzará los ejercicios aquí.', W/2, 600, {align:'center', color:'#A9BFC5', font:'800 30px '+FB, max:W-120}); }
+    M.btn([60,H-150,300,100],'Volver',()=>{ LOCKER.screen='home'; lockerDraw(); },{size:44});
+  }
+  M.end();
+}
+function lockerStart(k){ plan=null; LINK.reto=null; cur={key:k, lvl:S.lv[k], pos:S.pos, n:null, var:S.var}; leaveLocker(); beginDrill(); }
+function lockerLaunch(items, nombre){ if(!items.length) return; plan={nombre, items, i:0}; const it=items[0]; cur={key:it.key, lvl:it.lvl, pos:it.pos, n:it.n, var:it.v}; leaveLocker(); beginDrill(); }
+function enterLocker(){
+  initScene(); buildLocker(); disposeDrill(); clearXrPanel(); cur=null; plan=null; lastRes=null; if(LINK.paused) setPause(false);
+  setField(0,0,0); yaw=0; pitch=0; HUDF.a=0;
+  field.visible=false; if(STADIUM.sky) STADIUM.sky.visible=false; if(hudPanel) hudPanel.mesh.visible=false; if(MINI.panel) MINI.panel.mesh.visible=false;
+  LOCKER.group.visible=true; LOCKER.on=true; LOCKER.screen='home'; LOCKER.page=0; lockerShirts(); lockerDraw();
+  uiPicks=[LOCKER.menu.mesh];
+  $('#intro').hidden=true; $('#results').hidden=true; $('#hint').hidden=renderer.xr.isPresenting; $('#hint').textContent='Arrastra para mirar · clic en la pantalla del vestuario'; $('#loading').hidden=true;
+  setHud('Vestuario', 'Elige tu entrenamiento');
+  if(STADIUM.audio) STADIUM.audio.base=.012;
+  setFade(1); let a=1; const f=()=>{ a-=.08; setFade(Math.max(0,a)); if(a>0) requestAnimationFrame(f); }; requestAnimationFrame(f);
+}
+function leaveLocker(){
+  if(!LOCKER.on) return; LOCKER.on=false; if(LOCKER.group) LOCKER.group.visible=false; field.visible=true; if(STADIUM.sky) STADIUM.sky.visible=true; if(hudPanel) hudPanel.mesh.visible=true;
+  uiPicks=uiPicks.filter(m=>!LOCKER.menu || m!==LOCKER.menu.mesh); if(STADIUM.audio) STADIUM.audio.base=.05;
+  setFade(1); let a=1; const f=()=>{ a-=.06; setFade(Math.max(0,a)); if(a>0) requestAnimationFrame(f); }; requestAnimationFrame(f);
+}
+async function enterVR(){
+  ensureAudio();
+  $('#stage').hidden=false; document.body.style.overflow='hidden'; $('#loading').hidden=false;
+  await Promise.race([realLoad(), new Promise(r=>setTimeout(r,8000))]);
+  initScene(); resize(); startLoop(); $('#loading').hidden=true;
+  enterLocker();
+  if(xrSupported && !renderer.xr.isPresenting){
+    try{ const session=await navigator.xr.requestSession('immersive-vr', {optionalFeatures:['local-floor','bounded-floor']}); await renderer.xr.setSession(session); }
+    catch(e){ toast('No se ha podido entrar en VR. Pulsa de nuevo el botón.'); }
+  }
+}
+
 /* ================= Flujo ================= */
 let cur=null, lastRes=null, xrSupported=false, plan=null;
 function openDrill(key, lvl, pos, n, v){
@@ -3216,6 +3395,7 @@ function openDrill(key, lvl, pos, n, v){
   });
 }
 function showIntro(){
+  leaveLocker();
   const d=DRILLS[cur.key], p=currentPlayer();
   placeField(cur.key, cur.pos, POS[cur.pos].mir===true);
   $('#introLvl').textContent = planLabel() + 'N'+cur.lvl+' · '+faseDe(cur.key,cur.lvl)+(POS_DRILLS.indexOf(cur.key)>=0?' · '+POS[cur.pos].corto:'')+' · '+(p?p.nombre:'Sin jugador');
@@ -3234,6 +3414,7 @@ function showIntro(){
 }
 function disposeDrill(){ if(drill){ drill.dispose(); drill=null; } clearXrPanel(); }
 function beginDrill(){
+  leaveLocker();
   disposeDrill(); lastRes=null;
   placeField(cur.key, cur.pos, POS[cur.pos].mir===true);
   $('#intro').hidden=true; $('#results').hidden=true; $('#hint').hidden = renderer.xr.isPresenting;
@@ -3305,12 +3486,13 @@ function showXrResults(res, msg){
   p.mesh.position.set(0,1.8,0); g.add(p.mesh);
   const mkBtn=(label,color,xpos,fn)=>{ const b=makePanel(.84,.24,420,120); b.draw((x,w,h)=>{ x.fillStyle=color; roundRect(x,0,0,w,h,24); x.fill(); x.fillStyle=color==='#2BA9C7'?'#000000':'#ffffff'; x.font='60px '+FD; x.textAlign='center'; x.textBaseline='middle'; x.fillText(label,w/2,h/2+2,w-30); }); b.mesh.position.set(xpos,1.0,0); b.mesh.userData.pick=fn; g.add(b.mesh); uiPicks.push(b.mesh); };
   mkBtn(hasNext()?'SIGUIENTE':'REPETIR','#2BA9C7',-.47,()=>{ if(hasNext()) goNext(); else beginDrill(); });
-  mkBtn('SALIR DE VR','#144C5A',.47,()=>{ const s=renderer.xr.getSession(); if(s) s.end(); });
+  mkBtn('VESTUARIO','#144C5A',.47,()=>{ enterLocker(); });
   world.add(g); xrPanel=g;
 }
 function onXREnd(){
   clearXrPanel();
   if($('#stage').hidden) return;
+  if(LOCKER.on){ exitStage(); return; }
   if(!drill && !cur){ exitStage(); return; }
   if(drill && drill.isRest){ disposeDrill(); const idx=plan?plan.items.findIndex((it,j)=>j>plan.i && it.key!=='descanso'):-1; if(idx>=0){ plan.i=idx; const it=plan.items[idx]; cur={key:it.key, lvl:it.lvl, pos:it.pos, n:it.n, var:it.v}; } showIntro(); }
   else if(drill && drill.done && lastRes) $('#results').hidden=false;
@@ -3318,12 +3500,14 @@ function onXREnd(){
   $('#hint').hidden=true;
 }
 function exitStage(){
+  if(LOCKER.on){ LOCKER.on=false; if(LOCKER.group) LOCKER.group.visible=false; if(field) field.visible=true; if(STADIUM.sky) STADIUM.sky.visible=true; if(hudPanel) hudPanel.mesh.visible=true; uiPicks=[]; if(STADIUM.audio) STADIUM.audio.base=.05; }
   const s=renderer && renderer.xr.getSession(); if(s) s.end();
   disposeDrill(); if(renderer) stopLoop(); plan=null; cur=null; if(LINK.paused) setPause(false);
   $('#stage').hidden=true; document.body.style.overflow='';
   syncLevels(); renderAll();
 }
 $('#screenBtn').addEventListener('click', ()=>{ ensureAudio(); beginDrill(); });
+$('#vrHome').addEventListener('click', ()=>enterVR());
 $('#againBtn').addEventListener('click', ()=>{ ensureAudio(); if(hasNext()) goNext(); else beginDrill(); });
 $('#backBtn').addEventListener('click', exitStage);
 $('#exitBtn').addEventListener('click', exitStage);
@@ -3385,6 +3569,7 @@ async function startLink(){
   });
 }
 function renderLink(){
+  if(typeof LOCKER!=='undefined' && LOCKER.on && LOCKER.screen==='coach') lockerDraw();
   const el=$('#linkBox'); if(!el) return;
   const st=LINK.status;
   if(st==='na'){ el.innerHTML='<p class="note" style="margin:0">El modo entrenador funciona al abrir la app desde <b>sportax.es/vision360</b>.</p>'; return; }
@@ -3392,8 +3577,8 @@ function renderLink(){
   el.innerHTML='<div class="lk-st"><span class="dot '+st+'"></span>'+esc(txt)+'</div>'+
     '<div class="lk-code" aria-label="Código para el entrenador">'+esc(LINK.code||'·····')+'</div>'+
     '<p class="note" style="margin:0">En el ordenador, abre <b>sportax.es/vision360/entrenador</b> y escribe este código.</p>'+
-    '<button class="btn block" id="lobbyBtn" type="button">'+(xrSupported?'Entrar en VR y esperar al entrenador':'Abrir el estadio y esperar al entrenador')+'</button>';
-  $('#lobbyBtn').addEventListener('click', enterLobby);
+    '<button class="btn block" id="lobbyBtn" type="button">'+(xrSupported?'Entrar en VR · vestuario':'Abrir el vestuario')+'</button>';
+  $('#lobbyBtn').addEventListener('click', enterVR);
 }
 function lobbyHud(){ setHud('Esperando al entrenador', LINK.status==='linked' ? 'Tu entrenador lanzará el ejercicio' : 'Código del entrenador: '+(LINK.code||'')); }
 async function enterLobby(){
@@ -3458,7 +3643,7 @@ function launchItems(items, nombre, reto){
 }
 function coachStop(){
   plan=null; LINK.reto=null; if(LINK.paused) setPause(false);
-  if(renderer && renderer.xr.isPresenting){ disposeDrill(); cur=null; lastRes=null; $('#results').hidden=true; lobbyHud(); }
+  if(renderer && renderer.xr.isPresenting){ $('#results').hidden=true; enterLocker(); }
   else if(!$('#stage').hidden) exitStage();
 }
 function onCoachData(d){
@@ -3731,7 +3916,7 @@ function coachInit(){
   requestAnimationFrame(coDraw);
 }
 
-window.__v360={REAL, HUD, setVar:(v)=>{ S.var=v; }, gm:(l,p,f)=>genMatch(LV.partido[l-1],p,f), gt:(l,p)=>genTactic(LV.tactica[l-1],p,pickMir(p)), lc:laneClear, nd:nearestD, lerp, step:(n,dt)=>{ for(let i=0;i<n;i++){ moveTick(dt); if(drill) drill.tick(dt); } }, user:()=>userField(), moveTo:(x,z)=>moveTo(x,z), MOVE, dbg:()=>{ const d=drill; if(!d) return null; const o={key:d.key, phase:d.phase, trials:d.trials, k:d.k}; if(d.key==='juego'){ o.score=d.score; o.clock=Math.round(d.clock); o.B={st:d.B.state, x:+d.B.x.toFixed(1), z:+d.B.z.toFixed(1), own:d.B.owner?(d.B.owner.team+':'+d.B.owner.slot):null}; o.stats=d.stats; o.form=d.form; o.cnt=d.cnt; o.U={x:+d.U.x.toFixed(1),z:+d.U.z.toFixed(1)}; } return o; }, act:(t,a)=>drill.userAction(t,a), get D(){ return drill; }, look:(y,p,f)=>{ yaw=y; pitch=p||0; if(f){ camera.fov=f; camera.updateProjectionMatrix(); } }, stadium:STADIUM, cheer:(l)=>cheer(l), openDrill:(...a)=>openDrill(...a), mk:(t,n)=>makeAthlete(t,n), setGrey:(f,o)=>setGrey(f,o), get drill(){ return drill; }, exit:()=>{ if(typeof exitStage==='function') exitStage(); }};
+window.__v360={REAL, HUD, locker:LOCKER, setVar:(v)=>{ S.var=v; }, gm:(l,p,f)=>genMatch(LV.partido[l-1],p,f), gt:(l,p)=>genTactic(LV.tactica[l-1],p,pickMir(p)), lc:laneClear, nd:nearestD, lerp, step:(n,dt)=>{ for(let i=0;i<n;i++){ moveTick(dt); if(drill) drill.tick(dt); } }, user:()=>userField(), moveTo:(x,z)=>moveTo(x,z), MOVE, dbg:()=>{ const d=drill; if(!d) return null; const o={key:d.key, phase:d.phase, trials:d.trials, k:d.k}; if(d.key==='juego'){ o.score=d.score; o.clock=Math.round(d.clock); o.B={st:d.B.state, x:+d.B.x.toFixed(1), z:+d.B.z.toFixed(1), own:d.B.owner?(d.B.owner.team+':'+d.B.owner.slot):null}; o.stats=d.stats; o.form=d.form; o.cnt=d.cnt; o.U={x:+d.U.x.toFixed(1),z:+d.U.z.toFixed(1)}; } return o; }, act:(t,a)=>drill.userAction(t,a), get D(){ return drill; }, look:(y,p,f)=>{ yaw=y; pitch=p||0; if(f){ camera.fov=f; camera.updateProjectionMatrix(); } }, stadium:STADIUM, cheer:(l)=>cheer(l), openDrill:(...a)=>openDrill(...a), mk:(t,n)=>makeAthlete(t,n), setGrey:(f,o)=>setGrey(f,o), get drill(){ return drill; }, exit:()=>{ if(typeof exitStage==='function') exitStage(); }};
 if(location.hash==='#entrenador') coachInit(); else { Store.init(); renderLink(); startLink(); realLoad(); }
 })();
 </script>
