@@ -477,16 +477,40 @@ const LV = {
     {mates:5,defs:8,anim:1.6,win:2.8,gap:0.8,presion:true,ocl:0.5,que:'Oclusión a 0,5 s y máxima presión.'}
   ],
   partido:[
-    {sits:['posicional','salida'],circ:1,speed:.75,win:7.0,gap:1.4,que:'Ataque posicional y salida de balón, a ritmo lento.'},
-    {sits:['posicional','salida'],circ:1,speed:.85,win:6.5,gap:1.2,que:'Las mismas situaciones, algo más rápidas.'},
-    {sits:['posicional','salida','centro'],circ:2,speed:.9,win:6.0,gap:1.1,que:'Se añade el ataque por banda y dos pases previos.'},
-    {sits:['posicional','salida','centro','contra'],circ:2,speed:1.0,win:5.5,gap:1.0,que:'Se añade el contraataque.'},
-    {sits:['posicional','salida','centro','contra','bloque'],circ:2,speed:1.0,win:5.0,gap:.9,que:'Primera situación defensiva: defensa en bloque medio.'},
-    {sits:['posicional','salida','centro','contra','bloque','tdef'],circ:3,speed:1.05,win:4.5,gap:.8,que:'Se añade la transición defensiva.'},
-    {sits:['posicional','salida','centro','contra','bloque','tdef'],circ:3,speed:1.15,win:4.0,gap:.7,que:'Todas las situaciones a ritmo de partido.'},
-    {sits:['posicional','salida','centro','contra','bloque','tdef'],circ:3,speed:1.2,win:3.5,gap:.6,presion:true,que:'Un rival te presiona mientras decides.'},
-    {sits:['posicional','salida','centro','contra','bloque','tdef'],circ:4,speed:1.25,win:3.2,gap:.55,presion:true,ocl:.9,que:'Oclusión: la jugada desaparece a los 0,9 s.'},
-    {sits:['posicional','salida','centro','contra','bloque','tdef'],circ:4,speed:1.35,win:2.8,gap:.5,presion:true,ocl:.6,que:'Oclusión a 0,6 s y ritmo de élite.'}
+    {sits:['posicional','salida','cambio'],circ:1,speed:.75,win:7.0,gap:1.4,que:'Ataque posicional, salida de balón y cambios de orientación, a ritmo lento.'},
+    {sits:['posicional','salida','cambio','filtrado'],circ:1,speed:.85,win:6.5,gap:1.2,que:'Se añade el pase filtrado a la espalda de la defensa.'},
+    {sits:['posicional','salida','cambio','filtrado','centro','centro2'],circ:2,speed:.9,win:6.0,gap:1.1,que:'Ataque por banda y centros al área.'},
+    {sits:['posicional','salida','cambio','filtrado','centro','centro2','contra','tiro'],circ:2,speed:1.0,win:5.5,gap:1.0,que:'Contraataque y decisiones de tiro o pase.'},
+    {sits:['posicional','salida','cambio','filtrado','centro','centro2','contra','tiro','bloque','defCentro'],circ:2,speed:1.0,win:5.0,gap:.9,que:'Primeras situaciones defensivas: bloque medio y defender centros.'},
+    {sits:['posicional','salida','cambio','filtrado','centro','centro2','contra','tiro','bloque','defCentro','tdef'],circ:3,speed:1.05,win:4.5,gap:.8,que:'Se añade la transición defensiva.'},
+    {sits:['posicional','salida','cambio','filtrado','centro','centro2','contra','tiro','bloque','defCentro','tdef'],circ:3,speed:1.15,win:4.0,gap:.7,que:'Todas las situaciones a ritmo de partido.'},
+    {sits:['posicional','salida','cambio','filtrado','centro','centro2','contra','tiro','bloque','defCentro','tdef'],circ:3,speed:1.2,win:3.5,gap:.6,presion:true,que:'Un rival te presiona mientras decides.'},
+    {sits:['posicional','salida','cambio','filtrado','centro','centro2','contra','tiro','bloque','defCentro','tdef'],circ:4,speed:1.25,win:3.2,gap:.55,presion:true,ocl:.9,que:'Oclusión: la jugada desaparece a los 0,9 s.'},
+    {sits:['posicional','salida','cambio','filtrado','centro','centro2','contra','tiro','bloque','defCentro','tdef'],circ:4,speed:1.35,win:2.8,gap:.5,presion:true,ocl:.6,que:'Oclusión a 0,6 s y ritmo de élite.'}
+  ],
+  juego:[
+    {speed:.6,win:7.0,press:.35,userBias:8,reach:.8,react:.45,ayuda:true,que:'Juego muy lento, mucho tiempo con balón y ayuda: la línea de pase se ve en verde o rojo.'},
+    {speed:.66,win:6.2,press:.42,userBias:8,reach:.85,react:.42,ayuda:true,que:'Algo más rápido. Sigue la ayuda de la línea de pase.'},
+    {speed:.72,win:5.5,press:.5,userBias:7.5,reach:.9,react:.4,ayuda:true,que:'Más ritmo y la presión llega antes.'},
+    {speed:.78,win:4.8,press:.56,userBias:7,reach:.95,react:.38,ayuda:false,que:'Sin ayuda visual: tú lees si estás libre.'},
+    {speed:.84,win:4.2,press:.65,userBias:6.5,reach:1.0,react:.35,ayuda:false,que:'Ritmo medio y rivales que cortan mejor las líneas.'},
+    {speed:.9,win:3.7,press:.75,userBias:6,reach:1.05,react:.32,ayuda:false,que:'Menos tiempo para decidir con balón.'},
+    {speed:.97,win:3.2,press:.85,userBias:5.5,reach:1.1,react:.3,ayuda:false,que:'Ritmo de partido real.'},
+    {speed:1.04,win:2.8,press:.95,userBias:5,reach:1.15,react:.28,ayuda:false,que:'Presión intensa: decide antes de recibir.'},
+    {speed:1.12,win:2.4,press:1.05,userBias:4.5,reach:1.2,react:.25,ayuda:false,que:'Ritmo alto y rivales muy agresivos.'},
+    {speed:1.2,win:2.0,press:1.15,userBias:4,reach:1.25,react:.22,ayuda:false,que:'Ritmo de élite: juego a uno o dos toques.'}
+  ],
+  espacios:[
+    {defs:1,win:9,follow:0,cover:0,react:.6,reach:7,dist:[10,16],angC:.9,mates:0,ayuda:true,segunda:false,win2:6,que:'Un rival marcándote, quieto. Ves la línea de pase en verde o rojo.'},
+    {defs:2,win:8.5,follow:0,cover:0,react:.6,reach:7,dist:[10,18],angC:1.1,mates:0,ayuda:true,segunda:false,win2:6,que:'Dos rivales: uno te marca y otro tapa la línea.'},
+    {defs:2,win:7.5,follow:.35,cover:0,react:.6,reach:7,dist:[10,18],angC:1.2,mates:0,ayuda:false,segunda:false,win2:6,que:'Sin ayuda visual y el marcador te sigue despacio.'},
+    {defs:2,win:7,follow:.5,cover:.3,react:.55,reach:7,dist:[10,20],angC:1.3,mates:0,ayuda:false,segunda:false,win2:6,que:'Los rivales reaccionan a tu movimiento.'},
+    {defs:3,win:6.5,follow:.55,cover:.4,react:.5,reach:7,dist:[10,20],angC:1.4,mates:2,ayuda:false,segunda:true,win2:5.5,que:'Tres rivales y, al recibir, busca el siguiente pase.'},
+    {defs:3,win:6,follow:.65,cover:.5,react:.45,reach:7,dist:[11,22],angC:1.6,mates:2,ayuda:false,segunda:true,win2:5,que:'Menos tiempo para desmarcarte.'},
+    {defs:4,win:5.5,follow:.7,cover:.6,react:.4,reach:7,dist:[11,22],angC:1.8,mates:3,ayuda:false,segunda:true,win2:4.5,que:'Cuatro rivales y el balón puede venir de cualquier lado.'},
+    {defs:4,win:5,follow:.8,cover:.7,react:.35,reach:7,dist:[12,24],angC:2.2,mates:3,ayuda:false,segunda:true,win2:4,presion:true,que:'Presión sobre el pasador: la línea se cierra antes.'},
+    {defs:5,win:4.5,follow:.85,cover:.8,react:.3,reach:7,dist:[12,24],angC:2.6,mates:3,ayuda:false,segunda:true,win2:3.5,presion:true,que:'Cinco rivales que siguen tus movimientos.'},
+    {defs:5,win:4,follow:.95,cover:.9,react:.25,reach:7,dist:[12,26],angC:3.0,mates:3,ayuda:false,segunda:true,win2:3,presion:true,que:'Ritmo de élite: desmarque y pase en segundos.'}
   ],
   readapt:[
     {arc:20,balls:2,win:2.8,rules:'color',block:6,que:'Regla de color con 2 balones muy centrados.'},
@@ -519,6 +543,14 @@ const DRILLS = {
     chips:['Contexto real de juego','Ataque y defensa','Toma de decisiones'], meta:'8 situaciones · ≈2 min',
     pasos:['Ves el partido desde tu posición, con tu equipo de celeste en 4-3-3 y el rival de rojo en 4-4-2.','Sigue el balón girando la cabeza: la jugada puede llegar desde cualquier lado.','Con balón, señala el mejor pase. Sin balón, señala al rival libre más peligroso de tu zona.'],
     icon:'<svg class="ico" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="10" width="56" height="44" rx="2"/><line x1="32" y1="10" x2="32" y2="54"/><circle cx="32" cy="32" r="6"/><g fill="currentColor" stroke="none"><circle cx="12" cy="20" r="2.6"/><circle cx="12" cy="44" r="2.6"/><circle cx="20" cy="32" r="2.6"/><circle cx="26" cy="22" r="2.6"/><circle cx="26" cy="42" r="2.6"/></g><g stroke="currentColor"><circle cx="40" cy="26" r="2.6"/><circle cx="40" cy="38" r="2.6"/><circle cx="50" cy="18" r="2.6"/><circle cx="50" cy="46" r="2.6"/><circle cx="52" cy="32" r="2.6"/></g></svg>'},
+  juego:{nombre:'Jugar un partido', corto:'Jugar', desc:'Partido completo de 2 partes de 5 minutos que no se para. Te mueves con el joystick, te desmarcas, pides el balón y decides: pase, pase al espacio, centro, tiro o conducción.',
+    chips:['Juego real continuo','Desmarque','Decisión con balón'], meta:'2 × 5 min',
+    pasos:['Joystick izquierdo para moverte, derecho para girar (en pantalla: W A S D).','Sin balón, busca una línea de pase libre y pide el balón con el gatillo.','Con balón: apunta a un compañero (pase), al césped (pase al espacio) o a la portería (tiro). Moverte con balón es conducir.'],
+    icon:'<svg class="ico" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="4" y="10" width="56" height="44" rx="2"/><line x1="32" y1="10" x2="32" y2="54"/><circle cx="32" cy="32" r="6"/><circle cx="20" cy="40" r="4" fill="currentColor"/><path d="M24 37l12-8" stroke-dasharray="3 3"/><circle cx="40" cy="27" r="3"/><path d="M14 22l6 6M20 22l-6 6"/></svg>'},
+  espacios:{nombre:'Interpretación de espacios', corto:'Espacios', desc:'Muévete con el joystick para encontrar el espacio libre y abrir la línea de pase. Si estás libre, recibes; si un rival corta la línea, te lo interceptan.',
+    chips:['Desmarque','Líneas de pase','Orientación en el campo'], meta:'8 jugadas · ≈2 min',
+    pasos:['Un compañero tiene el balón y los rivales te tapan.','Muévete (joystick o W A S D) hasta que no haya rivales en la línea de pase.','Pide el balón con el gatillo o espera al pase. En niveles altos, al recibir busca el siguiente pase.'],
+    icon:'<svg class="ico" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="14" cy="50" r="4" fill="currentColor"/><circle cx="46" cy="18" r="5"/><path d="M14 50L46 18" stroke-dasharray="4 4"/><path d="M28 30l6 6M34 30l-6 6" stroke-width="2"/><path d="M50 30a12 12 0 0 1-8 10" /><path d="M40 36l2 4 4-1"/></svg>'},
   readapt:{nombre:'Readaptación: doble tarea', corto:'Readaptación', desc:'Balones numerados en un campo visual reducido. Toca solo el que cumple la regla del bloque. Las fases siguen la postura del jugador.',
     chips:['Vuelta al juego','Carga cognitiva','Poco movimiento'], meta:'18–20 estímulos · ≈2 min',
     pasos:['Cada bloque tiene una regla: números, colores o las dos cosas.','Aparecen varios balones delante de ti.','Toca solo el que cumple la regla.'],
@@ -544,11 +576,11 @@ const LEGACY_POS = {DFC:'DFCI', LAT:'LI', EXT:'EI', Portero:'POR', Defensa:'DFCI
 function normPos(k){ return POS[k] ? k : (LEGACY_POS[k]||null); }
 function pickMir(k){ const m=(POS[k]||POS.MC).mir; return m==null ? Math.random()<.5 : m; }
 function dispAt(k){ const P=POS[k]; return {x:P.at.x*(P.mir?-1:1), z:P.at.z}; }
-const POS_DRILLS = ['escaneo','tactica','partido'];
+const POS_DRILLS = ['escaneo','tactica','partido','juego','espacios'];
 function posFromPlayer(p){ if(!p || !p.posicion) return null; return normPos(p.posicion); }
 
 /* ================= Datos ================= */
-const S = { players:[], sessions:[], templates:[], edit:null, confirmDel:null, var:'llamada', playerId:null, pos:'MC', lv:{escaneo:1,reaccion:1,tactica:1,partido:1,readapt:1} };
+const S = { players:[], sessions:[], templates:[], edit:null, confirmDel:null, var:'llamada', playerId:null, pos:'MC', lv:{escaneo:1,reaccion:1,tactica:1,partido:1,juego:1,espacios:1,readapt:1} };
 const LS_KEY = 'campovr.v1';
 const Store = {
   mode:'local', db:null, dl:null,
@@ -687,6 +719,8 @@ function estTrial(key,lvl,v){
   if(key==='escaneo') return P.prep+1.2+P.win*.5+2;
   if(key==='tactica') return P.anim+P.win*.5+2.8;
   if(key==='partido') return 1.8/P.speed+P.circ*(.7/P.speed+1)+.8+P.win*.5+3;
+  if(key==='juego') return 60;
+  if(key==='espacios') return P.win*.8+3+(P.segunda?P.win2*.6+2.6:0);
   return .7+P.win*.6+.6+2.6/P.block;
 }
 function trialsFor(key,lvl,min,v){
@@ -829,7 +863,7 @@ $('#cancelAdd').addEventListener('click', ()=>{ $('#addForm').hidden=true; });
 
 /* ================= Audio ================= */
 let AC=null;
-function ensureAudio(){ try{ if(!AC) AC = new (window.AudioContext||window.webkitAudioContext)(); if(AC.state==='suspended') AC.resume(); }catch(e){} }
+function ensureAudio(){ try{ if(!AC) AC = new (window.AudioContext||window.webkitAudioContext)(); if(AC.state==='suspended') AC.resume(); if(typeof crowdAudioStart==='function') crowdAudioStart(); }catch(e){} }
 function tone(f,d,type,vol){ if(!AC) return; try{ const o=AC.createOscillator(), g=AC.createGain(); o.type=type||'sine'; o.frequency.value=f; g.gain.setValueAtTime(vol||.15, AC.currentTime); g.gain.exponentialRampToValueAtTime(.0001, AC.currentTime+(d||.12)); o.connect(g); g.connect(AC.destination); o.start(); o.stop(AC.currentTime+(d||.12)+.03); }catch(e){} }
 function noiseBurst(d,vol,freq){ if(!AC) return; try{ const n=Math.floor(AC.sampleRate*d), b=AC.createBuffer(1,n,AC.sampleRate), x=b.getChannelData(0); for(let i=0;i<n;i++) x[i]=(Math.random()*2-1)*Math.pow(1-i/n,3); const s=AC.createBufferSource(); s.buffer=b; const f=AC.createBiquadFilter(); f.type='lowpass'; f.frequency.value=freq||900; const g=AC.createGain(); g.gain.value=vol||.4; s.connect(f); f.connect(g); g.connect(AC.destination); s.start(); }catch(e){} }
 const sfx = {
@@ -848,7 +882,7 @@ function addNoise(x,w,h,amt){ const im=x.getImageData(0,0,w,h), d=im.data; for(l
 
 function pitchTexture(){
   const s=18, W=Math.round(68*s), H=Math.round(105*s); const [c,x]=cvs(W,H); const m=v=>v*s;
-  for(let i=0;i<18;i++){ x.fillStyle = i%2 ? '#3f8c3b' : '#4a9c44'; x.fillRect(0, i*H/18, W, H/18+1); }
+  for(let i=0;i<18;i++){ x.fillStyle = i%2 ? '#367e33' : '#41903c'; x.fillRect(0, i*H/18, W, H/18+1); }
   for(let i=0;i<260;i++){ x.fillStyle='rgba('+(Math.random()<.5?'30,70,25':'95,140,60')+','+rand(.03,.07)+')'; x.beginPath(); x.ellipse(rand(0,W),rand(0,H),rand(20,90),rand(10,50),rand(0,3),0,Math.PI*2); x.fill(); }
   [[W/2,m(6)],[W/2,H-m(6)]].forEach(([cx,cy])=>{ const g=x.createRadialGradient(cx,cy,0,cx,cy,m(7)); g.addColorStop(0,'rgba(150,130,80,.28)'); g.addColorStop(1,'rgba(150,130,80,0)'); x.fillStyle=g; x.fillRect(cx-m(8),cy-m(8),m(16),m(16)); });
   x.strokeStyle='rgba(250,252,248,.92)'; x.fillStyle='rgba(250,252,248,.92)'; x.lineWidth=m(.12);
@@ -868,7 +902,7 @@ function pitchTexture(){
   addNoise(x,W,H,16);
   return tex(c);
 }
-function grassTexture(){ const [c,x]=cvs(256,256); x.fillStyle='#3a7634'; x.fillRect(0,0,256,256); addNoise(x,256,256,26); return tex(c,true); }
+function grassTexture(){ const [c,x]=cvs(256,256); x.fillStyle='#336b2f'; x.fillRect(0,0,256,256); addNoise(x,256,256,26); return tex(c,true); }
 function skyTexture(){
   const [c,x]=cvs(1024,512); const g=x.createLinearGradient(0,0,0,256);
   g.addColorStop(0,'#2f6db8'); g.addColorStop(.6,'#7fb0dc'); g.addColorStop(1,'#d7e8f2'); x.fillStyle=g; x.fillRect(0,0,1024,256);
@@ -961,14 +995,6 @@ function quad(a,b,c,d,mat,ru,rv){
   g.setAttribute('uv', new THREE.Float32BufferAttribute([0,0,ru,0,ru,rv,0,0,ru,rv,0,rv],2));
   g.computeVertexNormals(); return new THREE.Mesh(g,mat);
 }
-function stand(L, crowd, concrete, roof){
-  const g=new THREE.Group(), h=L/2;
-  g.add(quad([-h,0,0],[h,0,0],[h,2.4,0],[-h,2.4,0],concrete, L/4, 1));
-  g.add(quad([-h,2.4,.3],[h,2.4,.3],[h,17,25],[-h,17,25],crowd, L/16, 2.2));
-  g.add(quad([-h,17,25],[h,17,25],[h,24,25.5],[-h,24,25.5],concrete, L/4, 1));
-  g.add(quad([-h,24,25.5],[h,24,25.5],[h,21.5,5],[-h,21.5,5],roof, 1, 1));
-  return g;
-}
 function makeGoal(z, dir){
   const g=new THREE.Group(); const m=new THREE.MeshStandardMaterial({color:0xf7f7f7, roughness:.35});
   const post=new THREE.CylinderGeometry(.06,.06,2.44,12);
@@ -982,6 +1008,166 @@ function makeGoal(z, dir){
   [-w,w].forEach(sx=>g.add(quad([sx,0,0],[sx,2.44,0],[sx,2.3,dt],[sx,0,db],nm,2.2/.15,2.44/.15)));
   g.position.z=z; return g;
 }
+/* ================= Estadio profesional ================= */
+const STADIUM = {crowd:[], boards:[], screens:[], excite:0, exciteT:0, t:0, screenTxt:['',''], audio:null};
+const ST_LONG_X=43, ST_END_Z=63;
+const ST_SECTIONS = [
+  {k:'line', a:{x:ST_LONG_X,z:-ST_END_Z}, b:{x:ST_LONG_X,z:ST_END_Z}, out:{x:1,z:0}, side:'E'},
+  {k:'line', a:{x:-ST_LONG_X,z:ST_END_Z}, b:{x:-ST_LONG_X,z:-ST_END_Z}, out:{x:-1,z:0}, side:'O'},
+  {k:'line', a:{x:ST_LONG_X,z:ST_END_Z}, b:{x:-ST_LONG_X,z:ST_END_Z}, out:{x:0,z:1}, side:'S'},
+  {k:'line', a:{x:-ST_LONG_X,z:-ST_END_Z}, b:{x:ST_LONG_X,z:-ST_END_Z}, out:{x:0,z:-1}, side:'N'},
+  {k:'arc', c:{x:ST_LONG_X,z:ST_END_Z}, a0:0, a1:Math.PI/2, side:'SE'},
+  {k:'arc', c:{x:-ST_LONG_X,z:ST_END_Z}, a0:Math.PI/2, a1:Math.PI, side:'SO'},
+  {k:'arc', c:{x:-ST_LONG_X,z:-ST_END_Z}, a0:Math.PI, a1:Math.PI*1.5, side:'NO'},
+  {k:'arc', c:{x:ST_LONG_X,z:-ST_END_Z}, a0:Math.PI*1.5, a1:Math.PI*2, side:'NE'}
+];
+const ST_TIERS = [ {y0:1.5, d0:0, rise:.42, depth:.82, rows:24, lod:0}, {y0:15.2, d0:21, rise:.56, depth:.86, rows:18, lod:1} ];
+function secPt(sec,u,d){ if(sec.k==='line') return {x:sec.a.x+(sec.b.x-sec.a.x)*u+sec.out.x*d, z:sec.a.z+(sec.b.z-sec.a.z)*u+sec.out.z*d}; const a=lerp(sec.a0,sec.a1,u); return {x:sec.c.x+Math.cos(a)*d, z:sec.c.z+Math.sin(a)*d}; }
+function secOut(sec,u){ if(sec.k==='line') return sec.out; const a=lerp(sec.a0,sec.a1,u); return {x:Math.cos(a), z:Math.sin(a)}; }
+function secLen(sec,d){ return sec.k==='line' ? Math.hypot(sec.b.x-sec.a.x, sec.b.z-sec.a.z) : (sec.a1-sec.a0)*d; }
+/* Geometría escalonada: banda de quads definida por dos curvas (d,y) a lo largo de la sección */
+function GeoBuilder(){ const P=[], C=[]; return {P, C,
+  quad(p1,p2,p3,p4,col){ P.push(...p1,...p2,...p3,...p1,...p3,...p4); for(let i=0;i<6;i++) C.push(col[0],col[1],col[2]); },
+  mesh(mat){ const g=new THREE.BufferGeometry(); g.setAttribute('position',new THREE.Float32BufferAttribute(P,3)); g.setAttribute('color',new THREE.Float32BufferAttribute(C,3)); g.computeVertexNormals(); g.computeBoundingSphere(); return new THREE.Mesh(g,mat); } }; }
+const hex3 = h=>{ const c=new THREE.Color(h); return [c.r,c.g,c.b]; };
+function strip(GB, sec, segs, d1,y1, d2,y2, colFn){
+  for(let s=0;s<segs;s++){ const u0=s/segs, u1=(s+1)/segs; const a=secPt(sec,u0,d1), b=secPt(sec,u1,d1), c=secPt(sec,u1,d2), e=secPt(sec,u0,d2);
+    GB.quad([a.x,y1,a.z],[e.x,y2,e.z],[c.x,y2,c.z],[b.x,y1,b.z], colFn(s,u0)); }
+}
+function buildStands(){
+  const mat=new THREE.MeshLambertMaterial({vertexColors:true, side:THREE.DoubleSide});
+  const seatA=hex3('#2BA9C7'), seatB=hex3('#144C5A'), seatW=hex3('#e9eef0'), riser=hex3('#30363c'), concrete=hex3('#7d848a'), dark=hex3('#1b2024'), glass=hex3('#0d2a33'), roofU=hex3('#41484f'), roofT=hex3('#9aa3aa'), azul=hex3('#144C5A');
+  const group=new THREE.Group();
+  ST_SECTIONS.forEach((sec,si)=>{
+    const GB=GeoBuilder(); const L=secLen(sec,30); const segs=sec.k==='line'?Math.max(8,Math.round(L/3)):12;
+    ST_TIERS.forEach((T,ti)=>{
+      // muro frontal
+      if(ti===0) strip(GB,sec,segs, T.d0,0, T.d0,T.y0-T.rise, ()=>azul);
+      else strip(GB,sec,segs, T.d0-.6,T.y0-1.6, T.d0,T.y0-T.rise, ()=>dark);
+      for(let r=0;r<T.rows;r++){
+        const y=T.y0+r*T.rise, dA=T.d0+r*T.depth, dB=dA+T.depth;
+        strip(GB,sec,segs, dA,y-T.rise, dA,y, ()=>riser);
+        strip(GB,sec,segs, dA,y, dB,y, (s)=>{ const band=Math.floor(r/6)%2, blk=(s+Math.floor(r/3))%5===0; return ti===1 ? (band?seatB:seatA) : (blk?seatW:(band?seatB:seatA)); });
+      }
+    });
+    // palcos acristalados entre anillos
+    const T0=ST_TIERS[0], T1=ST_TIERS[1], top0=T0.y0+(T0.rows-1)*T0.rise, back0=T0.d0+T0.rows*T0.depth;
+    strip(GB,sec,segs, back0,top0, back0+.2,top0, ()=>concrete);
+    strip(GB,sec,segs, back0+.2,top0, back0+.2,T1.y0-1.6, (s)=>s%2?glass:hex3('#123a45'));
+    strip(GB,sec,segs, back0+.2,T1.y0-1.6, T1.d0-.6,T1.y0-1.6, ()=>dark);
+    // muro trasero y cubierta
+    const top1=T1.y0+(T1.rows-1)*T1.rise, back1=T1.d0+T1.rows*T1.depth;
+    strip(GB,sec,segs, back1,top1, back1,31, ()=>concrete);
+    strip(GB,sec,segs, back1,31, 9,32.5, ()=>roofU);
+    strip(GB,sec,segs, 9,32.5, 9,33.6, ()=>roofT);
+    strip(GB,sec,segs, 9,33.6, back1+1,32.2, ()=>roofT);
+    const m=GB.mesh(mat); group.add(m);
+    // focos bajo el borde de la cubierta
+    const LM=MAT.roofLight;
+    const nL=sec.k==='line'?Math.round(L/9):3;
+    for(let i=0;i<nL;i++){ const u=(i+.5)/nL, p=secPt(sec,u,9.6), o=secOut(sec,u); const lb=new THREE.Mesh(GEO.roofLight, LM); lb.position.set(p.x,32.2,p.z); lb.rotation.y=Math.atan2(o.x,o.z); lb.rotation.x=.5; group.add(lb); }
+    // pancartas en el frente del anillo superior
+    if(sec.k==='line'){ [.25,.75].forEach((u,j)=>{ const p=secPt(sec,u,T1.d0-.62), o=secOut(sec,u); const b=new THREE.Mesh(GEO.banner, MAT.banners[(si+j)%MAT.banners.length]); b.position.set(p.x,T1.y0-2.2,p.z); b.rotation.y=Math.atan2(-o.x,-o.z); group.add(b); }); }
+  });
+  return group;
+}
+/* ---------- Afición 3D (instanciada y animada en la GPU) ---------- */
+function fanGeometry(lite){
+  const P=[], N=[], A=[];
+  const box=(x0,x1,y0,y1,z0,z1,part,faces)=>{ // faces: f(front +z), t(top), l, r
+    const F={f:[[x0,y0,z1],[x1,y0,z1],[x1,y1,z1],[x0,y1,z1],[0,0,1]], t:[[x0,y1,z1],[x1,y1,z1],[x1,y1,z0],[x0,y1,z0],[0,1,0]], l:[[x0,y0,z0],[x0,y0,z1],[x0,y1,z1],[x0,y1,z0],[-1,0,0]], r:[[x1,y0,z1],[x1,y0,z0],[x1,y1,z0],[x1,y1,z1],[1,0,0]]};
+    faces.split('').forEach(k=>{ const q=F[k], n=q[4]; [q[0],q[1],q[2],q[0],q[2],q[3]].forEach(v=>{ P.push(...v); N.push(...n); A.push(part); }); });
+  };
+  const head=()=>{ const o=new THREE.OctahedronGeometry(.13,0); o.scale(.9,1.1,.95); o.translate(0,.75,0); const op=o.attributes.position, on=o.attributes.normal; for(let i=0;i<op.count;i++){ P.push(op.getX(i),op.getY(i),op.getZ(i)); N.push(on.getX(i),on.getY(i),on.getZ(i)); A.push(1); } };
+  if(lite){ box(-.21,.21,0,.6,-.12,.12,0,'ft'); head();
+  } else {
+    box(-.2,.2,0,.58,-.12,.12,0,'ft'); box(-.15,.15,.1,.16,.12,.42,3,'f');
+    box(-.28,-.19,.12,.55,-.05,.06,2,'f'); box(.19,.28,.12,.55,-.05,.06,2,'f');
+    head();
+  }
+  const g=new THREE.BufferGeometry();
+  g.setAttribute('position',new THREE.Float32BufferAttribute(P,3)); g.setAttribute('normal',new THREE.Float32BufferAttribute(N,3)); g.setAttribute('aPart',new THREE.Float32BufferAttribute(A,1));
+  return g;
+}
+function crowdMaterial(){
+  return new THREE.ShaderMaterial({
+    uniforms: THREE.UniformsUtils.merge([THREE.UniformsLib.fog, {uTime:{value:0}, uExcite:{value:0}}]), fog:true,
+    vertexShader:`
+      attribute float aPart; attribute vec3 aRnd; attribute vec3 aSkin;
+      uniform float uTime; uniform float uExcite;
+      varying vec3 vCol;
+      #include <fog_pars_vertex>
+      void main(){
+        vec3 p=position; float ph=aRnd.x*6.2832;
+        float cheer=clamp(uExcite*(0.55+0.45*aRnd.y)+aRnd.z,0.,1.);
+        float jump=max(0.,sin(uTime*(6.+aRnd.y*3.)+ph))*0.17*cheer;
+        float sway=sin(uTime*(1.1+aRnd.y)+ph)*0.025*(1.+cheer*2.);
+        if(aPart>1.5 && aPart<2.5){ float up=cheer*(0.42+0.12*sin(uTime*5.+ph)); p.y+=up*smoothstep(.1,.55,position.y)+up*.5; p.x*=1.+cheer*.35; }
+        p.y+=jump; p.x+=sway; p.z+=abs(sway)*.4;
+        vec4 mvPosition=modelViewMatrix*instanceMatrix*vec4(p,1.);
+        gl_Position=projectionMatrix*mvPosition;
+        vec3 n=normalize(mat3(modelMatrix)*mat3(instanceMatrix)*normal);
+        float l=.5+.42*max(0.,dot(n,normalize(vec3(-.35,.8,.45))))+.18*max(0.,n.y);
+        vec3 shirt=instanceColor;
+        vec3 c=aPart<.5?shirt:(aPart<1.5?aSkin:(aPart<2.5?shirt*.9:vec3(.13,.14,.16)));
+        vCol=c*l;
+        #include <fog_vertex>
+      }`,
+    fragmentShader:`
+      varying vec3 vCol;
+      #include <fog_pars_fragment>
+      void main(){ gl_FragColor=vec4(vCol,1.);
+        #include <fog_fragment>
+      }`
+  });
+}
+function buildCrowd(){
+  const mat=crowdMaterial(); STADIUM.crowdMat=mat;
+  const geos=[fanGeometry(false), fanGeometry(true)];
+  const home=['#2BA9C7','#2BA9C7','#2BA9C7','#2BA9C7','#144C5A','#144C5A','#144C5A','#ffffff','#ffffff','#111418','#1c2a33','#3a4a56','#d9d9d9'].map(h=>new THREE.Color(h));
+  const away=['#c4262e','#c4262e','#c4262e','#8f1a20','#ffffff','#151515'].map(h=>new THREE.Color(h));
+  const skins=['#f1c9a5','#e8b98e','#d9a47a','#c48c62','#a8714a','#7a4e2f','#5a3622'].map(h=>new THREE.Color(h));
+  const M=new THREE.Matrix4(), Q=new THREE.Quaternion(), V=new THREE.Vector3(), Sc=new THREE.Vector3(), Y=new THREE.Vector3(0,1,0);
+  let total=0;
+  ST_SECTIONS.forEach(sec=>{
+    ST_TIERS.forEach((T,ti)=>{
+      const items=[]; const sp=ti===0?.62:.68, occ=ti===0?.84:.74;
+      for(let r=0;r<T.rows;r++){
+        const y=T.y0+r*T.rise, d=T.d0+r*T.depth+T.depth*.42; const L=secLen(sec,d); const n=Math.floor(L/sp); if(n<1) continue;
+        for(let i=0;i<n;i++){ if(Math.random()>occ) continue; const u=(i+.5+rand(-.12,.12))/n; const p=secPt(sec,u,d), o=secOut(sec,u);
+          if(sec.side==='O' && ti===0 && Math.abs(p.z)<4 && r<6) continue; // túnel
+          items.push({x:p.x, y:y+.02, z:p.z, ry:Math.atan2(-o.x,-o.z), away:(sec.side==='N' && u>.62) || (sec.side==='NE'), ch:sec.k==='line'?Math.min(3,Math.floor(u*4)):0}); }
+      }
+      if(!items.length) return;
+      [0,1,2,3].forEach(ch=>{ const its=items.filter(it=>it.ch===ch); if(its.length) mkInst(its, T); });
+    });
+  });
+  function mkInst(items, T){
+      const g=geos[T.lod]; const geo=new THREE.BufferGeometry(); Object.keys(g.attributes).forEach(k=>geo.setAttribute(k,g.attributes[k]));
+      const im=new THREE.InstancedMesh(geo, mat, items.length);
+      const rnd=new Float32Array(items.length*3), skin=new Float32Array(items.length*3);
+      const bb=new THREE.Box3();
+      items.forEach((it,i)=>{ const s=rand(.92,1.08); Q.setFromAxisAngle(Y, it.ry+rand(-.12,.12)); M.compose(V.set(it.x,it.y,it.z), Q, Sc.set(s,s*rand(.95,1.08),s)); im.setMatrixAt(i,M);
+        im.setColorAt(i, pick(it.away?away:home)); const sk=pick(skins); skin.set([sk.r,sk.g,sk.b],i*3);
+        rnd.set([Math.random(), Math.random(), Math.random()<.12?rand(.25,.55):0], i*3); bb.expandByPoint(V); });
+      geo.setAttribute('aRnd', new THREE.InstancedBufferAttribute(rnd,3)); geo.setAttribute('aSkin', new THREE.InstancedBufferAttribute(skin,3));
+      geo.boundingSphere=bb.getBoundingSphere(new THREE.Sphere()); geo.boundingSphere.radius+=2;
+      im.instanceMatrix.needsUpdate=true; if(im.instanceColor) im.instanceColor.needsUpdate=true;
+      field.add(im); STADIUM.crowd.push(im); total+=items.length;
+  }
+  STADIUM.fans=total;
+}
+function screenTexture(){ const [c,x]=cvs(512,256); const t=tex(c); STADIUM.screens.push({c,x,t}); return t; }
+function drawScreens(){
+  STADIUM.screens.forEach(s=>{ const x=s.x, W=512, H=256; x.fillStyle='#000'; x.fillRect(0,0,W,H);
+    x.fillStyle='#2BA9C7'; x.fillRect(0,0,W,8); x.fillRect(0,H-8,W,8);
+    x.textAlign='center'; x.textBaseline='middle';
+    if(STADIUM.screenTxt[0]){ x.fillStyle='#ffffff'; x.font='110px '+FD; x.fillText(STADIUM.screenTxt[0],W/2,108,W-30); x.fillStyle='#2BA9C7'; x.font='800 40px '+FB; x.fillText(STADIUM.screenTxt[1]||'',W/2,205,W-30); }
+    else { x.fillStyle='#ffffff'; x.font='92px '+FD; x.fillText('SPORTAX',W/2,100); x.fillStyle='#2BA9C7'; x.font='800 44px '+FB; x.fillText('VISION 360',W/2,182); }
+    s.t.needsUpdate=true; });
+}
+function setScreens(a,b){ if(STADIUM.screenTxt[0]===a && STADIUM.screenTxt[1]===b) return; STADIUM.screenTxt=[a||'',b||'']; drawScreens(); }
+function bannerTexture(txt, bg, fg){ const [c,x]=cvs(512,96); x.fillStyle=bg; x.fillRect(0,0,512,96); x.fillStyle=fg; x.font='64px '+FD; x.textAlign='center'; x.textBaseline='middle'; x.fillText(txt,256,52,490); return tex(c); }
 function buildStadium(){
   const sky=new THREE.Mesh(new THREE.SphereGeometry(330,40,20), new THREE.MeshBasicMaterial({map:skyTexture(), side:THREE.BackSide, fog:false, depthWrite:false}));
   scene.add(sky);
@@ -994,18 +1180,55 @@ function buildStadium(){
   field.add(makeGoal(-52.5,-1), makeGoal(52.5,1));
   const flagM=new THREE.MeshStandardMaterial({color:0x2BA9C7, side:THREE.DoubleSide}), poleM=new THREE.MeshStandardMaterial({color:0xffffff});
   [[-34,-52.5],[34,-52.5],[-34,52.5],[34,52.5]].forEach(([fx_,fz])=>{ const p=new THREE.Mesh(new THREE.CylinderGeometry(.02,.02,1.5,6),poleM); p.position.set(fx_,.75,fz); const f=new THREE.Mesh(new THREE.PlaneGeometry(.4,.28),flagM); f.position.set(fx_+.2,1.36,fz); field.add(p,f); });
+  // vallas LED (texto en movimiento)
   MAT.boardSide=new THREE.MeshStandardMaterial({color:0x1a1f22});
   const bt=boardTexture();
-  const mkBoard=(len,x,z,ry)=>{ const t=bt.clone(); t.needsUpdate=true; t.repeat.set(len/14,1); const bm=new THREE.MeshBasicMaterial({map:t}); const b=new THREE.Mesh(new THREE.BoxGeometry(len,.9,.1), [MAT.boardSide,MAT.boardSide,MAT.boardSide,MAT.boardSide,bm,bm]); b.position.set(x,.45,z); b.rotation.y=ry; field.add(b); };
+  const mkBoard=(len,x,z,ry)=>{ const t=bt.clone(); t.needsUpdate=true; t.repeat.set(len/14,1); const bm=new THREE.MeshBasicMaterial({map:t}); const b=new THREE.Mesh(new THREE.BoxGeometry(len,.9,.1), [MAT.boardSide,MAT.boardSide,MAT.boardSide,MAT.boardSide,bm,bm]); b.position.set(x,.45,z); b.rotation.y=ry; field.add(b); STADIUM.boards.push(t); };
   mkBoard(100,38,0,-Math.PI/2); mkBoard(100,-38,0,Math.PI/2); mkBoard(62,0,58.5,Math.PI); mkBoard(62,0,-58.5,0);
-  const crowd=new THREE.MeshStandardMaterial({map:crowdTexture(), roughness:1, side:THREE.DoubleSide});
-  const concrete=new THREE.MeshStandardMaterial({color:0x8c9196, roughness:.95, side:THREE.DoubleSide});
-  const roof=new THREE.MeshStandardMaterial({color:0x3c4248, roughness:.8, side:THREE.DoubleSide});
-  [[112,43,0,Math.PI/2],[112,-43,0,-Math.PI/2],[84,0,63,0],[84,0,-63,Math.PI]].forEach(([L,x,z,ry])=>{ const s=stand(L,crowd,concrete,roof); s.position.set(x,0,z); s.rotation.y=ry; field.add(s); });
-  const towerM=new THREE.MeshStandardMaterial({color:0x9aa0a6, roughness:.7}); const lampM=new THREE.MeshBasicMaterial({map:lampTexture()});
-  [[-58,-74],[58,-74],[-58,74],[58,74]].forEach(([x,z])=>{ const t=new THREE.Mesh(new THREE.CylinderGeometry(.5,.8,40,10),towerM); t.position.set(x,20,z); field.add(t);
-    const head=new THREE.Mesh(new THREE.BoxGeometry(8,4,.6),[towerM,towerM,towerM,towerM,lampM,towerM]); head.position.set(x,41,z); head.lookAt(0,0,0); field.add(head); });
+  // banquillos
+  const benchM=new THREE.MeshStandardMaterial({color:0x144C5A, roughness:.6}), glassM=new THREE.MeshStandardMaterial({color:0x9fc7d3, roughness:.1, transparent:true, opacity:.35, side:THREE.DoubleSide}), seatM=new THREE.MeshStandardMaterial({color:0x2BA9C7, roughness:.5});
+  [-10,10].forEach(z=>{ const g=new THREE.Group(); const base=new THREE.Mesh(new THREE.BoxGeometry(1.8,.08,7),benchM); base.position.y=.04; g.add(base);
+    const back=new THREE.Mesh(new THREE.BoxGeometry(.12,2.1,7),benchM); back.position.set(-.85,1.05,0); g.add(back);
+    const roof=new THREE.Mesh(new THREE.BoxGeometry(2.2,.06,7.2),glassM); roof.position.set(.15,2.15,0); roof.rotation.z=-.12; g.add(roof);
+    [-3.55,3.55].forEach(sz=>{ const s=new THREE.Mesh(new THREE.BoxGeometry(2,2.1,.05),glassM); s.position.set(.1,1.05,sz); g.add(s); });
+    for(let i=0;i<9;i++){ const s=new THREE.Mesh(new THREE.BoxGeometry(.5,.55,.5),seatM); s.position.set(-.45,.33,-3+i*.75); g.add(s); }
+    g.position.set(-40.6,0,z); field.add(g); });
+  // túnel de vestuarios
+  const tun=new THREE.Mesh(new THREE.BoxGeometry(.4,3,6), new THREE.MeshBasicMaterial({color:0x05080a})); tun.position.set(-ST_LONG_X-.1,1.5,0); field.add(tun);
+  // gradas y cubierta
+  GEO.roofLight=new THREE.BoxGeometry(2.6,.5,.9); MAT.roofLight=new THREE.MeshBasicMaterial({color:0xfffbea});
+  GEO.banner=new THREE.PlaneGeometry(14,2.6);
+  MAT.banners=[bannerTexture('SPORTAX','#2BA9C7','#000000'),bannerTexture('VISION 360','#000000','#2BA9C7'),bannerTexture('TERRASSA','#144C5A','#ffffff'),bannerTexture('ENTRENA TU MENTE','#ffffff','#144C5A')].map(t=>new THREE.MeshBasicMaterial({map:t, side:THREE.DoubleSide}));
+  field.add(buildStands());
+  buildCrowd();
+  // videomarcadores en dos esquinas
+  const smat=new THREE.MeshBasicMaterial({map:screenTexture()}), smat2=new THREE.MeshBasicMaterial({map:screenTexture()}), frame=new THREE.MeshStandardMaterial({color:0x111417});
+  [[ST_SECTIONS[4],smat],[ST_SECTIONS[6],smat2]].forEach(([sec,m])=>{ const p=secPt(sec,.5,22), o=secOut(sec,.5); const g=new THREE.Group();
+    const fr=new THREE.Mesh(new THREE.BoxGeometry(17,8.8,.6),frame); g.add(fr); const sc=new THREE.Mesh(new THREE.PlaneGeometry(16,8),m); sc.position.z=.31; g.add(sc);
+    g.position.set(p.x,26.5,p.z); g.rotation.y=Math.atan2(-o.x,-o.z); field.add(g); });
+  drawScreens();
 }
+function stadiumTick(dt){
+  STADIUM.t+=dt;
+  if(STADIUM.crowdMat){ STADIUM.excite=Math.max(0, STADIUM.excite-dt*.25); STADIUM.crowdMat.uniforms.uTime.value=STADIUM.t; STADIUM.crowdMat.uniforms.uExcite.value=Math.min(1,STADIUM.excite); }
+  for(let i=0;i<STADIUM.boards.length;i++) STADIUM.boards[i].offset.x=(STADIUM.t*.035)%1;
+  crowdAudioTick(dt);
+}
+function cheer(level){ STADIUM.excite=Math.max(STADIUM.excite, level); crowdSwell(level); }
+/* Ambiente de grada (ruido filtrado continuo) */
+function crowdAudioStart(){
+  if(!AC || STADIUM.audio) return;
+  try{ const n=AC.sampleRate*4, b=AC.createBuffer(2,n,AC.sampleRate);
+    for(let ch=0;ch<2;ch++){ const x=b.getChannelData(ch); let last=0; for(let i=0;i<n;i++){ const w=Math.random()*2-1; last=(last+.02*w)/1.02; x[i]=last*3.5; } }
+    const src=AC.createBufferSource(); src.buffer=b; src.loop=true;
+    const bp=AC.createBiquadFilter(); bp.type='bandpass'; bp.frequency.value=520; bp.Q.value=.6;
+    const g=AC.createGain(); g.gain.value=0; src.connect(bp); bp.connect(g); g.connect(AC.destination); src.start();
+    STADIUM.audio={g, bp, base:.05};
+  }catch(e){}
+}
+function crowdAudioTick(dt){ const A=STADIUM.audio; if(!A || !AC) return; const want=($('#stage').hidden?0:A.base)*(1+STADIUM.excite*2.2); A.g.gain.value+= (want-A.g.gain.value)*Math.min(1,dt*2); A.bp.frequency.value=520+STADIUM.excite*380; }
+function crowdSwell(l){ if(!STADIUM.audio) crowdAudioStart(); }
+
 function initScene(){
   if(renderer) return;
   renderer = new THREE.WebGLRenderer({antialias:true});
@@ -1347,8 +1570,10 @@ function animateReal(f, dt){
   if(u.raise>0){ u.raise-=dt; if(u.wv<=0 && A.wave){ A.wave.time=.55; } u.wv=Math.min(1,u.wv+dt/.15); }
   else u.wv=Math.max(0,u.wv-dt/.25);
   if(A.wave){ if(A.wave.time>2.6) A.wave.time=1.0; w.wave=u.wv; }
-  const over=Math.max(w.pass,w.wave);
-  Object.keys(A).forEach(n=>{ let x=w[n]||0; if(n!=='pass' && n!=='wave') x*=(1-over); const a=A[n]; a.enabled = x>.002; a.setEffectiveWeight(x);
+  if(u.play && A[u.play.n]){ const p=u.play; u.play=null; const a=A[p.n]; a.reset(); a.setLoop(THREE.LoopOnce); a.clampWhenFinished=true; a.time=p.at||0; a.enabled=true; u.os={n:p.n, t:0, dur:p.dur||1}; }
+  if(u.os){ u.os.t+=dt; w[u.os.n]=Math.min(1,u.os.t/.1)*(1-sstep(u.os.dur-.3,u.os.dur,u.os.t)); if(u.os.t>u.os.dur) u.os=null; }
+  const osn=u.os?u.os.n:null; const over=Math.max(w.pass,w.wave,osn?w[osn]:0);
+  Object.keys(A).forEach(n=>{ let x=w[n]||0; if(n!=='pass' && n!=='wave' && n!==osn) x*=(1-over); const a=A[n]; a.enabled = x>.002; a.setEffectiveWeight(x);
     const g=GAIT[n]; if(g && a.enabled) a.time=((u.phase+g.off)%1)*g.dur; });
   // LOD por distancia y actualización a menor ritmo de los lejanos
   f.getWorldPosition(_rw); const d=_rw.distanceTo(REAL.camPos);
@@ -1363,7 +1588,7 @@ function makeBall(mat){ const b=new THREE.Mesh(GEO.ball, mat||MAT.ball); const s
 function setRayFrom(ctrl){ tmpM.identity().extractRotation(ctrl.matrixWorld); raycaster.ray.origin.setFromMatrixPosition(ctrl.matrixWorld); raycaster.ray.direction.set(0,0,-1).applyMatrix4(tmpM); }
 function activePicks(){ return (drill?drill.picks:[]).concat(uiPicks); }
 function findPick(hits){ for(const h of hits){ let o=h.object; while(o && !o.userData.pick) o=o.parent; if(o) return {o,h}; } return null; }
-function tryPick(){ const f=findPick(raycaster.intersectObjects(activePicks(), true)); if(f) f.o.userData.pick(); }
+function tryPick(){ const f=findPick(raycaster.intersectObjects(activePicks(), true)); if(f) f.o.userData.pick(f.h); }
 function headDir(){
   if(renderer.xr.isPresenting){ const cam=renderer.xr.getCamera(camera); return _v.set(0,0,-1).transformDirection(cam.matrixWorld); }
   camera.updateMatrixWorld(); return _v.set(0,0,-1).transformDirection(camera.matrixWorld);
@@ -1375,6 +1600,8 @@ function loop(t){
   const dt = Math.min(.05, last ? (t-last)/1000 : 0); last=t;
   if(!renderer.xr.isPresenting){ camera.rotation.set(pitch, yaw, 0); camera.position.set(0,1.6,0); }
   if(REAL.state==='ready'){ REAL.frame++; (renderer.xr.isPresenting ? renderer.xr.getCamera(camera) : camera).getWorldPosition(REAL.camPos); }
+  stadiumTick(dt);
+  if(!LINK.paused) moveTick(dt);
   if(drill && !LINK.paused) drill.tick(dt);
   for(let i=fx.length-1;i>=0;i--){ const f=fx[i]; f.life+=dt; const k=f.life/f.dur; f.obj.position.y=f.y0+k*.5; f.obj.material.opacity=1-k; if(k>=1){ world.remove(f.obj); fx.splice(i,1); } }
   if(renderer.xr.isPresenting){
@@ -1430,7 +1657,7 @@ class Escaneo extends Drill {
   start(){
     usedNums=[];
     this.passer=this.spawn('mate',num(),0,-13); faceTo(this.passer,0,0); this.passer.userData.u.stance=.3;
-    this.passerNum=usedNums[0];
+    this.passerNum=usedNums[0]; this.pAng=0; this.pDist=13;
     this.addBall(); this.mates=[]; this.opps=[]; this.k=0; this.next();
   }
   next(){
@@ -1438,22 +1665,36 @@ class Escaneo extends Drill {
     this.k++; this.despawn(this.mates.concat(this.opps)); this.picks=[]; this.mates=[]; this.opps=[];
     usedNums=[this.passerNum];
     placeField('escaneo', this.pos, pickMir(this.pos));
+    // consigna variable y pasador desde distintos ángulos
+    const L=this.lvl, pool=['libre']; if(L>=3) pool.push('profundo'); if(L>=4 && this.P.sector>=270) pool.push('espalda'); if(L>=5) pool.push('linea'); if(L>=4) pool.push('libre');
+    this.mode=this.k<=1?'libre':pick(pool);
+    this.pAng=L<=2?0:rand(-1,1)*Math.min(70,10+L*7)*D; this.pDist=rand(9,16);
+    this.passer.position.set(Math.sin(this.pAng)*this.pDist,0,-Math.cos(this.pAng)*this.pDist); faceTo(this.passer,0,0); this.passer.userData.u.init=false;
     const H=this.P.sector/2; let sep=clamp((2*(H-22))/this.P.mates*.55,14,44);
     const angs=[], pts=[];
     for(let t=0; pts.length<this.P.mates && t<2000; t++){
       if(t>0 && t%400===0) sep*=.7;
-      const a=(Math.random()<.5?-1:1)*rand(22,H), r=rand(7,14.5), x=Math.sin(a*D)*r, z=-Math.cos(a*D)*r;
+      const a=(Math.random()<.5?-1:1)*rand(22,H), r=rand(6,16), x=Math.sin(a*D)*r, z=-Math.cos(a*D)*r;
       if(!inPitch(x,z,2) || !angs.every(b=>Math.abs(((a-b+540)%360)-180)>=sep)) continue;
+      if(Math.abs(Math.atan2(Math.sin(a*D-this.pAng),Math.cos(a*D-this.pAng)))<18*D) continue;
       angs.push(a); pts.push({x,z,r});
     }
     const n=pts.length;
     this.free=randi(0,n-1);
+    const angOf=p=>Math.abs(Math.atan2(p.x,-p.z));
+    if(this.mode==='espalda'){ const back=pts.map((p,i)=>({i,a:angOf(p)})).filter(o=>o.a>100*D); if(back.length) this.free=pick(back).i; else this.mode='libre'; }
+    this.free2=null;
+    if((this.mode==='profundo' || this.mode==='linea') && n>=3){ let j; do{ j=randi(0,n-1); } while(j===this.free); this.free2=j; }
+    else if(this.mode==='profundo' || this.mode==='linea') this.mode='libre';
     pts.forEach(({x,z,r},i)=>{
       const m=this.spawn('mate',num(),x,z); faceTo(m,0,0); m.userData.u.stance=.45; this.mates.push(m);
       const tg=Math.random()<.5?-1:1, sp=rand(.6,1.2); m.userData.vel={x:-z/r*tg*sp, z:x/r*tg*sp};
       this.addPick(m, ()=>this.choose(i));
     });
-    this.mates.forEach((m,i)=>{ if(i!==this.free) this.mark(i); });
+    this.mates.forEach((m,i)=>{ if(i!==this.free && i!==this.free2) this.mark(i); });
+    if(this.mode==='profundo'){ const fz=i=>toField(this.mates[i].position.x,this.mates[i].position.z).z; if(fz(this.free2)<fz(this.free)){ const t=this.free; this.free=this.free2; this.free2=t; } }
+    if(this.mode==='linea'){ // un rival corta la línea de pase hacia uno de los dos libres
+      const bad=this.mates[this.free2].position, t=rand(.4,.65); const o=this.spawn('opp',num(),bad.x*t+rand(-.3,.3),bad.z*t+rand(-.3,.3)); faceTo(o,0,0); o.userData.u.stance=.8; o.userData.cut={i:this.free2, t}; this.opps.push(o); }
     const fm=this.mates[this.free].position;
     for(let d=0, tries=0; d<this.P.decoys && tries<120; tries++){
       const a=(Math.random()<.5?-1:1)*rand(22,H)*D, r=rand(5,16), p=new THREE.Vector3(Math.sin(a)*r,0,-Math.cos(a)*r);
@@ -1461,9 +1702,10 @@ class Escaneo extends Drill {
       if(this.mates.some(m=>m.position.distanceTo(p)<2.4)) continue;
       const o=this.spawn('opp',num(),p.x,p.z); faceTo(o,0,0); o.userData.u.stance=.6; o.userData.vel={x:rand(-.5,.5), z:rand(-.5,.5)}; this.opps.push(o); d++;
     }
-    this.ball.position.set(0,.11,-12.3); this.ball.visible=true;
+    this.ball.position.set(Math.sin(this.pAng)*(this.pDist-.7),.11,-Math.cos(this.pAng)*(this.pDist-.7)); this.ball.visible=true;
     this.phase='prep'; this.scans=0; this.lookSide=false;
-    setHud('Jugada '+this.k+' de '+this.P.n, POS[this.pos].nombre+' · ¿qué compañero está libre?');
+    const Q={libre:'¿qué compañero está libre?', profundo:'¿cuál es el libre más adelantado?', espalda:'hay un compañero libre a tu espalda', linea:'¿a qué libre puedes pasar sin que la corten?'};
+    this.q=Q[this.mode]; setHud('Jugada '+this.k+' de '+this.P.n, POS[this.pos].nombre+' · '+this.q);
     this.after(this.P.prep, ()=>this.pass());
     if(this.P.swap && n>=3) this.after(this.P.prep*.4, ()=>this.swap());
     this.hudSub=POS[this.pos].nombre;
@@ -1478,7 +1720,7 @@ class Escaneo extends Drill {
     return new THREE.Vector3(m.x+tx*o.userData.md - tz*o.userData.side, 0, m.z+tz*o.userData.md + tx*o.userData.side);
   }
   swap(){
-    if(this.phase!=='prep' && this.phase!=='pass') return;
+    if(this.phase!=='prep' && this.phase!=='pass') return; if(this.mode!=='libre' && this.mode!=='espalda') return;
     const fp=this.mates[this.free].position; let best=null, bd=1e9;
     this.opps.forEach(o=>{ if(o.userData.marks==null) return; const dd=this.mates[o.userData.marks].position.distanceTo(fp); if(dd<bd){ bd=dd; best=o; } });
     if(!best) return;
@@ -1495,6 +1737,7 @@ class Escaneo extends Drill {
         this.opps.forEach(o=>{ if(o.userData.marks==null && o.userData.vel){ const v=o.userData.vel; o.position.x+=v.x*dt; o.position.z+=v.z*dt; if(!inPitch(o.position.x,o.position.z,1.5)){ v.x=-v.x; v.z=-v.z; } } });
       }
       this.opps.forEach(o=>{
+        if(o.userData.cut){ const m=this.mates[o.userData.cut.i].position; o.position.set(m.x*o.userData.cut.t, 0, m.z*o.userData.cut.t); return; }
         if(o.userData.marks==null) return;
         const t=this.markTarget(o), d=t.distanceTo(o.position), maxv=(o.userData.swapping?7.5:4.5)*dt;
         if(d>maxv) o.position.addScaledVector(t.clone().sub(o.position).normalize(), maxv); else { o.position.copy(t); o.userData.swapping=false; }
@@ -1502,16 +1745,16 @@ class Escaneo extends Drill {
       });
     }
     if(this.phase==='pass'){
-      this.passT+=dt; const u=clamp((this.passT-.22)/1.0,0,1);
-      this.ball.position.set(0,.11,-12.3+u*11.7); if(u>0&&u<1) this.ball.rotation.x+=dt*20;
+      this.passT+=dt; const u=clamp((this.passT-.22)/1.0,0,1); const sx=Math.sin(this.pAng), sz=-Math.cos(this.pAng), d0=this.pDist-.7;
+      this.ball.position.set(sx*lerp(d0,.6,u),.11,sz*lerp(d0,.6,u)); if(u>0&&u<1) this.ball.rotation.x+=dt*20;
       if(u>=1) this.arrive();
     }
   }
   arrive(){
-    this.phase='pick'; this.ball.position.set(0,.11,-.6);
+    this.phase='pick'; this.ball.position.set(Math.sin(this.pAng)*.6,.11,-Math.cos(this.pAng)*.6);
     this.opps.forEach(o=>{ if(o.userData.marks!=null){ o.position.copy(this.markTarget(o)); o.userData.swapping=false; } o.visible=false; });
     this.mates.forEach(m=>setGrey(m,true));
-    setHud('¿Quién estaba libre?','Señala al compañero sin marca');
+    setHud(this.mode==='profundo'?'¿El libre más adelantado?':this.mode==='linea'?'¿Línea de pase limpia?':'¿Quién estaba libre?', this.mode==='espalda'?'Estaba a tu espalda':'Señala al compañero');
     this.t0=performance.now();
     this.after(this.P.win, ()=>this.resolve(null));
   }
@@ -1525,7 +1768,7 @@ class Escaneo extends Drill {
     const at=(i!=null?this.mates[i]:this.mates[this.free]).position.clone(); at.y=2.5;
     if(ok){ sfx.ok(); flash('✓','#2bd46a',at,1.1); } else { sfx.bad(); flash(i==null?'…':'✗','#ff6b5e',at,1.1); }
     this.trials.push({ok, rt}); this.scansTotal+=this.scans; this.prepTotal+=this.P.prep+1.2;
-    setHud(ok?'¡Correcto!':(i==null?'Tiempo agotado':'No estaba libre'), 'Escaneos antes de recibir: '+this.scans);
+    setHud(ok?'¡Correcto!':(i==null?'Tiempo agotado':(i===this.free2?(this.mode==='profundo'?'Estaba libre, pero había uno más adelantado':'Estaba libre, pero un rival cortaba la línea'):'No estaba libre')), 'Escaneos antes de recibir: '+this.scans);
     this.after(2, ()=>this.next());
   }
   results(){ return this.summary({escaneosSeg:Math.round(this.scansTotal/Math.max(1,this.prepTotal)*100)/100, omisiones:this.trials.filter(t=>t.rt==null).length}, this.P.win*1000); }
@@ -1551,15 +1794,18 @@ class Reaccion extends Drill {
     }
     this.k=0; this.lit=[]; this.next();
   }
+  relayout(){ const n=this.pods.length, full=this.P.arc>=180; const base=rand(-15,15);
+    this.pods.forEach((g,i)=>{ const a=(full ? i*360/n - 180 + 180/n + base*.3 : -this.P.arc+(2*this.P.arc)*i/(n-1)+rand(-6,6))*D, r=rand(2.1,2.9); g.position.set(Math.sin(a)*r,0,-Math.cos(a)*r); g.lookAt(0,0,0); }); }
   next(){
     if(this.k>=this.P.total) return this.finish();
+    if(this.k && this.k%5===0) this.relayout();
     this.k++; setHud('Estímulo '+this.k+' de '+this.P.total, this.P.nogo?'Verde: tócala · Roja: no la toques':'Toca la luz que se enciende');
     this.after(rand(.6,1.5), ()=>this.light());
   }
   setPod(i,c){ const m=this.pods[i].userData.mat; if(c){ m.color.setHex(c); m.emissive.setHex(c); m.emissiveIntensity=1.1; } else { m.color.setHex(0x3a4146); m.emissive.setHex(0); } }
   light(){
     const n=this.pods.length; let i; do{ i=randi(0,n-1); } while(i===this.prev && n>1); this.prev=i;
-    if(Math.random()<this.P.doble){ let j; do{ j=randi(0,n-1); } while(j===i); this.lit=[{i,go:true},{i:j,go:false}]; }
+    if(Math.random()<this.P.doble){ let j; do{ j=randi(0,n-1); } while(j===i); this.lit=[{i,go:true},{i:j,go:Math.random()<.35}]; }
     else this.lit=[{i, go:Math.random()>=this.P.nogo}];
     this.lit.forEach(e=>this.setPod(e.i, e.go?0x22e06a:0xff3b30));
     sfx.cue(); this.t0=performance.now();
@@ -1567,7 +1813,7 @@ class Reaccion extends Drill {
   }
   off(){ this.lit.forEach(e=>this.setPod(e.i,null)); this.lit=[]; }
   timeout(){
-    const g=this.lit.find(e=>e.go), pos=this.pods[this.lit[0].i].position.clone(); pos.y=2;
+    const g=this.lit.find(e=>e.go && !e.done), pos=this.pods[this.lit[0].i].position.clone(); pos.y=2;
     if(g){ this.trials.push({ok:false, rt:null}); this.om++; flash('…','#ffb35c',pos,.5); }
     else { this.trials.push({ok:true, rt:null}); flash('✓','#2bd46a',pos,.5); }
     this.off(); this.next();
@@ -1576,6 +1822,7 @@ class Reaccion extends Drill {
     if(!this.lit.length) return;
     this.clearTimers();
     const e=this.lit.find(x=>x.i===i), rt=performance.now()-this.t0, pos=this.pods[i].position.clone(); pos.y=2;
+    if(e && e.go && !e.done && this.lit.filter(x=>x.go && !x.done).length>1){ e.done=true; this.setPod(i,null); sfx.tick(); flash(String(Math.round(rt)),'#2bd46a',pos,.45); this.after(this.P.win/1000, ()=>this.timeout()); return; }
     if(e && e.go){ this.trials.push({ok:true, rt}); sfx.ok(); flash(String(Math.round(rt)),'#2bd46a',pos,.55); }
     else { this.trials.push({ok:false, rt:null}); if(e && !e.go) this.com++; sfx.bad(); flash('✗','#ff6b5e',pos,.55); }
     this.off(); this.next();
@@ -1608,9 +1855,16 @@ class Llamada extends Drill {
   }
   next(){
     if(this.k>=this.P.total) return this.finish();
+    if(this.k && this.k%4===0) this.shuffleRing();
     this.k++; setHud('Estímulo '+this.k+' de '+this.P.total, 'Señala al compañero que pide el balón');
-    this.after(rand(.7,1.6), ()=>this.call());
+    this.after(this.moving?rand(1.8,2.4):rand(.7,1.6), ()=>this.call());
   }
+  shuffleRing(){ const n=this.ring.length, full=this.P.arc>=180; const order=shuffle(this.ring.slice());
+    order.forEach((f,i)=>{ const a=(full ? i*360/n-180+180/n+rand(-8,8) : -this.P.arc+(2*this.P.arc)*i/(n-1)+rand(-5,5))*D, r=rand(4.5,10.5); f.userData.to={x:Math.sin(a)*r, z:-Math.cos(a)*r}; });
+    this.moving=1.6; }
+  update(dt){ if(!this.moving) return; this.moving=Math.max(0,this.moving-dt);
+    this.ring.forEach(f=>{ const t=f.userData.to; if(!t) return; const dx=t.x-f.position.x, dz=t.z-f.position.z, d=Math.hypot(dx,dz); if(d>.05){ const m=Math.min(d,5.5*dt); f.position.x+=dx/d*m; f.position.z+=dz/d*m; faceTo(f,t.x,t.z); } else faceTo(f,0,0); });
+    if(!this.moving) this.ring.forEach(f=>faceTo(f,0,0)); }
   call(){
     const mates=this.ring.filter(f=>f.userData.team==='mate'), opps=this.ring.filter(f=>f.userData.team==='opp');
     const win=this.P.win/1000*1.3;
@@ -1663,24 +1917,27 @@ class ControlOr extends Drill {
   next(){
     if(this.k>=this.P.total) return this.finish();
     this.k++; this.phase='wait'; this.arrows.forEach(g=>g.userData.mat.color.setHex(0xffffff));
-    this.riv.visible=false; this.dis.visible=false; this.ball.position.set(0,.11,-9.4);
+    this.riv.visible=false; this.dis.visible=false;
+    this.pa=this.lvl>=3?rand(-1,1)*Math.min(40,8+this.lvl*4)*D:0; this.pd=rand(8,12); this.passer.position.set(Math.sin(this.pa)*this.pd,0,-Math.cos(this.pa)*this.pd); faceTo(this.passer,0,0); this.passer.userData.u.init=false;
+    this.ball.position.set(Math.sin(this.pa)*(this.pd-.6),.11,-Math.cos(this.pa)*(this.pd-.6));
+    this.arrows.forEach((g,j)=>{ const sd=j?1:-1; const a=this.pa+sd*.65; g.position.set(Math.sin(a)*2.2,.03,-Math.cos(a)*2.2); g.rotation.y=-this.pa-sd*.6; });
     setHud('Jugada '+this.k+' de '+this.P.total, 'Orienta el control lejos de la presión');
     this.after(rand(.8,1.4), ()=>this.go());
   }
   go(){
     const maxA=Math.max(45,this.P.arc); this.side=Math.random()<.5?-1:1;
-    const a=this.side*rand(35,Math.min(maxA,170))*D;
+    const a=this.pa+this.side*rand(35,Math.min(maxA,170))*D;
     this.riv.position.set(Math.sin(a)*9,0,-Math.cos(a)*9); faceTo(this.riv,0,0); this.riv.visible=true; this.riv.userData.u.init=false;
     this.distr=Math.random()<this.P.doble;
-    if(this.distr){ const b=-this.side*rand(35,Math.min(maxA,170))*D; this.dis.position.set(Math.sin(b)*9,0,-Math.cos(b)*9); faceTo(this.dis,0,0); this.dis.visible=true; this.dis.userData.u.init=false; }
+    if(this.distr){ const b=this.pa-this.side*rand(35,Math.min(maxA,170))*D; this.dis.position.set(Math.sin(b)*9,0,-Math.cos(b)*9); faceTo(this.dis,0,0); this.dis.visible=true; this.dis.userData.u.init=false; }
     this.passer.userData.u.kick=.42; setTimeout(()=>sfx.kick(),150);
     this.phase='pick'; this.pt=0; this.t0=performance.now();
     this.after(1.2+this.P.win/1000, ()=>this.resolve(null));
   }
   update(dt){
     if(this.phase!=='pick') return;
-    this.pt+=dt; const u=clamp((this.pt-.2)/1.0,0,1);
-    this.ball.position.set(0,.11,-9.4+u*8.9); if(u<1) this.ball.rotation.x+=dt*18;
+    this.pt+=dt; const u=clamp((this.pt-.2)/1.0,0,1); const d=lerp(this.pd-.6,.5,u);
+    this.ball.position.set(Math.sin(this.pa)*d,.11,-Math.cos(this.pa)*d); if(u<1) this.ball.rotation.x+=dt*18;
     [this.riv].concat(this.distr?[this.dis]:[]).forEach(o=>{ const r=Math.hypot(o.position.x,o.position.z); if(r>2.6){ const nr=r-5.5*dt; o.position.x*=nr/r; o.position.z*=nr/r; } });
   }
   choose(sd){ if(this.phase==='pick') this.resolve(sd); }
@@ -1689,7 +1946,7 @@ class ControlOr extends Drill {
     const good=-this.side, ok=sd===good, rt=sd==null?null:performance.now()-this.t0;
     this.arrows[good<0?0:1].userData.mat.color.setHex(COLORS.ok);
     if(sd!=null && !ok) this.arrows[sd<0?0:1].userData.mat.color.setHex(COLORS.bad);
-    const pos=new THREE.Vector3(good*1.5,1.6,-2);
+    const pos=this.arrows[good<0?0:1].position.clone(); pos.y=1.6;
     if(ok){ sfx.ok(); flash(String(Math.round(rt)),'#2bd46a',pos,.6); } else { sfx.bad(); flash(sd==null?'…':'✗','#ff6b5e',pos,.6); }
     if(sd==null) this.om++;
     this.trials.push({ok, rt: ok?rt:null});
@@ -1792,11 +2049,15 @@ function pathsOK(paths){
   return true;
 }
 function genTactic(P, posKey, mir){
-  const PO=POS[posKey], sx=mir?-1:1, at={x:PO.at.x*sx, z:PO.at.z};
+  const PO=POS[posKey], sx=mir?-1:1; let at={x:PO.at.x*sx, z:PO.at.z};
   const inP=(x,z,m)=>{ const fx=x+at.x, fz=z+at.z; m=m==null?1.5:m; return Math.abs(fx)<=34-m && Math.abs(fz)<=52.5-m; };
+  const runs=['ruptura','apoyo','abrirse'];
   for(let tries=0; tries<400; tries++){
-    const slots=shuffle(PO.slots.slice()).slice(0,P.mates);
-    const mates=slots.map(s=>({x:s.x*sx-at.x+rand(-2.5,2.5), z:s.z-at.z+rand(-2.5,2.5), run:s.run}));
+    at={x:clamp(PO.at.x*sx+rand(-6,6),-31,31), z:clamp(PO.at.z+rand(-7,7),-46,48)};
+    const pool=PO.slots.map(s=>({x:s.x*sx+rand(-4.5,4.5), z:s.z+rand(-4.5,4.5), run:s.run}));
+    for(let e=0;e<4;e++){ const a=rand(-Math.PI*.85,Math.PI*.85), r=rand(9,26); pool.push({x:at.x+Math.sin(a)*r, z:at.z-Math.cos(a)*r, run:pick(runs)}); }
+    const slots=shuffle(pool).slice(0,P.mates);
+    const mates=slots.map(s=>({x:s.x-at.x, z:s.z-at.z, run:s.run}));
     if(mates.some(m=>!inP(m.x,m.z) || Math.hypot(m.x,m.z)<6)) continue;
     let sep=true; for(let i=0;i<mates.length;i++) for(let j=i+1;j<mates.length;j++) if(Math.hypot(mates[i].x-mates[j].x,mates[i].z-mates[j].z)<5) sep=false;
     if(!sep) continue;
@@ -1904,11 +2165,48 @@ const SITS = {
   contra:{nombre:'Contraataque', sub:'Recuperamos y el rival está desordenado', ataque:true, ours:{z:6,d:.9,w:1}, rivs:{z:12,d:1.35,w:1.05}, start:['MC','DFCI','DFCD','MI','MD'], pos:['DFCI','DFCD','LI','LD','MC','EI','ED','DC']},
   centro:{nombre:'Ataque por banda', sub:'Llegamos al último tercio por fuera', ataque:true, ours:{z:-24,d:.6,w:1.05}, rivs:{z:-38,d:.42,w:.75}, start:['LI','LD','MI','MD'], pos:['LI','LD','MC','EI','ED','DC']},
   tdef:{nombre:'Transición defensiva', sub:'Perdemos el balón y el rival sale rápido', ataque:false, ours:{z:-2,d:1.1,w:1}, rivs:{z:12,d:1.2,w:1}, start:['MCI','MCD','DFCI','DFCD'], pos:['DFCI','DFCD','LI','LD','MC','EI','ED','DC']},
-  bloque:{nombre:'Defensa en bloque medio', sub:'El rival circula buscando espacio', ataque:false, ours:{z:14,d:.7,w:.8}, rivs:{z:0,d:.9,w:1}, start:['DFCI','DFCD','MCI','MCD'], pos:['DFCI','DFCD','LI','LD','MC','EI','ED','DC']}
+  bloque:{nombre:'Defensa en bloque medio', sub:'El rival circula buscando espacio', ataque:false, ours:{z:14,d:.7,w:.8}, rivs:{z:0,d:.9,w:1}, start:['DFCI','DFCD','MCI','MCD'], pos:['DFCI','DFCD','LI','LD','MC','EI','ED','DC']},
+  centro2:{nombre:'Centro al área', sub:'Llegas a línea de fondo: ¿a quién centras?', ataque:true, ours:{z:-26,d:.55,w:1.1}, rivs:{z:-40,d:.4,w:.7}, start:['MI','MD','MC','LI','LD'], pos:['EI','ED','LI','LD'], post:'centro'},
+  tiro:{nombre:'Tiro o pase', sub:'Recibes cerca del área: ¿disparas o la das?', ataque:true, ours:{z:-22,d:.6,w:.95}, rivs:{z:-36,d:.45,w:.75}, start:['MC','MI','MD','LI','LD'], pos:['DC','EI','ED','MC'], post:'tiro', shot:true},
+  cambio:{nombre:'Cambio de orientación', sub:'El rival bascula hacia el balón', ataque:true, ours:{z:-6,d:.8,w:1.1}, rivs:{z:-18,d:.6,w:.6}, start:['LI','LD','DFCI','DFCD','MC'], pos:['DFCI','DFCD','LI','LD','MC'], post:'cambio'},
+  filtrado:{nombre:'Pase filtrado', sub:'Un compañero rompe a la espalda de la defensa', ataque:true, ours:{z:-10,d:.75,w:1}, rivs:{z:-22,d:.6,w:.85}, start:['DFCI','DFCD','LI','LD'], pos:['MC','DFCI','DFCD','EI','ED','LI','LD'], post:'ruptura'},
+  defCentro:{nombre:'Defender un centro', sub:'El rival va a centrar desde la banda', ataque:false, ours:{z:36,d:.45,w:.75}, rivs:{z:28,d:.5,w:1.1}, start:['MI','MD','LI','LD'], pos:['DFCI','DFCD','LI','LD','MC'], post:'defcentro'}
 };
+function sitPost(kind, fin, user, posKey, fc){
+  const O=fin.ours, R=fin.rivs, set=(o,x,z)=>{ o.x=clamp(x,-33,33); o.z=clamp(z,-51,51); };
+  if(kind==='centro'){
+    const side=user.x>=0?1:-1; set(user, side*rand(23,31), rand(-46,-37));
+    const att=shuffle(['DC','EI','ED','MI','MD'].filter(s=>s!==posKey)).slice(0,3);
+    const spots=shuffle([{x:side*rand(2.5,5.5),z:rand(-48,-45.5)},{x:rand(-3,3),z:rand(-43,-40)},{x:-side*rand(3.5,7),z:rand(-48,-44)},{x:rand(-6,6),z:rand(-37,-34)}]);
+    att.forEach((sl,i)=>set(O[sl],spots[i].x,spots[i].z));
+    const freeI=randi(0,att.length-1); const defs=['DFCI','DFCD','MCD','LI','LD'];
+    att.forEach((sl,i)=>{ const d=R[defs[i]]; const m=O[sl]; if(i===freeI) set(d, m.x+rand(-1,1)*4+ (m.x>0?-3:3), m.z+rand(2.5,4)); else set(d, m.x+rand(-.5,.5), m.z+rand(.8,1.3)); });
+    set(R[pick(['MI','MD'])], user.x-side*2.5, user.z+rand(1,2.5)); R.POR.x=side*1.5; R.POR.z=-50.5;
+  } else if(kind==='tiro'){
+    set(user, rand(-12,12), rand(-37,-30));
+    if(Math.random()<.5){ const t=rand(.2,.35); set(R.DFCI, lerp(user.x,0,t)+rand(-.4,.4), lerp(user.z,-52.5,t)); }
+    else { set(R.DFCI, user.x+rand(-6,6), rand(-46,-42)); }
+    set(R.DFCD, user.x+(Math.random()<.5?-1:1)*rand(3,6), user.z-rand(2,4));
+  } else if(kind==='cambio'){
+    const side=user.x>=0?1:-1; Object.keys(R).forEach(sl=>{ if(sl==='POR') return; R[sl].x=clamp(R[sl].x+side*rand(5,10),-32,32); });
+    const far=['LI','LD','EI','ED'].filter(s=>s!==posKey && Math.sign(O[s].x)===-side); far.forEach(s=>{ O[s].x=clamp(-side*rand(24,31),-33,33); });
+  } else if(kind==='ruptura'){
+    const run=pick(['DC','EI','ED'].filter(s=>s!==posKey)); const line=Math.min(...['DFCI','DFCD','LI','LD'].map(s=>R[s].z));
+    set(O[run], rand(-12,12), line-rand(2.5,6));
+  } else if(kind==='defcentro'){
+    const side=Math.random()<.5?1:-1, cr=R[fc]; set(cr, side*rand(23,30), rand(36,45));
+    const att=shuffle(['DI','DD','MI','MD','MCI'].filter(s=>s!==fc)).slice(0,3);
+    const spots=shuffle([{x:side*rand(2.5,5.5),z:rand(45.5,48)},{x:rand(-3,3),z:rand(40,43)},{x:-side*rand(3.5,7),z:rand(44,48)},{x:rand(-6,6),z:rand(34,37)}]);
+    att.forEach((sl,i)=>set(R[sl],spots[i].x,spots[i].z));
+    const defs=['DFCI','DFCD','LI','LD','MC'].filter(s=>s!==posKey); const freeI=randi(0,att.length-1);
+    att.forEach((sl,i)=>{ const d=O[defs[i]]; const m=R[sl]; if(i===freeI) set(d, m.x+(m.x>0?-1:1)*rand(3,5), m.z+rand(1.5,3)); else set(d, m.x+rand(-.5,.5), m.z+rand(.7,1.2)); });
+    set(user, rand(-8,8), rand(38,44)); O.POR.x=side*1.2; O.POR.z=50.5;
+  }
+}
+let RIVF = F442, RIVF_NAME='4-4-2';
 const slotsOf = t => ['POR'].concat(Object.keys(t==='ours'?F433:F442));
 function teamTargets(team, sit, ball){
-  const S=sit[team], F=team==='ours'?F433:F442, dir=team==='ours'?1:-1, out={};
+  const S=sit[team], F=team==='ours'?F433:RIVF, dir=team==='ours'?1:-1, out={};
   const bz=S.z+(ball.z-S.z)*.25, bx=ball.x*.3;
   out.POR={x:clamp(ball.x*.08,-5,5), z:dir*49.5};
   Object.keys(F).forEach(sl=>{ const a=F[sl]; out[sl]={x:clamp(a[0]*S.w+bx,-32,32), z:clamp(bz+dir*a[1]*S.d,-50,50)}; });
@@ -1919,6 +2217,7 @@ function genMatch(P, posKey, force){
   for(let tries=0; tries<200; tries++){
     const keys=force?[force]:P.sits.filter(k=>SITS[k].pos.indexOf(posKey)>=0);
     const sitKey=pick(keys.length?keys:['posicional']), sit=SITS[sitKey], atk=sit.ataque, T=atk?'ours':'rivs';
+    RIVF_NAME=pick(Object.keys(RIV_FORMS)); RIVF=RIV_FORMS[RIVF_NAME];
     const jit={ours:{},rivs:{}};
     ['ours','rivs'].forEach(t=>slotsOf(t).forEach(sl=>{ jit[t][sl]={x:sl==='POR'?rand(-1,1):rand(-2.5,2.5), z:sl==='POR'?rand(-1,1):rand(-2.5,2.5)}; }));
     const posAt=(team,slot,ball)=>{ const t=teamTargets(team,sit,ball)[slot], j=jit[team][slot]; return {x:clamp(t.x+j.x,-33,33), z:clamp(t.z+j.z,-51,51)}; };
@@ -1942,7 +2241,8 @@ function genMatch(P, posKey, force){
     const fin={ours:{},rivs:{}};
     slotsOf('ours').forEach(s=>fin.ours[s]=posAt('ours',s,fb)); slotsOf('rivs').forEach(s=>fin.rivs[s]=posAt('rivs',s,fb));
     const user=fin.ours[posKey];
-    if(atk){
+    if(sit.post) sitPost(sit.post, fin, user, posKey, fc);
+    if(atk && !sit.post){
       const prev=chain[chain.length-2];
       shuffle(slotsOf('ours').filter(s=>s!=='POR' && s!==posKey && s!==prev)).slice(0,2).forEach(s=>{ const p=fin.ours[s];
         if(p.z<user.z-4) p.z=Math.max(-50,p.z-rand(3,6)); else { const dx=user.x-p.x, dz=user.z-p.z, L=Math.hypot(dx,dz)||1; p.x+=dx/L*3; p.z+=dz/L*3; } });
@@ -1966,6 +2266,8 @@ function genMatch(P, posKey, force){
       sc=slotsOf('ours').filter(s=>s!==posKey).map(s=>{ const m=W(fin.ours[s]);
         const clear=Math.min.apply(null, defsLane.map(d=>distSeg(d,{x:0,z:0},m))), space=Math.min.apply(null, defsAll.map(d=>Math.hypot(d.x-m.x,d.z-m.z))), L=Math.hypot(m.x,m.z);
         return {slot:s, clear, space, s:(clear<1.4?-10:0)+Math.min(space,6)+Math.min(clear,4)*.8+(-m.z)*.12-Math.max(0,L-30)*.35}; }).sort((a,b)=>b.s-a.s);
+      if(sit.shot){ const G={x:0-user.x, z:-52.5-user.z}; const lane=Math.min.apply(null, slotsOf('rivs').filter(s=>s!=='POR').map(s=>distSeg(W(fin.rivs[s]),{x:0,z:0},G))); const d=Math.hypot(G.x,G.z);
+        sc.push({slot:'GOAL', clear:lane, space:9, s:(lane<1.2?-7:0)+(24-d)*.55+Math.min(lane,3)*.8+5.5}); sc.sort((a,b)=>b.s-a.s); }
       if(!(sc[0].clear>=1.8 && sc[0].space>=2.6 && sc[0].s-sc[1].s>=P.gap)) continue;
     } else {
       const others=slotsOf('ours').filter(s=>s!==posKey && s!=='POR').map(s=>fin.ours[s]);
@@ -1974,7 +2276,7 @@ function genMatch(P, posKey, force){
         return {slot:s, free, dUser, s:Math.min(free,6)+Math.max(0,45-dGoal)*.12-Math.max(0,dUser-14)*.5}; }).sort((a,b)=>b.s-a.s);
       if(!(sc[0].dUser<=22 && sc[0].free>=2 && sc[0].s-sc[1].s>=P.gap)) continue;
     }
-    return {sitKey, chain, jit, fin, user, presser, sc, atk};
+    return {sitKey, chain, jit, fin, user, presser, sc, atk, rf:RIVF_NAME};
   }
   return null;
 }
@@ -2000,15 +2302,17 @@ class Partido extends Drill {
     if(!g) g=genMatch(this.P,this.pos);
     if(!g) g=genMatch(Object.assign({},this.P,{gap:.3, circ:1}),this.pos);
     if(!g) g=genMatch(Object.assign({},this.P,{gap:.2, circ:1, sits:['posicional']}),this.pos);
-    this.k++; this.g=g; this.sit=SITS[g.sitKey];
+    this.k++; this.g=g; this.sit=SITS[g.sitKey]; RIVF=RIV_FORMS[g.rf]; RIVF_NAME=g.rf;
     setField(0, g.user.x, g.user.z);
+    if(!this.goalObj){ const go=new THREE.Group(); const hit=new THREE.Mesh(new THREE.BoxGeometry(7.6,2.6,1.4), MAT.hit); hit.position.y=1.3; go.add(hit); const ring=new THREE.Mesh(new THREE.RingGeometry(1.6,2.1,40), new THREE.MeshBasicMaterial({color:COLORS.ok, side:THREE.DoubleSide, transparent:true, opacity:.9})); ring.rotation.x=-Math.PI/2; ring.position.set(0,.05,1.2); ring.visible=false; go.add(ring); go.userData.u={ring, kitMeshes:[]}; this.root.add(go); this.goalObj=go; }
+    { const gw=this.w({x:0,z:-52.5}); this.goalObj.position.set(gw.x,0,gw.z); this.goalObj.userData.u.ring.visible=false; }
     const T=g.atk?'ours':'rivs'; let b={x:0,z:this.sit[T].z};
     for(let i=0;i<3;i++) b=this.tgt(T,g.chain[0],b);
     const bw=this.w(b);
     this.eachFig((o,team,slot)=>{ const p=this.w(this.tgt(team,slot,b)); o.position.set(p.x,0,p.z); o.userData.u.init=false; faceTo(o,bw.x,bw.z); });
     const c0=this.posW(T,g.chain[0]); this.ball.position.set(c0.x,.11,c0.z+.4);
     this.phase='intro';
-    setHud('Situación '+this.k+' de '+this.P.n+' · '+this.sit.nombre, this.sit.sub);
+    setHud('Situación '+this.k+' de '+this.P.n+' · '+this.sit.nombre, this.sit.sub+' · rival en '+RIVF_NAME);
     this.after(1.8/this.P.speed, ()=>{ this.phase='play'; this.ci=0; this.hold=0; this.passing=false; });
   }
   update(dt){
@@ -2043,8 +2347,8 @@ class Partido extends Drill {
       const o=this.pressO, r=Math.hypot(o.position.x,o.position.z);
       if(r>1.4){ const nr=Math.max(1.4, r-(this.pressR-1.4)/this.P.win*dt); o.position.set(o.position.x/r*nr,0,o.position.z/r*nr); }
     } else if(this.phase==='fb' && this.passTo){
-      this.pT+=dt; const u=clamp(this.pT/1.1,0,1), m=this.passTo;
-      this.ball.position.set(m.x*u,.11,-.45+(m.z+.45)*u); if(u<1) this.ball.rotation.x-=dt*15;
+      this.pT+=dt; const u=clamp(this.pT/1.1,0,1), m=this.passTo; const arc=(this.sit&&this.sit.post==='centro')?12*u*(1-u):0;
+      this.ball.position.set(m.x*u,.11+arc+(this.passGoal?u*1.2:0),-.45+(m.z+.45)*u); if(u<1) this.ball.rotation.x-=dt*15;
     }
   }
   settle(){
@@ -2055,7 +2359,7 @@ class Partido extends Drill {
   pickPhase(){
     this.phase='pick'; this.t0=performance.now(); sfx.whistle();
     const g=this.g, fc=g.chain[g.chain.length-1];
-    if(g.atk){ setHud('¿Mejor pase?', this.sit.nombre+' · señala al compañero'); Object.keys(this.ours).forEach(s=>this.addPick(this.ours[s], ()=>this.choose(s))); }
+    if(g.atk){ setHud(this.sit.shot?'¿Tiro o pase?':this.sit.post==='centro'?'¿A quién centras?':'¿Mejor pase?', this.sit.nombre+(this.sit.shot?' · señala la portería o a un compañero':' · señala al compañero')); Object.keys(this.ours).forEach(s=>this.addPick(this.ours[s], ()=>this.choose(s))); if(this.sit.shot) this.addPick(this.goalObj, ()=>this.choose('GOAL')); }
     else { setHud('¿A quién vigilas?', 'El rival sin balón más peligroso de tu zona'); Object.keys(this.rivs).forEach(s=>{ if(s==='POR' || s===fc) return; this.addPick(this.rivs[s], ()=>this.choose(s)); }); }
     this.after(this.P.win, ()=>this.resolve(null));
     if(this.P.ocl) this.after(this.P.ocl, ()=>{ if(this.phase!=='pick') return;
@@ -2069,7 +2373,7 @@ class Partido extends Drill {
   line(p,color){ const L=Math.hypot(p.x,p.z), b=new THREE.Mesh(new THREE.BoxGeometry(.16,.02,L), new THREE.MeshBasicMaterial({color, transparent:true, opacity:.85})); b.position.set(p.x/2,.05,p.z/2); b.rotation.y=Math.atan2(p.x,p.z); this.root.add(b); this.objs.push(b); }
   resolve(slot){
     this.clearTimers(); this.phase='fb'; this.pressO=null;
-    const g=this.g, team=g.atk?this.ours:this.rivs, best=g.sc[0].slot, second=g.sc[1];
+    const g=this.g, team0=g.atk?this.ours:this.rivs, best=g.sc[0].slot, second=g.sc[1]; const team=new Proxy(team0,{get:(t,k)=>k==='GOAL'?this.goalObj:t[k]});
     this.eachFig(o=>{ o.visible=true; setGrey(o,false); });
     let ok=0; if(slot===best) ok=1; else if(slot!=null && slot===second.slot && (!g.atk || (second.clear>=1.4 && second.space>=2))) ok=.5;
     const rt=slot==null?null:performance.now()-this.t0, bo=team[best];
@@ -2077,9 +2381,9 @@ class Partido extends Drill {
     if(slot!=null && slot!==best){ const r=team[slot].userData.u.ring; r.material.color.setHex(ok?COLORS.alt:COLORS.bad); r.visible=true; this.line(team[slot].position, ok?0xf2b233:0xff4d3d); }
     const at=(slot!=null?team[slot]:bo).position.clone(); at.y=2.6;
     if(ok===1){ sfx.ok(); flash('✓','#2bd46a',at,1.4); } else if(ok){ sfx.cue(); flash('½','#f2b233',at,1.4); } else { sfx.bad(); flash(slot==null?'…':'✗','#ff6b5e',at,1.4); }
-    if(g.atk && slot!=null){ this.passTo=team[slot].position.clone(); this.pT=0; sfx.kick(); }
+    if(g.atk && slot!=null){ this.passTo=team[slot].position.clone(); this.passGoal=slot==='GOAL'; this.pT=0; sfx.kick(); if(slot==='GOAL' && ok) cheer(.7); }
     this.trials.push({ok, rt}); const acc=g.atk?this.byAtk:this.byDef; acc.n++; acc.ok+=ok;
-    if(g.atk) setHud(ok===1?'¡Mejor opción!':ok?'Opción válida, había una mejor':(slot==null?'Tiempo agotado':'Había una opción mejor'), 'Verde: la mejor opción de pase');
+    if(g.atk) setHud(ok===1?(slot==='GOAL'?'¡Bien visto: era para tirar!':'¡Mejor opción!'):ok?'Opción válida, había una mejor':(slot==null?'Tiempo agotado':'Había una opción mejor'), best==='GOAL'?'Verde: lo mejor era disparar':'Verde: la mejor opción');
     else setHud(ok===1?'¡Bien leído!':ok?'Válido, pero había uno más peligroso':(slot==null?'Tiempo agotado':'Ese no era el más peligroso'), 'Verde: el rival libre más peligroso de tu zona');
     this.after(3, ()=>this.next());
   }
@@ -2090,9 +2394,9 @@ class Partido extends Drill {
 }
 
 const RULE_POOLS = {
-  color:[{txt:'CELESTES',t:b=>b.c==='celeste'},{txt:'BLANCOS',t:b=>b.c==='blanco'}],
-  num:[{txt:'PARES',t:b=>b.n%2===0},{txt:'IMPARES',t:b=>b.n%2===1}],
-  combo:[{txt:'PARES CELESTES',t:b=>b.n%2===0&&b.c==='celeste'},{txt:'IMPARES BLANCOS',t:b=>b.n%2===1&&b.c==='blanco'},{txt:'PARES BLANCOS',t:b=>b.n%2===0&&b.c==='blanco'},{txt:'IMPARES CELESTES',t:b=>b.n%2===1&&b.c==='celeste'}]
+  color:[{txt:'CELESTES',t:b=>b.c==='celeste'},{txt:'BLANCOS',t:b=>b.c==='blanco'},{txt:'AMARILLOS',t:b=>b.c==='amarillo'},{txt:'QUE NO SON BLANCOS',t:b=>b.c!=='blanco'}],
+  num:[{txt:'PARES',t:b=>b.n%2===0},{txt:'IMPARES',t:b=>b.n%2===1},{txt:'MAYORES QUE 5',t:b=>b.n>5},{txt:'MENORES QUE 5',t:b=>b.n<5},{txt:'MÚLTIPLOS DE 3',t:b=>b.n%3===0}],
+  combo:[{txt:'PARES CELESTES',t:b=>b.n%2===0&&b.c==='celeste'},{txt:'IMPARES BLANCOS',t:b=>b.n%2===1&&b.c==='blanco'},{txt:'PARES BLANCOS',t:b=>b.n%2===0&&b.c==='blanco'},{txt:'IMPARES CELESTES',t:b=>b.n%2===1&&b.c==='celeste'},{txt:'AMARILLOS MAYORES QUE 5',t:b=>b.n>5&&b.c==='amarillo'},{txt:'CELESTES MENORES QUE 5',t:b=>b.n<5&&b.c==='celeste'},{txt:'BLANCOS MÚLTIPLOS DE 3',t:b=>b.n%3===0&&b.c==='blanco'},{txt:'PARES QUE NO SON CELESTES',t:b=>b.n%2===0&&b.c!=='celeste'}]
 };
 RULE_POOLS.mix = RULE_POOLS.color.concat(RULE_POOLS.num);
 class Readapt extends Drill {
@@ -2100,7 +2404,7 @@ class Readapt extends Drill {
     super('readapt',lvl); this.P.n = (cur&&cur.n) ? Math.max(this.P.block, Math.round(cur.n/this.P.block)*this.P.block) : (this.P.block===4 ? 20 : 18); this.om=0;
     const blocks=this.P.n/this.P.block, pool=RULE_POOLS[this.P.rules]; this.rules=[];
     for(let g=0; this.rules.length<blocks && g<200; g++){ const r=pick(pool); if(!this.rules.length || this.rules[this.rules.length-1]!==r) this.rules.push(r); }
-    this.mats={celeste:new THREE.MeshStandardMaterial({map:MAT.ballTex,color:0x2BA9C7,roughness:.45}), blanco:new THREE.MeshStandardMaterial({map:MAT.ballTex,color:0xffffff,roughness:.45})};
+    this.mats={celeste:new THREE.MeshStandardMaterial({map:MAT.ballTex,color:0x2BA9C7,roughness:.45}), blanco:new THREE.MeshStandardMaterial({map:MAT.ballTex,color:0xffffff,roughness:.45}), amarillo:new THREE.MeshStandardMaterial({map:MAT.ballTex,color:0xf2c12e,roughness:.45})};
     this.geo=new THREE.SphereGeometry(.17,28,20);
   }
   start(){ this.k=0; this.objs=[]; this.next(); }
@@ -2116,7 +2420,7 @@ class Readapt extends Drill {
     this.after(rand(.5,.9), ()=>this.show());
   }
   makeSet(){
-    const r=this.rule, nums=[1,2,3,4,5,6,7,8,9], cols=['celeste','blanco'];
+    const r=this.rule, nums=[1,2,3,4,5,6,7,8,9], cols=['celeste','blanco','amarillo'];
     const target={n:pick(nums), c:pick(cols)}; let g=0; while(!r.t(target) && g++<200){ target.n=pick(nums); target.c=pick(cols); }
     const set=[target]; g=0;
     while(set.length<this.P.balls && g++<500){ const b={n:pick(nums), c:pick(cols)}; if(!r.t(b) && !set.some(s=>s.n===b.n)) set.push(b); }
@@ -2129,10 +2433,10 @@ class Readapt extends Drill {
     while(angs.length<set.length && g++<500){ const a=rand(-sp,sp); if(angs.every(x=>Math.abs(x-a)>13)) angs.push(a); }
     while(angs.length<set.length) angs.push(rand(-sp,sp));
     set.forEach((b,i)=>{
-      const a=angs[i]*D, r=2.6, y=rand(1.15,1.65);
+      const a=angs[i]*D, r=rand(2.2,3.1), y=rand(1.05,1.75);
       const grp=new THREE.Group(); grp.position.set(Math.sin(a)*r,y,-Math.cos(a)*r); grp.lookAt(0,y,0);
       const ball=new THREE.Mesh(this.geo, this.mats[b.c]); ball.rotation.set(rand(0,6),rand(0,6),0);
-      const lab=textSprite(String(b.n),b.c==='blanco'?'#144C5A':'#ffffff',.3); lab.position.set(0,0,.2);
+      const lab=textSprite(String(b.n),b.c==='celeste'?'#ffffff':'#144C5A',.3); lab.position.set(0,0,.2);
       grp.add(ball,lab); this.root.add(grp); this.objs.push(grp); grp.userData.lbl=String(b.n); grp.userData.b=b; grp.userData.mat=this.mats[b.c];
       this.addPick(grp, ()=>this.choose(b,grp));
     });
@@ -2149,7 +2453,566 @@ class Readapt extends Drill {
   }
   results(){ return this.summary({omisiones:this.om}, this.P.win*1000); }
 }
-const CLASSES = {escaneo:Escaneo, reaccion:Reaccion, tactica:Tactica, partido:Partido, readapt:Readapt};
+/* ================= Movimiento del jugador (joystick / teclado) ================= */
+const MOVE = {on:false, a:{x:0,z:0}, th:0, max:5.2, keys:{}, snapReady:true, vx:0, vz:0, prev:null, called:0, sprint:1};
+const KEYMAP={KeyW:'f',ArrowUp:'f',KeyS:'b',ArrowDown:'b',KeyA:'l',KeyD:'r'};
+window.addEventListener('keydown', e=>{ if(MOVE.on && KEYMAP[e.code]){ MOVE.keys[KEYMAP[e.code]]=true; e.preventDefault(); } if(MOVE.on && e.code==='Space'){ MOVE.called=performance.now(); e.preventDefault(); } });
+window.addEventListener('keyup', e=>{ if(KEYMAP[e.code]) MOVE.keys[KEYMAP[e.code]]=false; });
+function headWorld(){ const v=new THREE.Vector3(); if(renderer.xr.isPresenting) renderer.xr.getCamera(camera).getWorldPosition(v); else v.set(0,1.6,0); return v; }
+function toWorld(fx,fz){ const c=FIELD.c, s=FIELD.s; return {x:fx*c+fz*s+FIELD.px, z:-fx*s+fz*c+FIELD.pz}; }
+function userField(){ const h=headWorld(); return toField(h.x,h.z); }
+function moveStart(fx,fz,th){ MOVE.on=true; MOVE.th=th||0; MOVE.a={x:fx,z:fz}; MOVE.keys={}; MOVE.vx=MOVE.vz=0; MOVE.prev=null; setField(MOVE.th, fx, fz); }
+function moveStop(){ MOVE.on=false; MOVE.keys={}; }
+function moveTo(fx,fz){ const h=headWorld(); const c=Math.cos(MOVE.th), s=Math.sin(MOVE.th); MOVE.a={x:fx-(h.x*c-h.z*s), z:fz-(h.x*s+h.z*c)}; setField(MOVE.th, MOVE.a.x, MOVE.a.z); }
+function readSticks(){
+  const out={mx:0, my:0, turn:0, sprint:false};
+  const ses=renderer.xr.isPresenting && renderer.xr.getSession();
+  if(ses){ for(const src of ses.inputSources){ const gp=src.gamepad; if(!gp || !gp.axes) continue; const ax=gp.axes; const sx=ax.length>=4?ax[2]:(ax[0]||0), sy=ax.length>=4?ax[3]:(ax[1]||0);
+    if(src.handedness==='right'){ out.turn=sx; if(gp.buttons[3] && gp.buttons[3].pressed) out.sprint=true; } else { out.mx=sx; out.my=sy; if(gp.buttons[3] && gp.buttons[3].pressed) out.sprint=true; }
+    if(gp.buttons[4] && gp.buttons[4].pressed) MOVE.called=performance.now(); } }
+  const k=MOVE.keys; if(k.f) out.my-=1; if(k.b) out.my+=1; if(k.l) out.mx-=1; if(k.r) out.mx+=1;
+  return out;
+}
+function moveTick(dt){
+  if(!MOVE.on || !dt) return;
+  const st=readSticks(); let mx=st.mx, my=st.my; const mag=Math.hypot(mx,my);
+  if(mag<.18){ mx=0; my=0; } else if(mag>1){ mx/=mag; my/=mag; }
+  // giro por pasos con el joystick derecho
+  if(Math.abs(st.turn)>.7 && MOVE.snapReady){ const h=headWorld(), before=toField(h.x,h.z); MOVE.th+= st.turn>0?-Math.PI/6:Math.PI/6; MOVE.snapReady=false; const c=Math.cos(MOVE.th), s=Math.sin(MOVE.th); MOVE.a={x:before.x-(h.x*c-h.z*s), z:before.z-(h.x*s+h.z*c)}; setField(MOVE.th, MOVE.a.x, MOVE.a.z); }
+  if(Math.abs(st.turn)<.3) MOVE.snapReady=true;
+  const hy=headYaw(); const fx=Math.sin(hy), fz=-Math.cos(hy), rx=Math.cos(hy), rz=Math.sin(hy);
+  const sp=MOVE.max*(st.sprint?1.25:1)*MOVE.sprint;
+  const wx=(fx*(-my)+rx*mx)*sp, wz=(fz*(-my)+rz*mx)*sp; // velocidad en mundo
+  const c=FIELD.c, s=FIELD.s; const vfx=wx*c-wz*s, vfz=wx*s+wz*c;
+  const k=1-Math.exp(-dt*9); MOVE.vx=lerp(MOVE.vx,vfx,k); MOVE.vz=lerp(MOVE.vz,vfz,k);
+  if(Math.abs(MOVE.vx)+Math.abs(MOVE.vz)>.01){ MOVE.a.x+=MOVE.vx*dt; MOVE.a.z+=MOVE.vz*dt;
+    const u=userField(); const ox=clamp(u.x,-37,37)-u.x, oz=clamp(u.z,-55,55)-u.z; MOVE.a.x+=ox; MOVE.a.z+=oz;
+    setField(MOVE.th, MOVE.a.x, MOVE.a.z); }
+}
+const HUDF={a:0, on:false};
+function hudFollow(dt){ if(!hudPanel) return; const want=headYaw(); let d=Math.atan2(Math.sin(want-HUDF.a),Math.cos(want-HUDF.a)); if(Math.abs(d)>.35) HUDF.a+=d*Math.min(1,dt*2.5); const r=3.4; hudPanel.mesh.position.set(Math.sin(HUDF.a)*r,2.95,-Math.cos(HUDF.a)*r); hudPanel.mesh.rotation.set(0,-HUDF.a,0); hudPanel.mesh.scale.setScalar(.72); HUDF.on=true; }
+function hudReset(){ if(!hudPanel || !HUDF.on) return; hudPanel.mesh.position.set(0,2.45,-3.4); hudPanel.mesh.rotation.set(0,0,0); hudPanel.mesh.scale.setScalar(1); HUDF.on=false; HUDF.a=0; }
+function faceDir(o,x,z){ const dx=x-o.position.x, dz=z-o.position.z; if(dx*dx+dz*dz>1e-4) o.rotation.set(0,Math.atan2(dx,dz),0); }
+function lineMesh(color, w){ const m=new THREE.Mesh(new THREE.BoxGeometry(1,1,1), new THREE.MeshBasicMaterial({color, transparent:true, opacity:.85, depthWrite:false})); m.scale.set(w||.16,.02,1); m.renderOrder=3; return m; }
+function setLine(m,a,b){ const L=Math.hypot(b.x-a.x,b.z-a.z)||.01; m.position.set((a.x+b.x)/2,.05,(a.z+b.z)/2); m.rotation.set(0,Math.atan2(b.x-a.x,b.z-a.z),0); m.scale.z=L; }
+function ringMesh(color,r){ const m=new THREE.Mesh(new THREE.RingGeometry(r*.75,r,40), new THREE.MeshBasicMaterial({color, side:THREE.DoubleSide, transparent:true, opacity:.9, depthWrite:false})); m.rotation.x=-Math.PI/2; m.position.y=.04; m.renderOrder=3; return m; }
+function laneClear(a,b,opps){ let m=99; for(const o of opps){ const d=distSeg(o,a,b); if(d<m) m=d; } return m; }
+function nearestD(p,list){ let m=99; for(const o of list){ const d=Math.hypot(o.x-p.x,o.z-p.z); if(d<m) m=d; } return m; }
+/* Campo como superficie seleccionable (pase al espacio) y portería rival (tiro) */
+function fieldPickers(drill, onField, onGoal){
+  const pl=new THREE.Mesh(new THREE.PlaneGeometry(76,114), MAT.hit); pl.rotation.x=-Math.PI/2; pl.position.y=.01; drill.root.add(pl);
+  drill.addPick(pl, h=>{ if(h){ const f=toField(h.point.x,h.point.z); onField(f); } });
+  const gm=new THREE.Mesh(new THREE.BoxGeometry(7.6,2.6,1.2), MAT.hit); gm.position.set(0,1.3,-53); drill.root.add(gm);
+  drill.addPick(gm, h=>{ let ax=0, ay=1; if(h){ const f=toField(h.point.x,h.point.z); ax=f.x; ay=h.point.y; } onGoal(ax,ay); });
+  drill.fieldPick=pl; drill.goalPick=gm;
+}
+
+/* ================= Modalidad: Interpretación de espacios ================= */
+class Espacios extends Drill {
+  constructor(lvl){ super('espacios',lvl); this.P.n=(cur&&cur.n)||8; field.add(this.root); this.fieldRoot=true; this.openT=0; }
+  dispose(){ moveStop(); hudReset(); this.clearTimers(); field.remove(this.root); this.picks=[]; this.figs=[]; }
+  start(){ this.k=0; this.objs=[]; this.rounds=[]; this.addBall(); this.lineA=lineMesh(0xffffff,.1); this.lineA.visible=false; this.root.add(this.lineA);
+    fieldPickers(this, ()=>this.call(), ()=>this.call()); this.next(); }
+  call(){ if(this.phase==='desmarque'){ this.calledAt=this.mt; this.resolveMove(); } }
+  genRound(){
+    const P=this.P, PO=POS[this.pos], mir=pickMir(this.pos), sx=mir?-1:1;
+    for(let g=0; g<300; g++){
+      const A={x:clamp(PO.at.x*sx+rand(-9,9),-30,30), z:clamp(PO.at.z+rand(-10,8),-44,44)};
+      if(this.pos==='POR'){ A.x=rand(-12,12); A.z=rand(20,40); }
+      const ang=rand(-1,1)*P.angC + (Math.random()<.5?0:Math.PI)*0; // 0 = detrás (hacia nuestra portería)
+      const dC=rand(P.dist[0],P.dist[1]); const C={x:clamp(A.x+Math.sin(ang)*dC*(Math.random()<.5?1:-1)*.9,-32,32), z:clamp(A.z+Math.cos(ang)*dC,-48,48)};
+      if(Math.hypot(C.x-A.x,C.z-A.z)<7) continue;
+      const defs=[]; const toGoal={x:0-A.x, z:-52.5-A.z}, tl=Math.hypot(toGoal.x,toGoal.z)||1;
+      defs.push({x:A.x+toGoal.x/tl*1.6+rand(-.6,.6), z:A.z+toGoal.z/tl*1.6, role:'marca'});
+      if(P.defs>=2){ const t=rand(.4,.65); defs.push({x:lerp(C.x,A.x,t)+rand(-1,1), z:lerp(C.z,A.z,t)+rand(-1,1), role:'linea'}); }
+      for(let i=2;i<P.defs;i++){ const a=rand(0,Math.PI*2), r=rand(4,9); defs.push({x:clamp(A.x+Math.cos(a)*r,-33,33), z:clamp(A.z+Math.sin(a)*r,-50,50), role:'zona'}); }
+      if(P.presion) defs.push({x:C.x+rand(-1.5,1.5), z:C.z-2.2, role:'presion'});
+      if(defs.some((d,i)=>defs.some((e,j)=>j>i && Math.hypot(d.x-e.x,d.z-e.z)<1.4))) continue;
+      if(defs.some(d=>Math.hypot(d.x-C.x,d.z-C.z)<1.6 && d.role!=='presion')) continue;
+      // existe un espacio alcanzable y abierto?
+      const best=this.bestSpot(A,C,defs, P.reach);
+      if(!best || best.s<3.5) continue;
+      if(this.spotScore(A,C,defs).open) continue; // la posición inicial no debe estar ya libre
+      const mates=[]; for(let i=0;i<P.mates;i++){ const a=rand(0,Math.PI*2), r=rand(10,22); const m={x:clamp(A.x+Math.cos(a)*r,-32,32), z:clamp(A.z+Math.sin(a)*r-6,-48,48)}; if(Math.hypot(m.x-C.x,m.z-C.z)>6) mates.push(m); }
+      return {A,C,defs,best,mates};
+    }
+    return null;
+  }
+  spotScore(p,C,defs){ const d=Math.hypot(p.x-C.x,p.z-C.z); const clear=laneClear(C,p,defs.filter(x=>x.role!=='presion')); const space=nearestD(p,defs);
+    const open=clear>=1.6 && space>=2.4 && d>=6 && d<=32 && Math.abs(p.x)<=33.5 && Math.abs(p.z)<=51.5;
+    const fwd=(C.z-p.z)*.05; return {open, clear, space, s:(open?2:0)+Math.min(clear,4)*.8+Math.min(space,6)*.7+fwd-Math.max(0,d-26)*.3}; }
+  bestSpot(A,C,defs,reach){ let best=null; for(let r=0;r<=reach;r+=1.2) for(let a=0;a<Math.PI*2;a+=r?Math.PI/Math.max(4,Math.round(r*2.2)):7){ const p={x:A.x+Math.cos(a)*r, z:A.z+Math.sin(a)*r}; const sc=this.spotScore(p,C,defs); if(!sc.open) continue; const s=sc.s-r*.08; if(!best||s>best.s) best={x:p.x,z:p.z,s,sc}; } return best; }
+  next(){
+    if(this.k>=this.P.n) return this.finish();
+    this.despawn(this.rounds); this.rounds=[]; this.objs.forEach(o=>this.root.remove(o)); this.objs=[]; this.lineA.visible=false;
+    let g=this.genRound(); if(!g){ this.P=Object.assign({},this.P,{defs:Math.max(1,this.P.defs-1)}); g=this.genRound(); } if(!g) return this.finish();
+    this.g=g; this.k++; usedNums=[];
+    moveStart(g.A.x, g.A.z, 0);
+    this.carrier=this.spawn('mate',num(),g.C.x,0); this.carrier.position.set(g.C.x,0,g.C.z); this.carrier.userData.u.stance=.3; this.rounds.push(this.carrier);
+    this.ball.position.set(g.C.x,.11,g.C.z-.5); this.ball.visible=true;
+    this.defObjs=g.defs.map(d=>{ const o=this.spawn('opp',num(),0,0); o.position.set(d.x,0,d.z); o.userData.u.stance=.9; o.userData.role=d.role; o.userData.home={x:d.x,z:d.z}; this.rounds.push(o); return o; });
+    this.mateObjs=g.mates.map(m=>{ const o=this.spawn('mate',num(),0,0); o.position.set(m.x,0,m.z); o.userData.u.stance=.4; this.rounds.push(o); return o; });
+    this.rounds.forEach(o=>{ if(o!==this.carrier) faceDir(o,g.C.x,g.C.z); }); faceDir(this.carrier,g.A.x,g.A.z);
+    this.phase='desmarque'; this.mt=0; this.calledAt=null; this.openT=0; this.firstOpen=null; this.trail=[];
+    setHud('Jugada '+this.k+' de '+this.P.n, 'Desmárcate: busca el espacio libre y la línea de pase');
+    sfx.whistle();
+  }
+  defsNow(){ return this.defObjs.map(o=>({x:o.position.x, z:o.position.z, role:o.userData.role})); }
+  update(dt){
+    hudFollow(dt);
+    if(this.phase==='desmarque'){
+      this.mt+=dt; const U=userField(), C={x:this.carrier.position.x, z:this.carrier.position.z};
+      this.trail.push({t:this.mt, x:U.x, z:U.z}); while(this.trail.length && this.trail[0].t<this.mt-this.P.react) this.trail.shift();
+      const lagU=this.trail.length?this.trail[0]:U;
+      this.defObjs.forEach(o=>{ const r=o.userData.role; let t=null, v=0;
+        if(r==='marca' && this.P.follow){ const gx=-lagU.x, gz=-52.5-lagU.z, L=Math.hypot(gx,gz)||1; const lx=C.x-lagU.x, lz=C.z-lagU.z, LL=Math.hypot(lx,lz)||1; t={x:lagU.x+gx/L*1.5+lx/LL*.9, z:lagU.z+gz/L*1.5+lz/LL*.9}; v=5.4*this.P.follow; }
+        else if(r==='linea' && this.P.cover){ const tt=.5; t={x:lerp(C.x,lagU.x,tt), z:lerp(C.z,lagU.z,tt)}; v=4.6*this.P.cover; }
+        else if(r==='presion'){ t={x:C.x+.2, z:C.z-1.3}; v=3; }
+        else if(r==='zona' && this.P.cover){ const h=o.userData.home; t={x:lerp(h.x,lagU.x,.25), z:lerp(h.z,lagU.z,.25)}; v=3*this.P.cover; }
+        if(t){ const dx=t.x-o.position.x, dz=t.z-o.position.z, d=Math.hypot(dx,dz); if(d>.15){ const m=Math.min(d,v*dt); o.position.x+=dx/d*m; o.position.z+=dz/d*m; } }
+        faceDir(o, lagU.x, lagU.z); });
+      const sc=this.spotScore(U,C,this.defsNow());
+      if(sc.open){ this.openT+=dt; if(this.openT>.35 && this.firstOpen==null) this.firstOpen=this.mt; } else this.openT=0;
+      const left=Math.max(0,this.P.win-this.mt);
+      if(this.P.ayuda){ this.lineA.visible=true; setLine(this.lineA,C,U); this.lineA.material.color.setHex(sc.open?0x2bd46a:0xff4d3d); }
+      setHud('Desmárcate · '+left.toFixed(1).replace('.',',')+' s', sc.open ? 'Línea abierta: pide el balón (gatillo)' : 'Busca la línea de pase sin rivales en medio');
+      faceDir(this.carrier,U.x,U.z);
+      if(this.mt>=this.P.win) this.resolveMove();
+    } else if(this.phase==='pass'){
+      this.pt+=dt; const u=clamp(this.pt/this.pdur,0,1); const p=this.p0, q=this.p1;
+      this.ball.position.set(lerp(p.x,q.x,u),.11,lerp(p.z,q.z,u)); this.ball.rotation.x-=dt*16;
+      if(u>=1) this.afterPass();
+    } else if(this.phase==='pass2'){
+      this.pt+=dt; const u=clamp(this.pt/this.pdur,0,1);
+      this.ball.position.set(lerp(this.p0.x,this.p1.x,u),.11,lerp(this.p0.z,this.p1.z,u)); this.ball.rotation.x-=dt*16;
+    }
+    if(this.phase==='pick' || this.phase==='fb' || this.phase==='pick2'){ const U=userField(); if(this.hasBall){ const hy=headYaw(); const fw=toField(Math.sin(hy)*.6, -Math.cos(hy)*.6); const o=toField(0,0); this.ball.position.set(U.x+(fw.x-o.x), .11, U.z+(fw.z-o.z)); } }
+  }
+  resolveMove(){
+    if(this.phase!=='desmarque') return;
+    const U=userField(), C={x:this.carrier.position.x, z:this.carrier.position.z}, defs=this.defsNow();
+    const sc=this.spotScore(U,C,defs); this.sc=sc; this.U={x:U.x,z:U.z};
+    this.carrier.userData.u.kick=.42; setTimeout(()=>sfx.kick(),180);
+    this.phase='pass'; this.pt=-.18; this.p0={x:C.x,z:C.z};
+    if(sc.open){ this.p1={x:U.x,z:U.z}; this.intercept=null; }
+    else { // interceptación: el rival más cercano a la línea
+      let best=null, bd=99; defs.forEach((d,i)=>{ const dd=distSeg(d,C,U); if(dd<bd){ bd=dd; best=i; } });
+      const o=this.defObjs[best]; this.intercept=o; this.p1={x:o.position.x, z:o.position.z};
+      if(sc.space<2.4 && nearestD(U,defs)<2.4){ let bi=0, b2=99; defs.forEach((d,i)=>{ const dd=Math.hypot(d.x-U.x,d.z-U.z); if(dd<b2){ b2=dd; bi=i; } }); this.intercept=this.defObjs[bi]; this.p1={x:U.x,z:U.z}; }
+    }
+    this.pdur=Math.max(.45, Math.hypot(this.p1.x-C.x,this.p1.z-C.z)/17);
+  }
+  afterPass(){
+    const sc=this.sc, best=this.g.best; this.objs.forEach(o=>this.root.remove(o)); this.objs=[];
+    const C=this.p0; const mk=(p,col)=>{ const r=ringMesh(col,.8); r.position.x=p.x; r.position.z=p.z; this.root.add(r); this.objs.push(r); const l=lineMesh(col,.12); setLine(l,C,p); this.root.add(l); this.objs.push(l); };
+    // mejor espacio posible desde donde estabas
+    const nb=this.bestSpot(this.U,C,this.defsNow(),4) || best;
+    let ok=0;
+    if(sc.open){ ok = (sc.clear>=2.4 && sc.space>=3.6) ? 1 : .5; this.hasBall=true; sfx.ok(); const w=toWorld(this.U.x,this.U.z); const hw=new THREE.Vector3(Math.sin(headYaw())*2.5,2.2,-Math.cos(headYaw())*2.5); flash(ok===1?'✓':'½',ok===1?'#2bd46a':'#f2b233',hw,1.0); }
+    else { this.hasBall=false; sfx.bad(); if(this.intercept) this.intercept.userData.u.raise=.6; }
+    mk(this.U, sc.open?0x2bd46a:0xff4d3d);
+    if(!sc.open || ok<1) mk(nb, 0xf2b233);
+    this.lineA.visible=false;
+    const rt=this.firstOpen!=null?Math.round(this.firstOpen*1000):null;
+    this.cur1={ok, rt};
+    if(sc.open && this.P.segunda){ this.secondAction(); return; }
+    this.trials.push(this.cur1); this.phase='fb';
+    setHud(sc.open?(ok===1?'¡Espacio perfecto!':'Recibes, pero muy justo'):(sc.clear<1.6?'Línea de pase cortada':'Demasiado cerca de un rival'), sc.open?'Ámbar: un espacio todavía mejor':'Ámbar: el espacio libre que había');
+    this.after(2.6, ()=>this.next());
+  }
+  secondAction(){
+    // tras recibir: elige la mejor línea de pase entre los compañeros
+    this.phase='pick2'; this.t2=performance.now(); this.picks=this.picks.filter(p=>p===this.fieldPick||p===this.goalPick);
+    const U=this.U, defs=this.defsNow();
+    const opts=this.mateObjs.concat([this.carrier]).map(o=>{ const m={x:o.position.x,z:o.position.z}; const clear=laneClear(U,m,defs), space=nearestD(m,defs), d=Math.hypot(m.x-U.x,m.z-U.z); return {o, clear, space, s:(clear<1.4?-10:0)+Math.min(space,6)+Math.min(clear,4)*.8+(U.z-m.z)*.12-Math.max(0,d-28)*.3}; }).sort((a,b)=>b.s-a.s);
+    this.opts2=opts;
+    opts.forEach(op=>this.addPick(op.o, ()=>this.choose2(op)));
+    setHud('¡Tienes el balón!', 'Señala el mejor pase'); sfx.cue();
+    this.after(this.P.win2, ()=>this.choose2(null));
+  }
+  choose2(op){
+    if(this.phase!=='pick2') return; this.clearTimers();
+    const best=this.opts2[0]; let ok=0; if(op===best) ok=1; else if(op && op.clear>=1.4 && op.space>=2) ok=.5;
+    const rt2=op?performance.now()-this.t2:null;
+    const br=best.o.userData.u.ring; br.material.color.setHex(COLORS.ok); br.visible=true;
+    if(op && op!==best){ const r=op.o.userData.u.ring; r.material.color.setHex(ok?COLORS.alt:COLORS.bad); r.visible=true; }
+    if(op){ this.hasBall=false; this.phase='pass2'; this.pt=0; this.p0={x:this.ball.position.x, z:this.ball.position.z}; this.p1={x:op.o.position.x, z:op.o.position.z}; this.pdur=Math.max(.45,Math.hypot(this.p1.x-this.p0.x,this.p1.z-this.p0.z)/17); sfx.kick(); }
+    else this.phase='fb';
+    this.trials.push({ok:(this.cur1.ok+ok)/2, rt:this.cur1.rt});
+    setHud(ok===1?'¡Desmarque y pase perfectos!':ok?'Pase válido, había uno mejor':(op?'Línea cerrada':'Tiempo agotado'), 'Verde: el mejor pase');
+    this.after(2.6, ()=>{ this.mateObjs.concat([this.carrier]).forEach(o=>{ o.userData.u.ring.visible=false; }); this.next(); });
+  }
+  results(){ return this.summary({omisiones:0}, this.P.win*1000); }
+}
+
+/* ================= Modalidad: Jugar un partido (juego continuo) ================= */
+const RIV_FORMS = {
+  '4-4-2':{LI:[-24,14],DFCI:[-8,16],DFCD:[8,16],LD:[24,14],MI:[-22,2],MCI:[-7,4],MCD:[7,4],MD:[22,2],DI:[-6,-10],DD:[6,-10]},
+  '4-3-3':{LI:[-26,14],DFCI:[-9,17],DFCD:[9,17],LD:[26,14],MCD:[0,7],MCI:[-12,-1],MD:[12,-1],MI:[-26,-14],DI:[0,-19],DD:[26,-14]},
+  '4-2-3-1':{LI:[-25,14],DFCI:[-8,17],DFCD:[8,17],LD:[25,14],MCI:[-7,6],MCD:[7,6],MI:[-22,-6],MD:[22,-6],DD:[0,-5],DI:[0,-18]},
+  '5-3-2':{LI:[-28,10],DFCI:[-12,16],DFCD:[12,16],LD:[28,10],MCD:[0,17],MCI:[-12,2],MD:[12,2],MI:[0,0],DI:[-7,-13],DD:[7,-13]},
+  '3-5-2':{DFCI:[-14,15],DFCD:[14,15],MCD:[0,16],LI:[-28,0],LD:[28,0],MCI:[-10,3],MD:[10,3],MI:[0,-4],DI:[-7,-14],DD:[7,-14]}
+};
+const OUR_FORM = F433;
+function goalProb(x,z,aimX,aimY,gk){
+  const d=Math.hypot(x,z+52.5); const ang=Math.abs(Math.atan2(x, -(z+52.5)));
+  let p = d<7?.5 : d<12?.34 : d<17?.2 : d<22?.11 : d<28?.05 : .02;
+  p *= Math.max(.15, 1-ang/1.25);
+  if(aimX!=null){ const edge=Math.abs(aimX)/3.66; p *= .7+.6*clamp(edge,0,1); if(Math.abs(aimX)>3.4 || aimY>2.3) p*=.75; }
+  if(gk){ const gd=Math.abs(gk.x-(aimX||0)); p*= .8+clamp(gd/4,0,.5); }
+  return clamp(p*1.7,.02,.88);
+}
+class Juego extends Drill {
+  constructor(lvl){ super('juego',lvl); field.add(this.root); this.fieldRoot=true;
+    const m=(cur&&cur.n)?cur.n:null; this.half=m?Math.max(45,Math.round(m*30)):300;
+    this.stats={gf:0, gc:0, pases:0, pasesOk:0, perdidas:0, recup:0, tiros:0, abiertoT:0, posesionT:0, scansRec:[], tocadas:0};
+  }
+  dispose(){ moveStop(); hudReset(); this.clearTimers(); field.remove(this.root); this.picks=[]; this.figs=[]; setScreens('',''); }
+  start(){
+    const P=this.P; this.sp=P.speed; this.form=pick(Object.keys(RIV_FORMS)); this.rf=RIV_FORMS[this.form];
+    this.E=[]; usedNums=[]; this.cnt={shots:0, cross:0};
+    const mk=(team,slot,f)=>{ const e={team, slot, x:0, z:0, vx:0, vz:0, user:false, gk:slot==='POR', run:null, runT:rand(1,5), wan:{x:0,z:0}, wanT:0, home:{x:0,z:0}};
+      if(team==='ours' && slot===this.pos){ e.user=true; } else { e.obj=this.spawn(team==='ours'?(slot==='POR'?'gk':'mate'):(slot==='POR'?'gk2':'opp'), team==='ours'?DORSAL.ours[slot]:(DORSAL.rivs[slot]||randi(12,23)), 0, 0, true); }
+      this.E.push(e); return e; };
+    ['POR'].concat(Object.keys(OUR_FORM)).forEach(s=>mk('ours',s));
+    ['POR'].concat(Object.keys(this.rf)).forEach(s=>mk('rivs',s));
+    this.U=this.E.find(e=>e.user);
+    this.addBall(); this.B={state:'dead', x:0, z:0, y:.11, owner:null, last:'ours'};
+    fieldPickers(this, f=>this.userAction('space',f), (ax,ay)=>this.userAction('shot',{x:ax,y:ay}));
+    this.E.forEach(e=>{ if(e.obj) this.addPick(e.obj, ()=>this.userAction(e.team==='ours'?'pass':'tackle', e)); });
+    this.halfN=1; this.clock=0; this.score=[0,0]; this.msgT=0; this.userMsg='';
+    this.kickoff('ours', true);
+    this.ring=ringMesh(0xffffff,.55); this.ring.material.opacity=.5; this.root.add(this.ring);
+    this.passLine=lineMesh(0x2bd46a,.1); this.passLine.visible=false; this.root.add(this.passLine);
+    this.updScreens(); this.phase='juego';
+  }
+  /* ---------- utilidades ---------- */
+  dirOf(team){ return team==='ours'?-1:1; }            // sentido de ataque en z
+  goalZ(team){ return team==='ours'?52.5:-52.5; }       // portería propia
+  mates(team){ return this.E.filter(e=>e.team===team); }
+  opps(team){ return this.E.filter(e=>e.team!==team); }
+  epos(e){ return {x:e.x, z:e.z}; }
+  F(e){ return e.team==='ours'?OUR_FORM[e.slot]:this.rf[e.slot]; }
+  say(t,s,dur){ this.userMsg=t; this.userSub=s||''; this.msgT=dur||2.2; }
+  updScreens(){ const m=Math.floor(this.clock/60), s=Math.floor(this.clock%60); setScreens('SPX '+this.score[0]+' - '+this.score[1]+' RIV', (this.halfN===1?'1ª':'2ª')+' parte · '+m+':'+String(s).padStart(2,'0')); }
+  kickoff(team, first){
+    this.B.state='dead'; this.B.owner=null; this.restart={type:'saque', team, t:first?2.2:3.2, x:0, z:0};
+    this.E.forEach(e=>{ const sgn=e.team==='ours'?1:-1; let p;
+      if(e.gk) p={x:0, z:sgn*49.5}; else { const f=this.F(e); p={x:f[0]*.85, z:sgn*clamp(3+(f[1]+20)*.85, 2.5, 44)}; }
+      e.kx=p.x; e.kz=p.z;
+      if(e.user){ if(first) moveStart(p.x, p.z, 0); }
+      else if(first){ e.x=p.x; e.z=p.z; e.vx=e.vz=0; } });
+    this.kickT=first?0:3;
+    const taker=this.mates(team).filter(e=>!e.user && !e.gk).sort((a,b)=>Math.abs(this.F(a)[1])-Math.abs(this.F(b)[1]))[0];
+    taker.kx=0; taker.kz=team==='ours'?.6:-.6; if(first){ taker.x=taker.kx; taker.z=taker.kz; } this.restart.taker=taker; this.restart.x=0; this.restart.z=team==='ours'?.5:-.5;
+    this.ballAt(0,0);
+  }
+  ballAt(x,z){ this.B.x=x; this.B.z=z; this.B.y=.11; }
+  /* ---------- objetivos tácticos ---------- */
+  homeOf(e, poss){
+    const team=e.team, dir=this.dirOf(team), back=-dir, inP=poss===team, B=this.B;
+    if(e.gk){ const gz=this.goalZ(team); const db=Math.abs(B.z-gz); return {x:clamp(B.x*.12,-3,3), z:gz+dir*clamp(1.5+(db-25)*.12,1.2,11)}; }
+    const f=this.F(e); const w=inP?1.08:.8, d=inP?.95:.68;
+    let cz=B.z*.62+back*(inP?1:8); cz=clamp(cz,-30,30);
+    let x=f[0]*w+B.x*(inP?.18:.33), z=cz+back*f[1]*d;
+    // línea defensiva no más allá del medio campo propio cuando no tenemos balón
+    z=clamp(z,-50,50);
+    return {x:clamp(x,-32,32), z};
+  }
+  carrier(){ return this.B.state==='held'?this.B.owner:null; }
+  separate(){ const L=this.E; for(let i=0;i<L.length;i++){ const a=L[i]; for(let j=i+1;j<L.length;j++){ const b=L[j]; const dx=b.x-a.x, dz=b.z-a.z, d=Math.hypot(dx,dz); if(d<.85 && d>1e-4){ const push=(.85-d)/2; const ux=dx/d, uz=dz/d; if(!a.user){ a.x-=ux*push; a.z-=uz*push; } if(!b.user){ b.x+=ux*push; b.z+=uz*push; } } } } }
+  /* ---------- bucle ---------- */
+  update(dt){
+    hudFollow(dt);
+    if(this.phase==='fin' || !this.E) return;
+    const sp=this.sp; this.T=(this.T||0)+dt;
+    // usuario
+    const uf=userField(); const U=this.U; const pux=U.x, puz=U.z; U.x=uf.x; U.z=uf.z; U.vx=(U.x-pux)/Math.max(dt,1e-3); U.vz=(U.z-puz)/Math.max(dt,1e-3);
+    this.ring.position.set(U.x,.04,U.z);
+    // reloj
+    if(this.phase==='juego'){ this.clock+=dt; if(Math.floor(this.clock)!==this.lastSec){ this.lastSec=Math.floor(this.clock); this.updScreens(); }
+      if(this.clock>=this.half && (this.B.state!=='flight')){ return this.endHalf(); } }
+    else if(this.phase==='descanso'){ this.restT-=dt; setHud('Descanso · '+this.score[0]+'-'+this.score[1], 'La 2ª parte empieza en '+Math.ceil(Math.max(0,this.restT))+' s'); if(this.restT<=0){ this.phase='juego'; this.halfN=2; this.clock=0; this.kickoff('rivs'); sfx.whistle(); } return; }
+    const B=this.B; let poss = B.state==='held' ? B.owner.team : (B.state==='dead' && this.restart ? this.restart.team : B.last); if(poss==='none') poss=null;
+    // reinicios
+    if(B.state==='dead'){ const r=this.restart; r.t-=dt; const tk=r.taker; if(tk && !tk.user){ this.moveE(tk,{x:r.x,z:r.z},dt,1); }
+      if(r.t<=0 && tk && Math.hypot(tk.x-r.x,tk.z-r.z)<1.5 && (r.type!=='saque' || this.E.every(e=>e.user||e.kx==null||Math.hypot(e.x-e.kx,e.z-e.kz)<3||e===tk))){ B.state='held'; B.owner=tk; tk.holdT=r.type==='corner'?.2:.3; tk.restartType=r.type; this.restart=null; if(r.type==='saque') sfx.whistle(); } }
+    // IA de jugadores
+    const car=this.carrier();
+    this.E.forEach(e=>{ if(e.user) return; e.home=this.homeOf(e,poss); });
+    this.assignDefense(poss, car, dt);
+    this.E.forEach(e=>{ if(e.user || e===car) return; if(B.state==='dead' && this.restart && e===this.restart.taker) return; this.aiMove(e, poss, car, dt); });
+    if(car && !car.user) this.aiCarrier(car, dt);
+    if(car && car.user) this.userCarrier(dt);
+    this.ballStep(dt);
+    this.separate();
+    // aplicar a figuras
+    this.E.forEach(e=>{ if(!e.obj) return; e.obj.position.set(e.x,0,e.z); const sp2=Math.hypot(e.vx,e.vz);
+      if(e===car){ const g=this.dirOf(e.team); faceDir(e.obj, e.x+e.vx*.3, e.z+(sp2>.5?e.vz*.3:g)); }
+      else if(sp2>2.4 && !e.mark) faceDir(e.obj, e.x+e.vx, e.z+e.vz); else faceDir(e.obj, B.x, B.z); });
+    this.ball.position.set(B.x,B.y,B.z);
+    this.metrics(dt, poss);
+    this.hud(dt, poss);
+  }
+  moveE(e,t,dt,urg){ const vmax=(urg>.5?6.6:4.2)*this.sp*(e.gk?.85:1); const dx=t.x-e.x, dz=t.z-e.z, d=Math.hypot(dx,dz);
+    let tvx=0,tvz=0; if(d>.25){ const v=Math.min(vmax, d*1.6); tvx=dx/d*v; tvz=dz/d*v; }
+    const a=7*this.sp*dt; e.vx+=clamp(tvx-e.vx,-a,a); e.vz+=clamp(tvz-e.vz,-a,a); e.x+=e.vx*dt; e.z+=e.vz*dt; e.x=clamp(e.x,-36,36); e.z=clamp(e.z,-54,54); }
+  assignDefense(poss, car, dt){
+    this.E.forEach(e=>{ e.press=false; e.mark=null; e.cover=false; });
+    if(!poss) return; const def=poss==='ours'?'rivs':'ours'; const B=this.B;
+    const target = car ? {x:car.x,z:car.z} : {x:B.x,z:B.z};
+    const ds=this.mates(def).filter(e=>!e.gk && !e.user).map(e=>({e, d:Math.hypot(e.x-target.x,e.z-target.z)})).sort((a,b)=>a.d-b.d);
+    if(ds[0]) ds[0].e.press=true;
+    if(ds[1] && car) ds[1].e.cover=true;
+    // marcas zonales
+    const atk=this.mates(poss).filter(e=>!e.gk);
+    this.mates(def).forEach(e=>{ if(e.gk||e.user||e.press||e.cover) return; let best=null, bd=11; atk.forEach(a=>{ if(a===car) return; const d=Math.hypot(a.x-e.home.x,a.z-e.home.z); if(d<bd){ bd=d; best=a; } }); e.mark=best; });
+  }
+  aiMove(e, poss, car, dt){
+    const B=this.B; let t=e.home, urg=0;
+    if(B.state==='dead' && this.restart && this.restart.type==='saque' && e.kx!=null){ this.moveE(e,{x:e.kx,z:e.kz},dt,.8); return; }
+    if(B.state==='loose' || (B.state==='flight' && e.intercept)){ /* persecución */ }
+    if(e.intercept && B.state==='flight'){ t=e.intercept; urg=1; }
+    else if(B.state==='loose' && e.chase){ t={x:B.x+B.vx*.25, z:B.z+B.vz*.25}; urg=1; }
+    else if(e.receive && B.state==='flight'){ t=e.receive; urg=1; }
+    else if(poss && poss!==e.team){
+      const gz=this.goalZ(e.team);
+      if(e===this.uPresser && B.owner===this.U) return;
+      if(e.press && !e.gk){ const tg=car||B; const gx=-tg.x, gzz=gz-tg.z, L=Math.hypot(gx,gzz)||1; t={x:tg.x+gx/L*.9, z:tg.z+gzz/L*.9}; urg=this.P.press; }
+      else if(e.cover && car){ const gx=-car.x, gzz=gz-car.z, L=Math.hypot(gx,gzz)||1; t={x:car.x+gx/L*6, z:car.z+gzz/L*6}; urg=.4; }
+      else if(e.mark){ const m=e.mark, gx=-m.x, gzz=gz-m.z, L=Math.hypot(gx,gzz)||1; t={x:lerp(e.home.x, m.x+gx/L*1.6, .6), z:lerp(e.home.z, m.z+gzz/L*1.6, .6)}; urg=.3; }
+    } else if(poss===e.team && !e.gk){
+      // desmarques: rupturas y apoyos
+      e.runT-=dt;
+      if(e.runT<=0){ e.runT=rand(3,7)/this.sp; const fwd=this.dirOf(e.team); const f=this.F(e);
+        if(f[1]<4 && Math.random()<.6){ // atacantes y medios rompen
+          const lastDef=this.lastLine(e.team); e.run={x:clamp(e.home.x+rand(-8,8),-31,31), z:clamp(lastDef+fwd*rand(1,7),-49,49), t:rand(1.5,3)}; }
+        else if(Math.random()<.5 && (car||B)){ const c=car||B; e.run={x:clamp(c.x+rand(-12,12),-31,31), z:clamp(c.z+fwd*rand(-4,8),-49,49), t:rand(1.2,2.5)}; }
+        else e.run=null; }
+      if(e.run){ e.run.t-=dt; if(e.run.t<=0) e.run=null; else { t=e.run; urg=.7; } }
+    }
+    this.moveE(e,t,dt,urg);
+  }
+  lastLine(team){ // z de la última línea rival (para no quedar en fuera de juego)
+    const opp=this.opps(team).filter(e=>!e.gk); if(team==='ours') return Math.min(...opp.map(e=>e.z)) ; return Math.max(...opp.map(e=>e.z)); }
+  /* ---------- decisiones de la IA con balón ---------- */
+  options(c, forUser){
+    const team=c.team, fwd=this.dirOf(team), opps=this.opps(team), mates=this.mates(team).filter(m=>m!==c);
+    const out=[];
+    mates.forEach(m=>{ const d=Math.hypot(m.x-c.x,m.z-c.z); if(d<4 || d>48) return; const p={x:m.x+m.vx*.4, z:m.z+m.vz*.4};
+      const lofted=d>32; const clear=lofted?Math.min(nearestD(p,opps)*1.3, 4):laneClear(c,p,opps); const space=nearestD(p,opps);
+      const prog=(p.z-c.z)*fwd; let s=(clear<1.3?-9:0)+Math.min(clear,3)*.8+Math.min(space,5)*.7+prog*.3-Math.max(0,d-20)*.3-(m.gk?3:0);
+      const goalD=Math.hypot(p.x, p.z-fwd*52.5); if(goalD<20) s+=2;
+      out.push({type:'pass', to:m, p, d, clear, space, s, lofted}); });
+    const gD=Math.hypot(c.x, c.z-fwd*52.5);
+    if(gD<30){ const rel={x:c.x*(team==='ours'?1:-1), z:(team==='ours'?c.z:-c.z)}; const gk=this.mates(team==='ours'?'rivs':'ours').find(e=>e.gk); const pg=goalProb(rel.x,rel.z,null,null,gk?{x:gk.x*(team==='ours'?1:-1)}:null);
+      const block=laneClear(c,{x:0,z:fwd*52.5},opps.filter(e=>!e.gk)); out.push({type:'shot', s:pg*45+(gD<18?3.5:gD<24?1:0)-1-(block<1?3:0), pg, block}); }
+    // conducir hacia delante si hay espacio
+    const ahead={x:c.x*.85, z:c.z+fwd*8}; const free=nearestD(ahead,opps); if(free>4 && Math.abs(c.z)<46) out.push({type:'drive', s:3+Math.min(free,10)*.3, p:ahead});
+    return out.sort((a,b)=>b.s-a.s);
+  }
+  aiCarrier(c, dt){
+    const B=this.B, fwd=this.dirOf(c.team); c.holdT=(c.holdT||0)-dt;
+    const opps=this.opps(c.team), near=nearestD(c,opps);
+    // robos de balón
+    if(near<1.15){ c.pressT=(c.pressT||0)+dt; if(c.pressT>.35 && Math.random()<dt*1.6*this.P.press){ const th=opps.reduce((a,o)=>Math.hypot(o.x-c.x,o.z-c.z)<Math.hypot(a.x-c.x,a.z-c.z)?o:a); return this.gain(th,'robo'); } } else c.pressT=0;
+    if(c.holdT>0){ if(c.drive){ this.moveE(c,c.drive,dt,.6); } else { c.vx*=.9; c.vz*=.9; } this.ballFoot(c); return; }
+    c.drive=null;
+    let opts=this.options(c);
+    // el usuario como opción preferente si está libre o ha pedido el balón
+    const uo=opts.find(o=>o.type==='pass' && o.to.user);
+    if(uo){ const called=performance.now()-MOVE.called<2500; if(uo.clear>=1.6 && uo.space>=2.2) uo.s+=this.P.userBias; if(called) uo.s+=this.P.userBias+3; opts.sort((a,b)=>b.s-a.s); }
+    // ruido de decisión
+    let o=opts[0]; if(opts.length>1){ const top=opts.slice(0,3), ws=top.map(x=>Math.exp((x.s-top[0].s)/1.1)); o=wpick(top,ws); }
+    if(!o){ c.holdT=.5; return; }
+    if(o.type==='drive'){ c.drive=o.p; c.holdT=rand(.8,1.6)/this.sp; return; }
+    if(c.restartType==='corner'){ const box=this.mates(c.team).filter(m=>!m.gk && Math.abs(m.x)<20 && Math.abs(m.z-fwd*52.5)<17); const tgt=box.length?pick(box):null; c.restartType=null; this.cnt.cross++; return this.kick(c,'cross', tgt?{x:tgt.x,z:tgt.z}:{x:rand(-6,6), z:fwd*45}, tgt); }
+    c.restartType=null;
+    if(o.type==='shot'){ this.cnt.shots++; return this.shoot(c, rand(-3,3), rand(.3,2)); }
+    // centro desde banda en último tercio
+    const wide=Math.abs(c.x)>17 && (c.z*fwd)>28; const boxM=this.mates(c.team).filter(m=>!m.gk && Math.abs(m.x)<14 && Math.abs(m.z-fwd*52.5)<17);
+    if(wide && boxM.length && Math.random()<.6){ this.cnt.cross++; const t=pick(boxM); return this.kick(c,'cross',{x:t.x+rand(-1,1), z:t.z}, t); }
+    const er=o.d*.045+(near<2?.9:0); const tp={x:o.p.x+rand(-er,er), z:o.p.z+rand(-er,er)};
+    this.kick(c, o.lofted?'lob':'pass', tp, o.to);
+  }
+  ballFoot(c){ const B=this.B; let fx=c.vx, fz=c.vz; const L=Math.hypot(fx,fz); if(L<.3){ fx=0; fz=this.dirOf(c.team); } else { fx/=L; fz/=L; } B.x=c.x+fx*.55; B.z=c.z+fz*.55; B.y=.11; }
+  /* ---------- balón ---------- */
+  kick(c, kind, target, recv, aim){
+    const B=this.B; if(c.obj){ c.obj.userData.u.kick=.42; faceDir(c.obj,target.x,target.z); }
+    B.state='kick'; B.kickT=c.obj?.18:.05; B.owner=null; B.last=c.team; B.from=c;
+    const d=Math.hypot(target.x-B.x,target.z-B.z);
+    let v, h=0; if(kind==='pass'){ v=clamp(10+d*.4,11,23)*this.sp; } else if(kind==='lob'||kind==='cross'){ v=clamp(d/1.25,14,24)*this.sp; h=clamp(d*.13,2.6,8); } else { v=26*this.sp; h=aim?aim.h:1; }
+    B.fl={kind, p0:{x:B.x,z:B.z}, p1:{x:target.x,z:target.z}, T:Math.max(.35,d/v), h, recv, team:c.team, aim};
+    this.E.forEach(e=>{ e.intercept=null; e.receive=null; e.chase=false; });
+    if(recv && !recv.user) recv.receive={x:target.x, z:target.z};
+    if(kind!=='shot') this.planIntercept(c.team, B.fl);
+    setTimeout(()=>sfx.kick(), (B.kickT*1000)|0);
+  }
+  planIntercept(team, fl){
+    const opps=this.opps(team).filter(e=>!e.user); let best=null;
+    for(const o of opps){ for(let k=1;k<=10;k++){ const u=k/10; const px=lerp(fl.p0.x,fl.p1.x,u), pz=lerp(fl.p0.z,fl.p1.z,u); const y=fl.h*4*u*(1-u); if(y>2.1) continue;
+      const dist=Math.hypot(px-o.x,pz-o.z); const tb=u*fl.T; const reach=(this.P.reach)+.25; if(dist-reach < (tb-this.P.react)*6.4*this.sp && dist<14){ if(!best || u<best.u) best={o,u,x:px,z:pz}; break; } } }
+    if(best) best.o.intercept={x:best.x,z:best.z};
+  }
+  shoot(c, ax, ay){
+    const B=this.B, team=c.team, sg=team==='ours'?1:-1; const gk=this.mates(team==='ours'?'rivs':'ours').find(e=>e.gk);
+    const rel={x:B.x*sg, z:team==='ours'?B.z:-B.z}; let pg=goalProb(rel.x, rel.z, ax*sg, ay, gk?{x:gk.x*sg}:null);
+    const blockers=this.opps(team).filter(e=>!e.gk && distSeg(e,B,{x:ax,z:-sg*52.5})<.9);
+    if(blockers.length) pg*=.35;
+    const r=Math.random(); let out;
+    if(r<pg) out='goal'; else if(blockers.length && Math.random()<.6) out='block'; else if(Math.random()<.55) out='save'; else out='wide';
+    let tx=ax, ty=ay;
+    if(out==='goal'){ tx=clamp(ax,-3.4,3.4); ty=clamp(ay,.2,2.2); }
+    else if(out==='save' && gk){ tx=gk.x+rand(-.6,.6); ty=rand(.4,1.8); }
+    else if(out==='wide'){ tx=(Math.abs(ax)>.5?Math.sign(ax):pick([-1,1]))*rand(4.2,7); ty=rand(.3,3.2); }
+    const gz=-sg*52.5; const tz= out==='goal'? gz-sg*1.2 : out==='save'&&gk ? gk.z : out==='block' ? blockers[0].z : gz-sg*3;
+    const tgt = out==='block' ? {x:blockers[0].x, z:blockers[0].z} : {x:tx, z:tz};
+    this.kick(c,'shot', tgt, null, {h:out==='block'?.3:ty*.6+.2});
+    this.B.fl.out=out; this.B.fl.gk=gk; this.B.fl.ty=ty; this.B.fl.blk=blockers[0]||null;
+    if(team==='ours'){ cheer(out==='goal'?0:.35); }
+    if(c.user) this.stats.tiros++;
+  }
+  ballStep(dt){
+    const B=this.B;
+    if(B.state==='held'){ if(!B.owner.user) this.ballFoot(B.owner); return; }
+    if(B.state==='kick'){ B.kickT-=dt; if(B.kickT<=0){ B.state='flight'; B.ft=0; } return; }
+    if(B.state==='flight'){
+      const f=B.fl; B.ft+=dt; const u=clamp(B.ft/f.T,0,1);
+      B.x=lerp(f.p0.x,f.p1.x,u); B.z=lerp(f.p0.z,f.p1.z,u);
+      B.y=.11+(f.kind==='shot'? (f.aim?f.aim.h:1)*u*1.2 : f.h*4*u*(1-u)); this.ball.rotation.x-=dt*20;
+      if(f.kind==='shot'){ if(u>=1) return this.shotEnd(f); return; }
+      // interceptación / recepción
+      if(B.y<2.1 && u>.12){ for(const e of this.E){ if(e.team===f.team && e!==f.recv) continue; if(e===f.from) continue; const r=e.user?1.2:(e===f.recv?1.0:this.P.reach); if(Math.hypot(e.x-B.x,e.z-B.z)<r && (B.y<1.6 || e===f.recv || e.user)){ return this.gain(e, e.team===f.team?'pase':'intercepta', f); } } }
+      if(u>=1){ // balón suelto
+        const dx=f.p1.x-f.p0.x, dz=f.p1.z-f.p0.z, L=Math.hypot(dx,dz)||1, v=L/f.T*.45; B.state='loose'; B.vx=dx/L*v; B.vz=dz/L*v; B.y=.11; this.assignChase(); }
+      return;
+    }
+    if(B.state==='loose'){
+      B.x+=B.vx*dt; B.z+=B.vz*dt; const sp=Math.hypot(B.vx,B.vz); if(sp>0){ const ns=Math.max(0,sp-4*dt); B.vx*=ns/sp; B.vz*=ns/sp; } this.ball.rotation.x-=dt*sp*3;
+      if(Math.abs(B.x)>34 || Math.abs(B.z)>52.5) return this.outOfPlay();
+      let best=null, bd=99; for(const e of this.E){ const d=Math.hypot(e.x-B.x,e.z-B.z), r=e.user?1.2:.85; if(d<r && d<bd){ bd=d; best=e; } }
+      if(best) return this.gain(best,'suelto');
+      this.chaseT=(this.chaseT||0)-dt; if(this.chaseT<=0) this.assignChase();
+    }
+  }
+  assignChase(){ this.chaseT=.5; this.E.forEach(e=>e.chase=false); ['ours','rivs'].forEach(t=>{ const c=this.mates(t).filter(e=>!e.user && !e.gk).sort((a,b)=>Math.hypot(a.x-this.B.x,a.z-this.B.z)-Math.hypot(b.x-this.B.x,b.z-this.B.z)); if(c[0]) c[0].chase=true; }); }
+  shotEnd(f){
+    const B=this.B, out=f.out;
+    if(out==='goal'){ const ours=f.team==='ours'; this.score[ours?0:1]++; if(ours) this.stats.gf++; else this.stats.gc++;
+      this.updScreens(); sfx.whistle(); cheer(ours?1:.05);
+      this.say(ours?'¡GOOOL!':'Gol del rival', 'SPX '+this.score[0]+' - '+this.score[1]+' RIV', 3);
+      if(ours && f.from && f.from.user) flash('⚽ GOL','#2bd46a',new THREE.Vector3(0,2.2,-3),1.2);
+      B.state='dead'; this.restart={type:'gol', team:'none', t:99}; this.after(2.8,()=>this.kickoff(ours?'rivs':'ours')); return; }
+    if(out==='save' && f.gk){ if(f.gk.obj){ f.gk.obj.userData.u.play={n:pick(['catch','catch2']), at:.9, dur:1.1}; } return this.gain(f.gk,'parada'); }
+    if(out==='block' && f.blk){ B.state='loose'; B.vx=rand(-5,5); B.vz=(f.team==='ours'?6:-6)*rand(.4,1); this.assignChase(); return; }
+    // fuera: saque de puerta
+    this.outOfPlay(true);
+  }
+  outOfPlay(goalLine){
+    const B=this.B; const lastT=B.last||'ours', other=lastT==='ours'?'rivs':'ours';
+    let r;
+    if(Math.abs(B.z)>=52.5 || goalLine){ const endTeam = B.z<0 ? 'rivs':'ours'; // portería de ese lado
+      if(lastT===endTeam){ const ax=B.x>0?34:-34, az=B.z<0?-52.5:52.5; r={type:'corner', team:other, x:ax*.99, z:az*.995}; }
+      else { const gz=endTeam==='ours'?47:-47; r={type:'puerta', team:endTeam, x:rand(-6,6), z:gz}; } }
+    else { r={type:'banda', team:other, x:Math.sign(B.x)*33.8, z:clamp(B.z,-50,50)}; }
+    r.t=r.type==='corner'?2.2:1.3; const cands=this.mates(r.team).filter(e=>!e.user && (r.type==='puerta'?e.gk:!e.gk));
+    r.taker=cands.sort((a,b)=>Math.hypot(a.x-r.x,a.z-r.z)-Math.hypot(b.x-r.x,b.z-r.z))[0];
+    B.state='dead'; B.owner=null; B.x=r.x; B.z=r.z; B.y=.11; this.restart=r; this.cnt[r.type]=(this.cnt[r.type]||0)+1;
+    if(r.type==='corner'){ // los rematadores entran al área
+      const fwd=this.dirOf(r.team); this.mates(r.team).filter(e=>!e.gk && !e.user && e!==r.taker).slice(0,6).forEach(e=>{ e.run={x:rand(-9,9), z:fwd*rand(41,48), t:3.5}; }); }
+    this.E.forEach(e=>{ e.intercept=null; e.receive=null; e.chase=false; });
+  }
+  gain(e, how, fl){
+    const B=this.B, prevTeam=B.last;
+    if(this.pendingQ && !e.user) this.userPassResult(e.team==='ours', e);
+    else if(this.pendingQ && e.user) this.userPassResult(true, e);
+    B.state='held'; B.owner=e; B.last=e.team; B.y=.11; e.holdT=(how==='parada'?1.2:rand(.5,1.3)/this.sp); e.pressT=0;
+    this.E.forEach(x=>{ x.intercept=null; x.receive=null; x.chase=false; });
+    if(e.user){ this.userGot(how, fl); }
+    else if(e.team==='rivs' && prevTeam==='ours' && this.userHad){ /* pérdida tras jugada del usuario ya contada */ }
+    if(e.team==='ours' && how!=='pase' && how!=='suelto' && how!=='parada') cheer(.25);
+    if(e.user && (how==='intercepta' || how==='robo' || (how==='suelto' && prevTeam==='rivs'))){ this.stats.recup++; this.say('¡Balón recuperado!','',1.5); cheer(.4); }
+    // cabezazo/remate tras centro
+    if(fl && fl.kind==='cross' && !e.user && e.team===fl.team && Math.abs(e.z-this.dirOf(e.team)*52.5)<14 && Math.random()<.7){ if(e.obj) e.obj.userData.u.play={n:'header', at:1.1, dur:.8}; e.holdT=.05; this.shoot(e, rand(-3,3), rand(.5,2.2)); }
+  }
+  /* ---------- el usuario ---------- */
+  userGot(how, fl){
+    this.userHad=true; this.uT0=performance.now(); this.uDecided=false; this.stats.tocadas++;
+    if(how==='pase'){ const now=performance.now(); this.stats.scansRec.push((this.scanTimes||[]).filter(t=>t>now-4000).length); }
+    this.userOpts=this.options(this.U);
+    // presión: el rival más cercano sale a por ti
+    sfx.cue(); this.say('¡Tu balón!', 'Pase, pase al espacio, tiro o conduce', 2);
+    this.uLeft=this.P.win;
+  }
+  userCarrier(dt){
+    const B=this.B, U=this.U; const hy=headYaw(); const w=toField(Math.sin(hy)*.6, -Math.cos(hy)*.6), o=toField(0,0);
+    B.x=U.x+(w.x-o.x); B.z=U.z+(w.z-o.z); B.y=.11;
+    this.uLeft-=dt;
+    // presión rival dimensionada por nivel
+    const opps=this.opps('ours'); const pr=opps.filter(e=>!e.gk).sort((a,b)=>Math.hypot(a.x-U.x,a.z-U.z)-Math.hypot(b.x-U.x,b.z-U.z))[0];
+    this.uPresser=pr||null;
+    if(pr){ const d=Math.hypot(pr.x-U.x,pr.z-U.z); if(d>1.1){ const need=Math.max(.3,this.uLeft); const v=clamp((d-1)/need, 2.5, 7.5*this.sp); const dx=U.x-pr.x, dz=U.z-pr.z; pr.x+=dx/d*v*dt; pr.z+=dz/d*v*dt; pr.vx=dx/d*v; pr.vz=dz/d*v; }
+      else { this.uStealT=(this.uStealT||0)+dt; if(this.uStealT>.45){ this.uStealT=0; this.userLost('presion'); return this.gain(pr,'robo'); } } }
+  }
+  userAction(type, arg){
+    const B=this.B, U=this.U;
+    if(B.state==='held' && B.owner===U){
+      if(type==='tackle') return; // apuntar a un rival con balón propio: nada
+      const rt=performance.now()-this.uT0; const opts=(this.userOpts&&this.userOpts.length?this.userOpts:this.options(U)).filter(o=>o.type!=='drive'); if(!opts.length) opts.push({type:'none', s:-5});
+      const best=opts[0]; let chosen=null, target=null, recv=null, kind='pass';
+      if(type==='pass'){ recv=arg; target={x:arg.x+arg.vx*.3, z:arg.z+arg.vz*.3}; chosen=opts.find(o=>o.type==='pass' && o.to===arg); }
+      else if(type==='space'){ target={x:clamp(arg.x,-33.5,33.5), z:clamp(arg.z,-51.5,51.5)}; const ms=this.mates('ours').filter(m=>!m.user); recv=ms.sort((a,b)=>Math.hypot(a.x-target.x,a.z-target.z)-Math.hypot(b.x-target.x,b.z-target.z))[0];
+        const d=Math.hypot(target.x-U.x,target.z-U.z); if(d<3.5) return; const clear=laneClear(U,target,this.opps('ours')), space=nearestD(target,this.opps('ours')), mine=Math.hypot(recv.x-target.x,recv.z-target.z);
+        chosen={type:'space', s:(clear<1.3?-9:0)+Math.min(clear,4)*.9+Math.min(space,6)*.9+(U.z-target.z)*.16-Math.max(0,d-26)*.25-Math.max(0,mine-6)*.8, clear}; }
+      else if(type==='shot'){ chosen=opts.find(o=>o.type==='shot') || {type:'shot', s:-3}; }
+      const d=target?Math.hypot(target.x-U.x,target.z-U.z):0;
+      const wide=Math.abs(U.x)>17 && U.z<-30; if(target && ((wide && Math.abs(target.x)<14 && target.z<-36) || d>30)) kind=wide?'cross':'lob';
+      let q = chosen ? (chosen.s>=best.s-1.2 ? 1 : (chosen.s>0 ? .5 : 0)) : 0;
+      this.uDecided=true; this.pendingQ={q, rt, type};
+      if(type==='shot'){ this.pendingQ=null; this.shoot(U, clamp(arg.x,-5,5), clamp(arg.y,.1,3)); this.trialPush(q>=.5?q:(goalProb(U.x,U.z)>.12?.5:0), rt); this.say('¡Disparo!','',1.2); }
+      else { this.stats.pases++; this.kick(U, kind, target, recv); }
+      this.userHad=false; return;
+    }
+    // sin balón: pedirlo o presionar
+    if(type==='tackle' && B.state==='held' && B.owner===arg && Math.hypot(arg.x-U.x,arg.z-U.z)<2.6){ if(Math.random()<.55){ this.gain(U,'robo'); } else this.say('Entrada fallida','',1.2); return; }
+    if(B.state==='held' && B.owner.team==='ours'){ MOVE.called=performance.now(); this.say('¡Pides el balón!','',1); }
+  }
+  trialPush(ok, rt){ this.trials.push({ok, rt:rt!=null?Math.round(rt):null}); }
+  userPassResult(okPass, e){ const pq=this.pendingQ; if(!pq) return; this.pendingQ=null; if(okPass){ this.stats.pasesOk++; this.trialPush(pq.q, pq.rt); } else { this.stats.perdidas++; this.trialPush(0, pq.rt); this.say('Pase interceptado','La línea estaba cortada',1.8); } }
+  userLost(why){ this.stats.perdidas++; this.trialPush(0, null); this.userHad=false; this.say('Te han robado el balón','Decide antes: la presión llega',2); }
+  /* ---------- métricas y HUD ---------- */
+  metrics(dt, poss){
+    // escaneo: miradas fuera del balón
+    const hy=headYaw(); const bw=toWorld(this.B.x,this.B.z); const ba=Math.atan2(bw.x,-bw.z); const off=Math.abs(Math.atan2(Math.sin(hy-ba),Math.cos(hy-ba)));
+    const away=off>1.05; if(away && !this.wasAway){ this.scanCount=(this.scanCount||0)+1; (this.scanTimes=this.scanTimes||[]).push(performance.now()); if(this.scanTimes.length>40) this.scanTimes.shift(); } this.wasAway=away;
+    if(poss==='ours'){ this.stats.posesionT+=dt; const c=this.carrier(); if(c && !c.user){ const sc=laneClear(c,this.U,this.opps('ours')), sp=nearestD(this.U,this.opps('ours')), d=Math.hypot(c.x-this.U.x,c.z-this.U.z); if(sc>=1.6 && sp>=2.6 && d>5 && d<34) this.stats.abiertoT+=dt; this.stats.conBalonT=(this.stats.conBalonT||0)+dt; } }
+  }
+  hud(dt, poss){
+    const m=Math.floor(this.clock/60), s=Math.floor(this.clock%60); const t=this.score[0]+' - '+this.score[1]+' · '+(this.halfN===1?'1ª':'2ª')+' parte '+m+':'+String(s).padStart(2,'0');
+    let sub;
+    if(this.msgT>0){ this.msgT-=dt; sub=this.userMsg+(this.userSub?' · '+this.userSub:''); }
+    else if(this.B.state==='held' && this.B.owner===this.U){ sub='¡Tu balón! '+Math.max(0,this.uLeft).toFixed(1).replace('.',',')+' s antes de la presión'; }
+    else if(poss==='ours'){ const c=this.carrier(); const open=c && !c.user && laneClear(c,this.U,this.opps('ours'))>=1.6 && nearestD(this.U,this.opps('ours'))>=2.6; sub=open?'Estás libre: pide el balón (gatillo)':'Desmárcate: busca línea de pase'; this.passLine.visible=!!(c&&this.P.ayuda); if(c&&this.P.ayuda){ setLine(this.passLine,c,this.U); this.passLine.material.color.setHex(open?0x2bd46a:0xff4d3d); } }
+    else { sub='Defiende: cierra líneas y presiona'; this.passLine.visible=false; }
+    if(poss!=='ours') this.passLine.visible=false;
+    if(t!==this._ht || sub!==this._hs){ this._ht=t; this._hs=sub; setHud(t, sub); }
+  }
+  endHalf(){
+    sfx.whistle(); setTimeout(()=>sfx.whistle(),350);
+    if(this.halfN===1){ this.phase='descanso'; this.restT=8; this.B.state='dead'; this.restart={type:'descanso', team:'none', t:99}; this.say('Descanso','',8); return; }
+    this.phase='fin'; this.finish();
+  }
+  results(){
+    const st=this.stats; const pct=v=>Math.round(v*100);
+    const open=st.conBalonT?st.abiertoT/st.conBalonT:0;
+    const res=this.summary({omisiones:this.trials.filter(t=>t.rt==null).length, golesFavor:st.gf, golesContra:st.gc, pases:st.pases, pasesOk:st.pasesOk, perdidas:st.perdidas, recuperaciones:st.recup, tiros:st.tiros, toques:st.tocadas, desmarquePct:pct(open), escaneosRecibir:st.scansRec.length?Math.round(avg(st.scansRec)*10)/10:null, sistemaRival:this.form}, this.P.win*1000);
+    if(!this.trials.length) res.puntuacion=Math.round(open*60);
+    else res.puntuacion=Math.round(res.puntuacion*.8+open*20);
+    return res;
+  }
+}
+
+const CLASSES = {escaneo:Escaneo, reaccion:Reaccion, tactica:Tactica, partido:Partido, juego:Juego, espacios:Espacios, readapt:Readapt};
 
 /* ================= Flujo ================= */
 let cur=null, lastRes=null, xrSupported=false, plan=null;
@@ -2187,6 +3050,7 @@ function beginDrill(){
   disposeDrill(); lastRes=null;
   placeField(cur.key, cur.pos, POS[cur.pos].mir===true);
   $('#intro').hidden=true; $('#results').hidden=true; $('#hint').hidden = renderer.xr.isPresenting;
+  $('#hint').textContent = (cur.key==='juego'||cur.key==='espacios') ? 'W A S D: moverte · arrastra: mirar · clic: elegir · espacio: pedir balón' : 'Arrastra para mirar · toca para elegir';
   const C = cur.key==='reaccion' ? ({luces:Reaccion, llamada:Llamada, control:ControlOr, mot:Mot})[cur.var||'luces'] : CLASSES[cur.key];
   drill = new C(cur.lvl); drill.begin();
 }
@@ -2220,10 +3084,11 @@ async function onDrillEnd(res){
   setHud('Fin · '+res.puntuacion+' puntos', 'Acierto '+res.aciertoPct+' %'+(res.trMedio!=null?' · '+res.trMedio+' ms':''));
   $('#resWho').textContent = planLabel()+'N'+res.nivel+' · '+faseDe(res.ejercicio,res.nivel)+(res.posicion?' · '+POS[normPos(res.posicion)].corto:'')+' · '+(p?p.nombre:'Sin jugador');
   $('#resT').textContent = res.variante ? VARS[res.variante].nombre : d.nombre;
-  const stats=[[res.puntuacion,'Puntuación (0–100)'],[res.aciertoPct+' %','Acierto'],[res.trMedio!=null?res.trMedio+' ms':'—', res.ejercicio==='escaneo'||res.ejercicio==='tactica'||res.ejercicio==='partido'?'Tiempo de decisión':'Tiempo de reacción']];
+  const stats=[[res.puntuacion,'Puntuación (0–100)'],[res.aciertoPct+' %','Acierto'],[res.trMedio!=null?res.trMedio+' ms':'—', res.ejercicio==='espacios'?'Tiempo hasta estar libre':(['escaneo','tactica','partido','juego'].indexOf(res.ejercicio)>=0?'Tiempo de decisión':'Tiempo de reacción')]];
   if(res.escaneosSeg!=null) stats.push([String(res.escaneosSeg).replace('.',','),'Escaneos por segundo']);
   else if(res.comisiones!=null) stats.push([res.comisiones,'Toques en rojo']);
   else if(res.ejercicio==='partido') stats.push([(res.aciertoAtaque!=null?res.aciertoAtaque+' %':'—')+' / '+(res.aciertoDefensa!=null?res.aciertoDefensa+' %':'—'),'Acierto con / sin balón']);
+  else if(res.ejercicio==='juego'){ stats.push([res.golesFavor+' - '+res.golesContra,'Resultado']); stats.push([res.desmarquePct+' %','Tiempo desmarcado']); stats.push([res.pasesOk+'/'+res.pases,'Pases completados']); stats.push([res.recuperaciones,'Balones recuperados']); stats.push([res.escaneosRecibir!=null?String(res.escaneosRecibir).replace('.',','):'—','Escaneos antes de recibir']); }
   else stats.push([res.omisiones||0,'Sin respuesta']);
   $('#resStats').innerHTML = stats.map(s=>'<div class="stat"><b>'+esc(s[0])+'</b><span>'+esc(s[1])+'</span></div>').join('');
   $('#resProg').hidden=!msg; $('#resProg').textContent=msg;
@@ -2461,8 +3326,9 @@ function entSnapshot(){
   const ans=ansSet(), out=[], seen=new Set();
   (d.figs||[]).forEach(f=>{ if(seen.has(f)) return; seen.add(f); const u=f.userData.u; let r=0;
     if(u.ring && u.ring.visible){ const c=u.ring.material.color.getHex(); r = c===COLORS.ok?1 : c===COLORS.bad?2 : 3; }
-    out.push([r2(f.position.x), r2(f.position.z), TEAMCODE[u.team]||1, f.userData.num||'', r, f.visible?1:0, (u.kitMeshes[0] && (u.kitMeshes[0].material===MAT.grey || u.kitMeshes[0].material===REAL.grey))?1:0, u.raise>0?1:0, 0, ans.has(f)?1:0, 0]); });
-  (d.picks||[]).forEach(o=>{ if(seen.has(o)) return; seen.add(o); const m=o.userData.mat;
+    const wp=d.fieldRoot?toWorld(f.position.x,f.position.z):{x:f.position.x,z:f.position.z};
+    out.push([r2(wp.x), r2(wp.z), TEAMCODE[u.team]||1, f.userData.num||'', r, f.visible?1:0, (u.kitMeshes[0] && (u.kitMeshes[0].material===MAT.grey || u.kitMeshes[0].material===REAL.grey))?1:0, u.raise>0?1:0, 0, ans.has(f)?1:0, 0]); });
+  (d.picks||[]).forEach(o=>{ if(seen.has(o) || o===d.fieldPick || o===d.goalPick) return; seen.add(o); const m=o.userData.mat;
     out.push([r2(o.position.x), r2(o.position.z), 9, o.userData.lbl||'', 0, o.visible?1:0, 0, 0, m&&m.color?m.color.getHex():0xffffff, ans.has(o)?1:0, (d.targets && d.targets.indexOf(o)>=0)?1:0]); });
   return out;
 }
@@ -2479,14 +3345,14 @@ function linkState(){
     plan: plan ? {nombre:plan.nombre, i:plan.items.slice(0,plan.i+1).filter(x=>x.key!=='descanso').length, n:plan.items.filter(x=>x.key!=='descanso').length} : null,
     yaw: renderer&&camera ? r2(headYaw()) : 0,
     F:[+FIELD.c.toFixed(4), +FIELD.s.toFixed(4), r2(FIELD.px), r2(FIELD.pz)],
-    e:entSnapshot(), b: d&&d.ball&&d.ball.visible!==false ? [r2(d.ball.position.x), r2(d.ball.position.z)] : null,
+    e:entSnapshot(), b: d&&d.ball&&d.ball.visible!==false ? (d.fieldRoot ? (w=>[r2(w.x),r2(w.z)])(toWorld(d.ball.position.x,d.ball.position.z)) : [r2(d.ball.position.x), r2(d.ball.position.z)]) : null,
     player:S.playerId, reto: LINK.reto ? retoText(LINK.reto) : null};
 }
 setInterval(()=>{ if(LINK.conn && LINK.conn.open){ try{ linkSend(linkState()); }catch(e){} } }, 125);
 
 /* ================= Panel del entrenador ================= */
 const CO={peer:null, conn:null, code:'', status:'off', st:null, stAt:0, hello:null, rows:[], retry:null, view:null, paused:false};
-const PHASES={prep:'Preparando la jugada', pass:'Balón en juego', pick:'Decidiendo', fb:'Viendo la corrección', anim:'Jugada en movimiento', intro:'Pantalla de inicio: falta pulsar Entrar en VR', lobby:'En el estadio, esperando órdenes', panel:'En el panel de la app', fin:'Ejercicio terminado', show:'Memorizando', move:'Siguiendo los balones', wait:'Preparado', settle:'Jugada en movimiento', play:'Jugada en movimiento', descanso:'Descanso', juego:'En juego'};
+const PHASES={prep:'Preparando la jugada', pass:'Balón en juego', pick:'Decidiendo', fb:'Viendo la corrección', anim:'Jugada en movimiento', intro:'Pantalla de inicio: falta pulsar Entrar en VR', lobby:'En el estadio, esperando órdenes', panel:'En el panel de la app', fin:'Ejercicio terminado', show:'Memorizando', move:'Siguiendo los balones', wait:'Preparado', settle:'Jugada en movimiento', play:'Jugada en movimiento', descanso:'Descanso', juego:'En juego', desmarque:'Buscando el espacio libre', pick2:'Eligiendo el pase', pass2:'Pasando'};
 const QUICK=['Escanea antes de recibir','Mira también a tu espalda','Decide más rápido','Busca el pase más profundo','Perfil abierto al recibir','¡Muy bien, sigue así!'];
 const coSend=o=>{ if(CO.conn && CO.conn.open){ try{ CO.conn.send(o); return true; }catch(e){} } toast('Las gafas no están conectadas.'); return false; };
 function coRowKey(r){ return (r.fecha||'')+'|'+(r.ejercicio||'')+'|'+(r.jugadorId||''); }
@@ -2678,7 +3544,7 @@ function coachInit(){
   requestAnimationFrame(coDraw);
 }
 
-window.__v360={REAL, HUD, openDrill:(...a)=>openDrill(...a), mk:(t,n)=>makeAthlete(t,n), setGrey:(f,o)=>setGrey(f,o), get drill(){ return drill; }, exit:()=>{ if(typeof exitStage==='function') exitStage(); }};
+window.__v360={REAL, HUD, setVar:(v)=>{ S.var=v; }, gm:(l,p,f)=>genMatch(LV.partido[l-1],p,f), gt:(l,p)=>genTactic(LV.tactica[l-1],p,pickMir(p)), lc:laneClear, nd:nearestD, lerp, step:(n,dt)=>{ for(let i=0;i<n;i++){ moveTick(dt); if(drill) drill.tick(dt); } }, user:()=>userField(), moveTo:(x,z)=>moveTo(x,z), MOVE, dbg:()=>{ const d=drill; if(!d) return null; const o={key:d.key, phase:d.phase, trials:d.trials, k:d.k}; if(d.key==='juego'){ o.score=d.score; o.clock=Math.round(d.clock); o.B={st:d.B.state, x:+d.B.x.toFixed(1), z:+d.B.z.toFixed(1), own:d.B.owner?(d.B.owner.team+':'+d.B.owner.slot):null}; o.stats=d.stats; o.form=d.form; o.cnt=d.cnt; o.U={x:+d.U.x.toFixed(1),z:+d.U.z.toFixed(1)}; } return o; }, act:(t,a)=>drill.userAction(t,a), get D(){ return drill; }, look:(y,p,f)=>{ yaw=y; pitch=p||0; if(f){ camera.fov=f; camera.updateProjectionMatrix(); } }, stadium:STADIUM, cheer:(l)=>cheer(l), openDrill:(...a)=>openDrill(...a), mk:(t,n)=>makeAthlete(t,n), setGrey:(f,o)=>setGrey(f,o), get drill(){ return drill; }, exit:()=>{ if(typeof exitStage==='function') exitStage(); }};
 if(location.hash==='#entrenador') coachInit(); else { Store.init(); renderLink(); startLink(); realLoad(); }
 })();
 </script>
