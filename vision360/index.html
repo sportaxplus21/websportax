@@ -241,7 +241,31 @@ body.coach-mode:not(.co-linked) .co-side .btn,body.coach-mode:not(.co-linked) .c
 .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(env(safe-area-inset-bottom,0px) + 20px);background:var(--celeste);color:#000;padding:10px 16px;border-radius:10px;z-index:40;font-weight:600;max-width:calc(100% - 32px)}
 @media (prefers-reduced-motion:no-preference){.drill{transition:border-color .15s}.drill:hover{border-color:var(--pitch)}}
 body.coach-mode:not(.co-linked) .co-side .co-lib .btn,body.coach-mode:not(.co-linked) .co-side .co-free{opacity:1;pointer-events:auto}
-.co-edbtns{display:grid;grid-template-columns:1fr;gap:8px;margin:10px 0 6px}
+.co-acc{border:1px solid var(--celeste);border-radius:12px;background:var(--surface);padding:18px;margin:18px 0 22px;display:flex;flex-direction:column;gap:12px}
+.co-acc h2{margin:0}
+.co-acc-head{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:flex-end}
+.co-acc-btns{display:flex;flex-wrap:wrap;gap:8px}
+.co-libst{margin:0}
+.co-acc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+.acc{border:1px solid var(--line);border-radius:10px;background:var(--surface-2);padding:10px;display:flex;flex-direction:column;gap:8px;cursor:pointer}
+.acc.on{border-color:var(--celeste);box-shadow:0 0 0 2px var(--celeste) inset}
+.acc canvas{width:100%;height:auto;border-radius:6px;display:block}
+.acc b{font-family:var(--font-display);font-weight:400;text-transform:uppercase;font-size:1.05rem;letter-spacing:.02em;line-height:1.1}
+.acc small{color:var(--muted);font-size:.75rem}
+.acc .acc-top{display:flex;gap:8px;align-items:flex-start;justify-content:space-between}
+.acc .acc-top input{width:22px;height:22px;accent-color:var(--celeste);flex:0 0 auto;margin-top:2px}
+.acc .acc-act{display:flex;gap:6px;flex-wrap:wrap}
+.acc .acc-act button{padding:6px 10px;font-size:.8rem}
+.acc.new{align-items:center;justify-content:center;min-height:180px;border-style:dashed;color:var(--celeste);font-family:var(--font-round);font-weight:800}
+.co-acc-send{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;padding:12px;border-radius:10px;background:#000;border:1px solid var(--line)}
+.co-acc-send label{display:flex;gap:6px;align-items:center;font-size:.85rem;color:var(--muted)}
+.co-acc-send select{padding:6px 8px}
+.co-acc-send #coAccSel{font-family:var(--font-round);font-weight:800;margin-right:auto}
+.co-tpls .co-sess{border-top:1px solid var(--line)}
+body.coach-mode:not(.co-linked) #coAccGo{opacity:.45;pointer-events:none}
+body.coach-mode #vrHome{display:none}
+#coachLinkBtn{margin:16px 0 0 10px;position:relative;font-size:1.05rem;padding:13px 20px;text-decoration:none;display:inline-block}
+body.coach-mode #coachLinkBtn{display:none}
 .co-cfg{margin:4px 0 10px}.co-cfg .note{margin:6px 0 0;font-size:.82rem}
 .wm{position:fixed;inset:0;z-index:60;background:rgba(0,0,0,.86);display:flex;align-items:center;justify-content:center;padding:16px;overflow:auto}
 .wm-box{position:relative;width:min(1240px,100%)}
@@ -257,7 +281,7 @@ body.coach-mode:not(.co-linked) .co-side .co-lib .btn,body.coach-mode:not(.co-li
     <div class="eyebrow">Entrenamiento cognitivo</div>
     <h1>Vision 360</h1>
     <p>Cuatro capacidades, diez niveles cada una y una regla clara para subir o bajar. Elige jugador, pulsa un ejercicio o la sesión guiada y entra en VR con las Meta Quest.</p>
-    <button class="btn" id="vrHome" type="button" style="margin-top:16px;position:relative;font-size:1.1rem;padding:14px 22px">Entrar en VR · Vestuario</button>
+    <button class="btn" id="vrHome" type="button" style="margin-top:16px;position:relative;font-size:1.1rem;padding:14px 22px">Entrar en VR · Vestuario</button><a class="btn ghost" id="coachLinkBtn" href="entrenador/">Soy entrenador: crear acciones y enviarlas a las gafas</a>
   </div>
 </header>
 
@@ -336,6 +360,22 @@ body.coach-mode:not(.co-linked) .co-side .co-lib .btn,body.coach-mode:not(.co-li
     </div>
     <div class="lk-st" id="coStatus"></div>
   </div>
+  <section class="co-acc" aria-label="Acciones para las gafas">
+    <div class="co-acc-head">
+      <div><h2>Acciones para las gafas</h2><p class="note" style="margin:4px 0 0">1. Crea la acción en la pizarra · 2. Márcala · 3. Elige repeticiones y tiempo · 4. Envíala. Todo se guarda en este ordenador y se copia solo a las gafas al conectarlas.</p></div>
+      <div class="co-acc-btns"><button class="btn" id="coEdNew" type="button">+ Crear acción</button><button class="btn ghost" id="coEdTpl" type="button">Entrenamientos</button><button class="btn ghost" id="coPushAll" type="button">Copiar todo a las gafas</button></div>
+    </div>
+    <p class="note co-libst" id="coLib"></p>
+    <div class="co-acc-grid" id="coAccGrid"></div>
+    <div class="co-acc-send">
+      <span id="coAccSel">Ninguna acción marcada</span>
+      <label>Repeticiones <select id="coAccN"><option>3</option><option>4</option><option selected>6</option><option>8</option><option>10</option><option>12</option><option>16</option></select></label>
+      <label>Tiempo para decidir <select id="coAccWin"><option value="0">Según nivel</option><option value="1.5">1,5 s</option><option value="2">2 s</option><option value="2.5">2,5 s</option><option value="3">3 s</option><option value="4" selected>4 s</option><option value="5">5 s</option><option value="6">6 s</option><option value="8">8 s</option></select></label>
+      <label>Nivel <select id="coAccLvl"><option value="rec">Recomendado</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></select></label>
+      <button class="btn" id="coAccGo" type="button">Enviar a las gafas y empezar</button>
+    </div>
+    <div class="co-tpls" id="coTplList"></div>
+  </section>
   <div class="co-grid">
     <section class="co-live" aria-label="En directo">
       <div class="co-head" id="coHead"></div>
@@ -354,12 +394,6 @@ body.coach-mode:not(.co-linked) .co-side .co-lib .btn,body.coach-mode:not(.co-li
           <div class="row"><select id="coNewPos" aria-label="Posición"></select><select id="coNewCat" aria-label="Categoría"><option>Base</option><option selected>Amateur</option><option>Semi-pro / Pro</option></select></div>
           <button class="btn" type="submit">Crear en las gafas</button></form>
         </details>
-      </section>
-      <section class="co-card co-lib">
-        <h2>Editor de ejercicios</h2>
-        <p class="note">Diseña jugadas en la pizarra y crea entrenamientos a medida. Se guardan en este ordenador y pasan solas a las gafas al conectarlas.</p>
-        <div class="co-edbtns"><button class="btn" id="coEdNew" type="button">Crear jugada</button><button class="btn ghost" id="coEdJug" type="button">Mis jugadas</button><button class="btn ghost" id="coEdTpl" type="button">Mis entrenamientos</button></div>
-        <p class="note" id="coLib"></p>
       </section>
       <section class="co-card">
         <h2>Lanzar ejercicio</h2>
@@ -3654,7 +3688,7 @@ class Pizarra extends Drill {
   constructor(lvl){ super('pizarra',lvl); this.P.n=(cur&&cur.n)||this.cfg.n||6; }
   start(){
     this.k=0; this.objs=[]; this.rounds=[]; this.addBall(); this.ball.position.set(0,.11,-.45);
-    const ids=this.cfg.ids||[], all=allJugadas(); let L=ids.length?all.filter(j=>ids.indexOf(j.id)>=0):all; if(!L.length) L=all; this.pool=L; this.queue=[]; this.next();
+    const ids=this.cfg.ids||[], all=allJugadas(); let L=(this.cfg.jug||[]).filter(j=>j && j.yo && Array.isArray(j.mates)); if(!L.length) L=ids.length?all.filter(j=>ids.indexOf(j.id)>=0):all; if(!L.length) L=all; this.pool=L; this.queue=[]; this.next();
   }
   next(){
     if(this.k>=this.P.n) return this.finish();
@@ -3956,19 +3990,50 @@ function libNeedsPush(h){
   return libTombs().some(id=>D.indexOf(id)<0 && (J.some(x=>x.id===id) || T.some(x=>x.id===id)));
 }
 function libChanged(){ if(isCoach()){ coRenderLib(); if(CO.conn && CO.conn.open){ try{ CO.conn.send(libPayload()); }catch(e){} } } }
+const COACC={sel:new Set(), del:null};
 function coRenderLib(){
-  const el=$('#coLib'); if(!el) return;
+  const el=$('#coLib'); if(!el) return; coRenderAcc();
   const nj=S.jugadas.length, nt=S.templates.length, on=CO.conn && CO.conn.open;
   el.textContent=nj+(nj===1?' jugada':' jugadas')+' y '+nt+(nt===1?' entrenamiento':' entrenamientos')+' en este ordenador · '+(on?'sincronizado con las gafas':'se enviarán a las gafas al conectar');
   const k=$('#coEj')?$('#coEj').value:null; if($('#coCfgWrap')){ const ok=CFG_KEYS.indexOf(k)>=0; $('#coCfgWrap').hidden=!ok; if(ok) $('#coCfgSum').textContent=cfgSummary(k); }
+}
+function jugsFor(ids){ const all=allJugadas(); return (ids&&ids.length?all.filter(j=>ids.indexOf(j.id)>=0):all).map(j=>clone(j)); }
+function coRenderAcc(){
+  const grid=$('#coAccGrid'); if(!grid) return;
+  const L=allJugadas(); COACC.sel.forEach(id=>{ if(!L.some(j=>j.id===id)) COACC.sel.delete(id); });
+  grid.innerHTML=L.map(j=>'<div class="acc'+(COACC.sel.has(j.id)?' on':'')+'" data-acc="'+esc(j.id)+'"><div class="acc-top"><div><b>'+esc(j.nombre)+'</b><br><small>'+(j.fija?'Ejemplo · ':'')+(j.mates||[]).length+' compañeros · '+(j.rivs||[]).length+' rivales'+(j.tiro?' · tiro':'')+((j.mates||[]).some(m=>m.ok)||(j.tiro&&j.okG)?' · con respuesta ★':'')+'</small></div><input type="checkbox" aria-label="Marcar '+esc(j.nombre)+'"'+(COACC.sel.has(j.id)?' checked':'')+'></div><canvas width="420" height="272"></canvas><div class="acc-act"><button type="button" class="btn ghost" data-aed="'+esc(j.id)+'">'+(j.fija?'Copiar y editar':'Editar')+'</button><button type="button" class="btn ghost" data-ago="'+esc(j.id)+'">Probar ya</button>'+(j.fija?'':'<button type="button" class="btn ghost" data-adel="'+esc(j.id)+'">'+(COACC.del===j.id?'¿Seguro?':'Borrar')+'</button>')+'</div></div>').join('')+
+    '<button type="button" class="acc new" id="coAccNew">+ Crear acción nueva</button>';
+  grid.querySelectorAll('.acc[data-acc]').forEach(c=>{ const j=L.find(x=>x.id===c.dataset.acc), cv=c.querySelector('canvas'); if(j && cv) drawBoard(cv.getContext('2d'), j, null, 0, 0, 420, 272, true); });
+  const n=COACC.sel.size; $('#coAccSel').textContent = n ? n+(n===1?' acción marcada':' acciones marcadas') : 'Marca las acciones que quieres enviar';
+  const T=allTemplates();
+  $('#coTplList').innerHTML='<h3 class="co-sub">Entrenamientos</h3>'+T.map(t=>'<div class="co-sess"><div><b>'+esc(t.nombre)+'</b><small>'+t.bloques.map(b=>esc(blockLabel(b))).join(' · ')+'</small></div><div class="co-acc-btns"><button class="btn ghost" type="button" data-ted="'+esc(t.id)+'">'+(t.fija?'Duplicar':'Editar')+'</button><button class="btn" type="button" data-tgo="'+esc(t.id)+'">Enviar a las gafas</button></div></div>').join('')+'<p class="note">Un entrenamiento junta varios ejercicios seguidos (por ejemplo: activación, 6 acciones tuyas y un partido), con nivel, minutos y consignas de cada bloque.</p>';
+}
+function coAccInit(){
+  const pz=j=>({pz:{j, tool:'mate', sel:null, msg:j.id?'':'Empieza con “Base aleatoria” o coloca tú los jugadores. Marca con ★ la respuesta correcta.', back:'close'}});
+  $('#coEdNew').addEventListener('click', ()=>webMenuOpen('pz', pz(jugadaNueva())));
+  $('#coEdTpl').addEventListener('click', ()=>webMenuOpen('tpls',{}));
+  $('#coPushAll').addEventListener('click', ()=>{ if(CO.conn && CO.conn.open){ libChanged(); toast('Acciones y entrenamientos copiados a las gafas.'); } else toast('Conecta primero las gafas con su código.'); });
+  $('#coAccGrid').addEventListener('click', e=>{
+    if(e.target.closest('#coAccNew')){ webMenuOpen('pz', pz(jugadaNueva())); return; }
+    const L=allJugadas(), b=e.target.closest('button');
+    if(b && b.dataset.aed){ const j=L.find(x=>x.id===b.dataset.aed); if(!j) return; const c=clone(j); if(j.fija){ c.id=null; c.fija=false; c.nombre=j.nombre+' (copia)'; } c.mates=c.mates||[]; c.rivs=c.rivs||[]; webMenuOpen('pz', pz(c)); return; }
+    if(b && b.dataset.ago){ const id=b.dataset.ago; libChanged(); if(coSend({t:'start', key:'pizarra', lvl:$('#coAccLvl').value, pos:'jugador', cfg:{ids:[id], jug:jugsFor([id]), cons:[], n:3, win:+$('#coAccWin').value||0}})) toast('Acción enviada a las gafas.'); return; }
+    if(b && b.dataset.adel){ const id=b.dataset.adel; if(COACC.del!==id){ COACC.del=id; coRenderAcc(); return; } COACC.del=null; Store.delJugada(id).then(()=>{ libTomb(id); COACC.sel.delete(id); const c=cfgOf('pizarra'); c.ids=(c.ids||[]).filter(x=>x!==id); cfgSave(); libChanged(); }); return; }
+    const card=e.target.closest('.acc[data-acc]'); if(!card) return; const id=card.dataset.acc; if(COACC.sel.has(id)) COACC.sel.delete(id); else COACC.sel.add(id); COACC.del=null; coRenderAcc();
+  });
+  $('#coAccGo').addEventListener('click', ()=>{ if(!COACC.sel.size){ toast('Marca al menos una acción.'); return; } const ids=[...COACC.sel]; libChanged();
+    if(coSend({t:'start', key:'pizarra', lvl:$('#coAccLvl').value, pos:'jugador', cfg:{ids, jug:jugsFor(ids), cons:[], n:+$('#coAccN').value||6, win:+$('#coAccWin').value||0}})) toast(ids.length+(ids.length===1?' acción enviada':' acciones enviadas')+' a las gafas.'); });
+  $('#coTplList').addEventListener('click', e=>{ const b=e.target.closest('button'); if(!b) return; const t=tplById(b.dataset.ted||b.dataset.tgo); if(!t) return;
+    if(b.dataset.ted){ const ed=cloneTpl(t); if(t.fija){ ed.id=null; ed.nombre=t.nombre+' (copia)'; } webMenuOpen('tplEdit',{ed, edPage:0, msg:''}); }
+    else uiLaunchTpl({web:true}, t); });
 }
 function coLaunchKey(k, extra){ const c=coLaunchCfg(); c.key=k; if(POS_DRILLS.indexOf(k)<0) c.pos='jugador'; c.cfg=CFG_KEYS.indexOf(k)>=0?clone(cfgOf(k)):null; if(!c.min) c.min=null; return coSend(Object.assign({t:'start'}, c, extra||{})); }
 /* ---------- Pantallas a medida (vestuario VR y ventana en la web) ---------- */
 const UI_WEB_SCREENS=['cfg','jugadas','pz','kbd','tpls','tpl','tplEdit','blk','blkPick'];
 function uiBack(M,U,scr){ if(U.web && (!scr || UI_WEB_SCREENS.indexOf(scr)<0)){ webMenuClose(); return; } U.screen=scr; U.page=0; M.redraw(); }
 function uiStart(U,k){ const cfg=CFG_KEYS.indexOf(k)>=0?clone(cfgOf(k)):null; if(U.web && isCoach()){ libChanged(); if($('#coEj')) $('#coEj').value=k; if(coLaunchKey(k)){ toast('Ejercicio enviado a las gafas.'); webMenuClose(); } return; } if(U.web){ webMenuClose(); plan=null; LINK.reto=null; openDrill(k,S.lv[k],S.pos,cfg?cfgN(k,cfg):null,S.var,cfg); } else lockerStart(k); }
-function uiLaunchTpl(U,t){ if(!t) return; if(U.web && isCoach()){ libChanged(); if(coSend({t:'session', tpl:{nombre:t.nombre, bloques:t.bloques}})){ toast('Entrenamiento enviado: '+t.nombre); webMenuClose(); } return; } if(U.web){ webMenuClose(); startTemplate(t); } else { U.page=0; lockerLaunch(buildItems(t), t.nombre); } }
-function uiTryJugada(U,id){ const cfg={ids:[id], cons:[], n:3}; if(U.web && isCoach()){ libChanged(); if(coSend({t:'start', key:'pizarra', lvl:'rec', pos:'jugador', cfg})){ toast('Jugada enviada a las gafas.'); webMenuClose(); } return; } plan=null; LINK.reto=null; if(U.web){ webMenuClose(); openDrill('pizarra',S.lv.pizarra,S.pos,3,S.var,cfg); } else { cur={key:'pizarra', lvl:S.lv.pizarra, pos:S.pos, n:3, var:S.var, cfg}; leaveLocker(); beginDrill(); } }
+function uiLaunchTpl(U,t){ if(!t) return; if(U.web && isCoach()){ libChanged(); const bl=clone(t.bloques).map(b=>{ if(b.ej==='pizarra'){ b.cfg=b.cfg||{}; b.cfg.jug=jugsFor(b.cfg.ids); } return b; }); if(coSend({t:'session', tpl:{nombre:t.nombre, bloques:bl}})){ toast('Entrenamiento enviado: '+t.nombre); webMenuClose(); } return; } if(U.web){ webMenuClose(); startTemplate(t); } else { U.page=0; lockerLaunch(buildItems(t), t.nombre); } }
+function uiTryJugada(U,id){ const cfg={ids:[id], cons:[], n:3}; if(U.web && isCoach()){ cfg.jug=jugsFor([id]); libChanged(); if(coSend({t:'start', key:'pizarra', lvl:'rec', pos:'jugador', cfg})){ toast('Jugada enviada a las gafas.'); webMenuClose(); } return; } plan=null; LINK.reto=null; if(U.web){ webMenuClose(); openDrill('pizarra',S.lv.pizarra,S.pos,3,S.var,cfg); } else { cur={key:'pizarra', lvl:S.lv.pizarra, pos:S.pos, n:3, var:S.var, cfg}; leaveLocker(); beginDrill(); } }
 function openKbd(M,U,title,text,max,done,back){ if(/^(Mi entrenamiento|Nueva jugada|Entrenamiento)$/.test(String(text||''))) text=''; U.kbd={title, text:String(text||''), max:max||40, done, back:back||U.screen}; U.screen='kbd'; M.redraw(); }
 function kbdType(K,ch){ if(K.text.length>=K.max) return; if(ch===' '){ if(K.text && !/ $/.test(K.text)) K.text+=' '; return; } const up=!K.text.length || /[\s.¿!?]$/.test(K.text); K.text += /[A-ZÑÁÉÍÓÚÜ]/.test(ch) ? (up?ch:ch.toLowerCase()) : ch; }
 
@@ -4837,9 +4902,7 @@ function coachInit(){
   $('#coSess').addEventListener('click', e=>{ const b=e.target.closest('[data-tpl]'); if(!b || !CO.hello) return; const t=CO.hello.templates.find(x=>x.id===b.dataset.tpl); if(t && coSend({t:'session', tpl:{nombre:t.nombre, bloques:t.bloques}})) toast('Sesión enviada: '+t.nombre); });
   $('#coExport').addEventListener('click', coExport);
   $('#coCfgBtn').addEventListener('click', ()=>{ const k=$('#coEj').value; webMenuOpen('cfg',{key:k, cfgT:cfgOf(k), cfgMode:'drill', cfgBack:null}); });
-  $('#coEdNew').addEventListener('click', ()=>webMenuOpen('pz',{pz:{j:jugadaNueva(), tool:'mate', sel:null, msg:'Empieza con “Base aleatoria” o coloca tú los jugadores.', back:'jugadas'}}));
-  $('#coEdJug').addEventListener('click', ()=>webMenuOpen('jugadas',{}));
-  $('#coEdTpl').addEventListener('click', ()=>webMenuOpen('tpls',{}));
+  coAccInit();
   coRenderLib();
   if(!linkAvailable()) coStatus('na'); else if(CO.code.length>=5) coConnect(); else coStatus('off');
   requestAnimationFrame(coDraw);
