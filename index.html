@@ -1344,6 +1344,83 @@ const TEAM = [
 const L3 = (ca, es, en) => ({ ca, es, en });
 const ARTICLES = [
   {
+    slug: "fuerza-y-sueno", date: "2026-11-09", cat: "activity",
+    title: L3("Dorms malament? Potser el que et falta no és una altra infusió, sinó una sessió de força", "¿Duermes mal? Quizá lo que te falta no es otra infusión, sino una sesión de fuerza", "Sleeping badly? Maybe what you need isn't another herbal tea, but a strength session"),
+    sum: L3("L'entrenament de força millora la qualitat del son i, combinat amb treball aeròbic, és una de les estratègies no farmacològiques més eficaces a partir dels 50 anys.", "El entrenamiento de fuerza mejora la calidad del sueño y, combinado con trabajo aeróbico, es una de las estrategias no farmacológicas más eficaces a partir de los 50 años.", "Strength training improves sleep quality and, combined with aerobic work, is one of the most effective non-drug strategies for people over 50."),
+    body: [
+      ["p", L3(
+        "En resum: dormir malament és molt freqüent i gairebé mai s'aborda amb exercici. Les revisions sistemàtiques més recents indiquen que l'entrenament de força millora la qualitat del son i que, combinat amb treball aeròbic, ofereix un dels efectes més grans entre les estratègies no farmacològiques en persones de més de 50 anys. Aquí t'expliquem què sabem, què no i com aplicar-ho.",
+        "Resumen rápido: dormir mal es muy frecuente y casi nunca se aborda con ejercicio. Las revisiones sistemáticas más recientes indican que el entrenamiento de fuerza mejora la calidad del sueño y que, combinado con trabajo aeróbico, ofrece uno de los mayores efectos entre las estrategias no farmacológicas en mayores de 50 años. Aquí te contamos qué sabemos, qué no y cómo aplicarlo.",
+        "In short: poor sleep is very common and is almost never tackled with exercise. The latest systematic reviews show that strength training improves sleep quality and that, combined with aerobic work, it offers one of the largest effects among non-drug strategies in people over 50. Here's what we know, what we don't and how to apply it.")],
+      ["h", L3("El problema: dormir malament surt car", "El problema: dormir mal sale caro", "The problem: poor sleep is costly")],
+      ["p", L3(
+        "Les alteracions del son són habituals a partir de la mitjana edat i s'associen a pitjor funció cognitiva, menys qualitat de vida i més ús de serveis sanitaris (Wang et al., 2026). La resposta típica és canviar hàbits de pantalla, prendre suplements o buscar fàrmacs. Però l'exercici, i en concret la força, poques vegades entra a la conversa.",
+        "Las alteraciones del sueño son habituales a partir de la mediana edad y se asocian a peor función cognitiva, menor calidad de vida y mayor uso de servicios sanitarios (Wang et al., 2026). La respuesta típica es cambiar hábitos de pantalla, tomar suplementos o buscar fármacos. Pero el ejercicio, y en concreto la fuerza, rara vez entra en la conversación.",
+        "Sleep problems are common from middle age onwards and are linked to poorer cognitive function, lower quality of life and greater use of health services (Wang et al., 2026). The usual response is to change screen habits, take supplements or look for medication. But exercise, and strength training in particular, rarely comes into the conversation.")],
+      ["h", L3("El que diuen els estudis", "Lo que dicen los estudios", "What the studies say")],
+      ["dl", L3(
+        [["Força + aeròbic: el millor tàndem", "Una metaanàlisi en xarxa de 132 assajos aleatoritzats (10.872 participants de 50 anys o més amb alteracions del son) va comparar 25 intervencions no farmacològiques. La combinació d'entrenament aeròbic i de força va mostrar l'efecte més gran sobre la qualitat del son (DME = -1,56; IC 95 % creïble -2,08 a -1,03) i va ser una de les poques que va superar la diferència mínima clínicament important (Wang et al., 2026)."],
+         ["La força sola també ajuda en persones grans", "En una metaanàlisi en xarxa de 39 estudis (3.198 adults de 60 anys o més), l'entrenament de força va millorar la qualitat subjectiva del son davant del control (DM = -1,17 punts a l'Índex de Qualitat del Son de Pittsburgh; IC 95 % -2,19 a -0,15). L'entrenament d'equilibri, l'aeròbic i el multicomponent van obtenir efectes de magnitud similar o una mica més grans (Oh et al., 2026)."],
+         ["Persones sedentàries amb insomni", "Una revisió de 31 assajos (1.420 adults sedentaris amb insomni) va concloure que l'exercici millora de manera significativa les puntuacions de son, amb els resultats més consistents en programes de 8 a 16 setmanes. Les millores per modalitat van dependre del resultat mesurat (eficiència del son, temps total de son, etc.) (Guo et al., 2026)."],
+         ["Quan a més hi ha dolor", "En fibromiàlgia, una metaanàlisi de 22 assajos (1.235 participants) va trobar que els programes de força van millorar el dolor, la fatiga, la depressió i l'ansietat, amb guanys petits en qualitat del son i un efecte gran en força de cames. Un protocol de dosi baixa i intensitat moderada va semblar suficient (Rech et al., 2026)."]],
+        [["Fuerza + aeróbico: el mejor tándem", "Un metaanálisis en red de 132 ensayos aleatorizados (10.872 participantes de 50 años o más con alteraciones del sueño) comparó 25 intervenciones no farmacológicas. La combinación de entrenamiento aeróbico y de fuerza mostró el mayor efecto sobre la calidad del sueño (DME = -1,56; IC 95 % creíble -2,08 a -1,03) y fue una de las pocas que superó la diferencia mínima clínicamente importante (Wang et al., 2026)."],
+         ["La fuerza sola también ayuda en mayores", "En un metaanálisis en red de 39 estudios (3.198 adultos de 60 años o más), el entrenamiento de fuerza mejoró la calidad subjetiva del sueño frente al control (DM = -1,17 puntos en el Índice de Calidad del Sueño de Pittsburgh; IC 95 % -2,19 a -0,15). El entrenamiento de equilibrio, el aeróbico y el multicomponente obtuvieron efectos de magnitud similar o algo mayor (Oh et al., 2026)."],
+         ["Personas sedentarias con insomnio", "Una revisión de 31 ensayos (1.420 adultos sedentarios con insomnio) concluyó que el ejercicio mejora de forma significativa las puntuaciones de sueño, con los resultados más consistentes en programas de 8 a 16 semanas. Las mejoras por modalidad dependieron del resultado medido (eficiencia del sueño, tiempo total de sueño, etc.) (Guo et al., 2026)."],
+         ["Cuando además hay dolor", "En fibromialgia, un metaanálisis de 22 ensayos (1.235 participantes) halló que los programas de fuerza mejoraron el dolor, la fatiga, la depresión y la ansiedad, con ganancias pequeñas en calidad del sueño y un efecto grande en fuerza de piernas. Un protocolo de dosis baja e intensidad moderada pareció suficiente (Rech et al., 2026)."]],
+        [["Strength + aerobic: the best combination", "A network meta-analysis of 132 randomised trials (10,872 participants aged 50 or over with sleep problems) compared 25 non-drug interventions. Combined aerobic and strength training showed the largest effect on sleep quality (SMD = -1.56; 95% credible interval -2.08 to -1.03) and was one of the few to exceed the minimal clinically important difference (Wang et al., 2026)."],
+         ["Strength alone also helps older adults", "In a network meta-analysis of 39 studies (3,198 adults aged 60 or over), strength training improved subjective sleep quality compared with control (MD = -1.17 points on the Pittsburgh Sleep Quality Index; 95% CI -2.19 to -0.15). Balance, aerobic and multicomponent training achieved similar or slightly larger effects (Oh et al., 2026)."],
+         ["Sedentary people with insomnia", "A review of 31 trials (1,420 sedentary adults with insomnia) concluded that exercise significantly improves sleep scores, with the most consistent results in 8- to 16-week programmes. Improvements by exercise type depended on the outcome measured (sleep efficiency, total sleep time, etc.) (Guo et al., 2026)."],
+         ["When there's also pain", "In fibromyalgia, a meta-analysis of 22 trials (1,235 participants) found that strength programmes improved pain, fatigue, depression and anxiety, with small gains in sleep quality and a large effect on leg strength. A low-dose, moderate-intensity protocol appeared to be enough (Rech et al., 2026)."]])],
+      ["h", L3("Matisos honestos", "Matices honestos", "Honest caveats")],
+      ["ul", L3(
+        ["No és la intervenció més potent en tots els grups. En persones grans, l'equilibri va superar la força en el rànquing; en el Parkinson, l'exercici aeròbic va quedar per sobre de la força, que va ocupar el tercer lloc (Oh et al., 2026; Zhan et al., 2026). La força funciona, però millor integrada en un programa complet.",
+         "La qualitat del son se sol mesurar amb qüestionaris, és a dir, de manera subjectiva, i molts estudis són petits i heterogenis.",
+         "Gairebé totes les dades provenen de persones de mitjana edat i grans o de poblacions clíniques. En adults joves sans l'evidència és menys concloent.",
+         "Si l'insomni és persistent o sospites apnea del son, consulta un professional sanitari. L'exercici complementa, no substitueix, la valoració mèdica."],
+        ["No es la intervención más potente en todos los grupos. En mayores, el equilibrio superó a la fuerza en el ranking; en párkinson, el ejercicio aeróbico quedó por encima de la fuerza, que ocupó el tercer lugar (Oh et al., 2026; Zhan et al., 2026). La fuerza funciona, pero mejor integrada en un programa completo.",
+         "La calidad del sueño suele medirse con cuestionarios, es decir, de forma subjetiva, y muchos estudios son pequeños y heterogéneos.",
+         "Casi todos los datos proceden de personas de mediana edad y mayores o de poblaciones clínicas. En adultos jóvenes sanos la evidencia es menos concluyente.",
+         "Si el insomnio es persistente o sospechas apnea del sueño, consulta con un profesional sanitario. El ejercicio complementa, no sustituye, la valoración médica."],
+        ["It isn't the most powerful intervention in every group. In older adults, balance training ranked above strength; in Parkinson's disease, aerobic exercise ranked above strength, which came third (Oh et al., 2026; Zhan et al., 2026). Strength works, but best as part of a complete programme.",
+         "Sleep quality is usually measured with questionnaires, i.e. subjectively, and many studies are small and varied.",
+         "Almost all the data come from middle-aged and older people or clinical populations. In healthy young adults the evidence is less conclusive.",
+         "If your insomnia persists or you suspect sleep apnoea, see a healthcare professional. Exercise complements medical assessment; it doesn't replace it."])],
+      ["h", L3("Què vol dir a la pràctica", "Qué significa en la práctica", "What it means in practice")],
+      ["ul", L3(
+        ["Freqüència: 2-3 sessions de força a la setmana, sumant-hi treball aeròbic (caminar ràpid, bici) altres dies.",
+         "Constància abans que intensitat màxima: les millores més consistents apareixen entre les 8 i les 16 setmanes.",
+         "Exercicis bàsics i multiarticulars: esquat o premsa, pes mort adaptat, rems, press i empentes, amb progressió gradual.",
+         "Evita les sessions molt intenses just abans d'anar a dormir si notes que t'activen massa; provar horaris forma part del procés.",
+         "Registra el teu son durant unes setmanes (hora d'anar a dormir, despertars, com et sents) per veure la teva pròpia resposta."],
+        ["Frecuencia: 2-3 sesiones de fuerza a la semana, sumando trabajo aeróbico (caminar rápido, bici) en otros días.",
+         "Constancia antes que intensidad máxima: las mejoras más consistentes aparecen entre las 8 y las 16 semanas.",
+         "Ejercicios básicos y multiarticulares: sentadilla o prensa, peso muerto adaptado, remos, press y empujes, con progresión gradual.",
+         "Evita las sesiones muy intensas justo antes de acostarte si notas que te activan en exceso; probar horarios es parte del proceso.",
+         "Registra tu sueño durante unas semanas (hora de acostarte, despertares, cómo te sientes) para ver tu propia respuesta."],
+        ["Frequency: 2–3 strength sessions a week, adding aerobic work (brisk walking, cycling) on other days.",
+         "Consistency over maximum intensity: the most consistent improvements appear between 8 and 16 weeks.",
+         "Basic, multi-joint exercises: squat or leg press, adapted deadlift, rows, presses and pushes, with gradual progression.",
+         "Avoid very intense sessions right before bed if you find they wind you up; trying different times is part of the process.",
+         "Keep a sleep log for a few weeks (bedtime, awakenings, how you feel) to see how you respond."])],
+      ["h", L3("Com ho treballem a Sportax", "Cómo lo trabajamos en Sportax", "How we work on it at Sportax")],
+      ["p", L3(
+        "Valorem el teu punt de partida, les teves molèsties i els teus horaris, i dissenyem un programa de força (amb treball aeròbic i de mobilitat quan convé) que puguis mantenir. Tant si ets esportista i et recuperes d'una lesió com si simplement vols despertar-te amb energia, la força és una eina de salut global. Dorms malament i vols provar una cosa que funcioni? Reserva la teva valoració inicial i construïm el teu pla de força.",
+        "Valoramos tu punto de partida, tus molestias y tus horarios, y diseñamos un programa de fuerza (con trabajo aeróbico y de movilidad cuando conviene) que puedas sostener. Tanto si eres deportista y te recuperas de una lesión como si simplemente quieres despertar con energía, la fuerza es una herramienta de salud global. ¿Duermes mal y quieres probar algo que funcione? Reserva tu valoración inicial y construimos tu plan de fuerza.",
+        "We assess your starting point, any aches and your schedule, and design a strength programme (with aerobic and mobility work where useful) that you can keep up. Whether you're an athlete recovering from an injury or simply want to wake up with energy, strength is a whole-health tool. Sleeping badly and want to try something that works? Book your initial assessment and we'll build your strength plan.")],
+      ["p", L3(
+        "Aquest article és divulgatiu i no substitueix el consell mèdic o fisioterapèutic individualitzat.",
+        "Este artículo es divulgativo y no sustituye el consejo médico o fisioterapéutico individualizado.",
+        "This article is for general information and doesn't replace individual medical or physiotherapy advice.")],
+      ["refs", [
+        "Wang J, Yuan Y, Bai Y, et al. Non-pharmacological interventions for improving sleep quality in adults aged 50 years and older: a systematic review and network meta-analysis. Arch Public Health. 2026;84(1). https://doi.org/10.1186/s13690-026-01892-5",
+        "Oh SE, Choe JP, Kang M. Effectiveness of different types of physical activity interventions for enhancing sleep quality in older adults: a systematic review and network meta-analysis. J Phys Act Health. 2026:1-8. https://doi.org/10.1123/jpah.2026-0106",
+        "Guo J, Tang J, Jiang J, et al. The impact of different types of exercise on sleep in sedentary populations: a systematic review and network meta-analysis. PeerJ. 2026;14:e21037. https://doi.org/10.7717/peerj.21037",
+        "Rech A, Casagranda E, Radaelli R, et al. A systematic review and meta-analysis on the benefits of resistance exercise in patients with fibromyalgia. J Bodyw Mov Ther. 2026;47:636-645. https://doi.org/10.1016/j.jbmt.2026.05.010",
+        "Zhan Y, Ci H, Xue W, Ding Z, Chen L. Efficacy of different exercise modalities for sleep quality in Parkinson's disease: a systematic review and network meta-analysis. Front Physiol. 2026;17:1854427. https://doi.org/10.3389/fphys.2026.1854427"
+      ]]
+    ]
+  },
+  {
     slug: "fuerza-dolor-lumbar", date: "2026-11-02", cat: "training",
     title: L3("Dolor lumbar crònic: per què aixecar pes pot ser part de la solució (i no el problema)", "Dolor lumbar crónico: por qué levantar peso puede ser parte de la solución (y no el problema)", "Chronic low back pain: why lifting weights can be part of the solution (not the problem)"),
     sum: L3("L'entrenament de força redueix de manera clínicament rellevant el dolor lumbar crònic inespecífic, amb una certesa d'evidència moderada.", "El entrenamiento de fuerza reduce de forma clínicamente relevante el dolor lumbar crónico inespecífico, con una certeza de evidencia moderada.", "Strength training reduces chronic non-specific low back pain to a clinically relevant degree, with moderate certainty of evidence."),
